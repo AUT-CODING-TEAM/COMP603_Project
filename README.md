@@ -7,7 +7,7 @@ AN AUT-COMP603 PROJECT! ---- Oct.14 2019
 
 本项目为AUT课程 COMP603 的 Assignment1
 
-选题待定
+选题是：An English vocabulary (英语词汇) learning software
 
 
 
