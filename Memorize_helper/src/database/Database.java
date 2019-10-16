@@ -38,7 +38,7 @@ public class Database {
             ResultSet res = this.controller.executeQuery(sql_str);
             return res;
         }catch(Exception e){
-            System.err.println("SQLException from getAllData: " + e.getMessage());
+            System.err.println("SQLException from method get: " + e.getMessage());
         }
         return null;
     }
@@ -50,7 +50,7 @@ public class Database {
             ResultSet res = this.controller.executeQuery(sql_str);
             return true;
         }catch(Exception e){
-            System.err.println("SQLException from getAllData: " + e.getMessage());
+            System.err.println("SQLException from method set: " + e.getMessage());
         }
         return false;
     }
@@ -76,7 +76,7 @@ public class Database {
             ResultSet res = this.controller.executeQuery(sql_str);
             return true;
         }catch(Exception e){
-            System.err.println("SQLException from getAllData: " + e.getMessage());
+            System.err.println("SQLException from method add: " + e.getMessage());
         }
         return false;
     }
@@ -88,7 +88,7 @@ public class Database {
             ResultSet res = this.controller.executeQuery(sql_str);
             return true;
         }catch(Exception e){
-            System.err.println("SQLException from getAllData: " + e.getMessage());
+            System.err.println("SQLException from method delete: " + e.getMessage());
         }
         return false;
     }
