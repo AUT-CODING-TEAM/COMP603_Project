@@ -252,9 +252,9 @@ public class Database {
         Database t = new Database("jdbc:derby:Memorize_helper;create=true",
                 "root", "root");
         t.init();
-        t.get("CET4", "word", "dislike");
-        t.set("CET4", "word", "dislike", "chinese", "test");
-        t.delete("CET4", "word", "a");
+//        t.get("CET4", "word", "dislike");
+//        t.set("CET4", "word", "dislike", "chinese", "test");
+//        t.delete("CET4", "word", "a");
 //        ResultSet res = t.get("student", "name", "黄平川");
 //        try{
 //            while(res.next()){

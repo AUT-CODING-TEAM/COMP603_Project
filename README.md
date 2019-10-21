@@ -15,7 +15,7 @@ AN AUT-COMP603 PROJECT! ---- Oct.14 2019
 
 ### 缩进
 
-采用设置2个空格的缩进方式。
+采用设置4个空格的缩进方式。
 
 
 
@@ -87,4 +87,41 @@ AN AUT-COMP603 PROJECT! ---- Oct.14 2019
 4. 释放资源：如果有需要释放资源，需要放入finally块中
 
 
+
+# 数据库设计
+
+**USERS表**
+
+该表在Database进行初始化时自动创建
+
+注：PASSWORD字段为原密码进行sha256加密后的字符串
+
+| ID   | USERNAME | PASSWORD                                                     |
+| ---- | -------- | ------------------------------------------------------------ |
+| 1    | yyz      | 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92 |
+| 2    | zyw      | 472bbe83616e93d3c09a79103ae47d8f71e3d35a966d6e8b22f743218d04171d |
+| 3    | lly      | c0034605ea413370d5ad022b8d2f7fe33461bf6d7e5f4ac78f02c27b793673c9 |
+| 4    | hpc      | 54bb6a0d2ea7d49744e886aa20859d70b6fc4ee0b9f144353ecb4b39195767f3 |
+
+**单词表**
+
+该表在Database进行初始化时，根据以下目录内的txt文件进行表的创建 
+
+```
+COMP603_Project\Memorize_helper\vocabulary_config
+```
+
+表名为文件名，例如存在以下文件
+
+```
+COMP603_Project\Memorize_helper\vocabulary_config\cet4.txt
+```
+
+则创建后的表名为 CET4，注意：该表名会被自动转换为大写
+
+| ID   | WORD    | CHINESE               | PHONTIC  |
+| ---- | ------- | --------------------- | -------- |
+| 1    | a       | art.一(个)每一(个)    | ei,ə     |
+| 2    | abandon | vt.丢弃放弃抛弃n.放纵 | ə'bændən |
+| 3    | ability | n.能力能耐本领        | ə'biliti |
 
