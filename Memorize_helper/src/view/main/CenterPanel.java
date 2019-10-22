@@ -5,7 +5,8 @@
  */
 package view.main;
 
-import cotroller.main.*;
+import controller.main.ChangePlanController;
+import controller.main.ShowVocabularyController;
 import java.awt.*;
 import javax.swing.*;
 import model.*;

@@ -1,2 +1,5 @@
 /Memorize_helper/nbproject/private/
 /Memorize_helper/build/
+/Memorize_helper/*.DS_Store
+/Memorize_helper/src/*.DS_Store
+/Memorize_helper/vocabulary/*.DS_Store

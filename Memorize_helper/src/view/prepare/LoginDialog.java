@@ -5,8 +5,8 @@
  */
 package view.prepare;
 
-import cotroller.prepare.LoginController;
-import cotroller.*;
+import controller.prepare.LoginController;
+import controller.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

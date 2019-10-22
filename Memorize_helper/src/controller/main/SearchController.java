@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cotroller.main;
+package controller.main;
 
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -13,15 +13,16 @@ import model.*;
  *
  * @author ThinkPad
  */
-public class StartLearnController extends MainViewControllerTemplate{
+public class SearchController extends MainViewControllerTemplate {
 
-    public StartLearnController(JFrame mainView, User user) {
+    public SearchController(JFrame mainView, User user) {
         super(mainView, user);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("开始背单词JFrame");
+        System.out.println("查询结果JFrame");
         mainView.dispose();
     }
+
 }

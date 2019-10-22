@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cotroller.prepare;
+package controller.prepare;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,7 @@ import javax.swing.*;
 import model.*;
 import view.main.*;
 import view.prepare.*;
-
+import controller.interfaces.*;
 /**
  *
  * @author ThinkPad
@@ -22,7 +22,7 @@ public class LoginController implements ActionListener {
     private JTextField tf_lgD_username;
     private JPasswordField tf_lgD_password;
     private User user;
-
+    
     public LoginController(LoginDialog aThis, JTextField tf_lgD_username, JPasswordField tf_lgD_password) {
         this.loginDialog = aThis;
         this.tf_lgD_username = tf_lgD_username;
@@ -32,7 +32,7 @@ public class LoginController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String username = tf_lgD_username.getText();
-        char[] password = tf_lgD_password.getPassword();
+        String password = String.valueOf(tf_lgD_password.getPassword());
 
         int loginCheck = loginCheck(username, password);
         if (loginCheck == 1) {
@@ -43,16 +43,26 @@ public class LoginController implements ActionListener {
         }
     }
 
-    private int loginCheck(String username, char[] password) {
-        System.out.println("username = " + username);
-        for (char c : password) {
-            System.out.print(c);
+    private int loginCheck(String username, String password) {
+        UserController uc = new UserController();
+        User user = this.getUser(username);
+        if(user == null){
+            return 0;
         }
-        this.user = getUser();
+        
+        boolean correct = uc.checkPassword(user,password);
+        if(!correct){
+            return 0;
+        }
+        
+        System.out.println("username = " + username);
+        System.out.println("password = " + password);
+        this.user = user;
         return 1;
     }
 
-    private User getUser() {
-        return new User();
+    private User getUser(String username) {
+        UserController uc = new UserController();
+        return uc.getUser(username);
     } 
 }

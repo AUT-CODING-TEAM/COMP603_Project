@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cotroller.main;
+package controller.main;
 
 import java.awt.event.ActionEvent;
 import javax.swing.*;

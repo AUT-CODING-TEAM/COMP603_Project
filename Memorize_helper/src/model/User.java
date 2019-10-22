@@ -11,6 +11,7 @@ package model;
  */
 public class User {
     private String username;
+    private String password;
     private int todayLearnedNumber;
     private int todayTargetNumber;
     private int todayReviewNumber;
@@ -27,7 +28,20 @@ public class User {
         this.studyPlan = new StudyPlan();
         this.finishedNumber = 2;
     }
-
+    
+    public User(String name, String pass){
+        this.username = name;
+        this.password = pass;
+        this.todayLearnedNumber = 13;
+        this.todayTargetNumber = 15;
+        this.todayReviewNumber = 2;
+        this.remainingDay = 3;
+        this.studyPlan = new StudyPlan();
+        this.finishedNumber = 2;
+    }
+    public String getSeqPassword(){
+        return this.password;
+    }
     public String getUsername() {
         return username;
     }

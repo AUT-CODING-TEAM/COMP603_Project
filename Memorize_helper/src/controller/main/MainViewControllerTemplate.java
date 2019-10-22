@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cotroller.main;
+package controller.main;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.*;
 
@@ -13,16 +14,16 @@ import model.*;
  *
  * @author ThinkPad
  */
-public class SearchController extends MainViewControllerTemplate {
-
-    public SearchController(JFrame mainView, User user) {
-        super(mainView, user);
+public class MainViewControllerTemplate implements ActionListener {
+    protected JFrame mainView;
+    protected User user;
+    
+    public MainViewControllerTemplate(JFrame mainView, User user) {
+        this.mainView = mainView;
+        this.user = user;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("查询结果JFrame");
-        mainView.dispose();
     }
-
 }

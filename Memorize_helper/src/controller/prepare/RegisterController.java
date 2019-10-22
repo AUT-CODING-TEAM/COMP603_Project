@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cotroller.prepare;
+package controller.prepare;
 
+import controller.interfaces.UserController;
+import database.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -31,29 +33,37 @@ public class RegisterController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String username = tf_rgD_username.getText();
-        char[] password = tf_rgD_password.getPassword();
-        char[] pwdConfirm = tf_rgD_pwdConfirm.getPassword();
+        String password = String.valueOf(tf_rgD_password.getPassword());
+        String pwdConfirm = String.valueOf(tf_rgD_pwdConfirm.getPassword());
 
         int registerCheck = registerCheck(username, password, pwdConfirm);
         if (registerCheck == 1) {
-            JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "注册成功！", "提示",
+                    JOptionPane.PLAIN_MESSAGE);
             new LoginDialog();
             registerDialog.dispose();
         } else if (registerCheck == 0) {
-            JOptionPane.showMessageDialog(null, "注册失败！", "错误 ", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "注册失败！", "错误 ",
+                    JOptionPane.ERROR_MESSAGE);
+        } else if(registerCheck == -1){
+            JOptionPane.showMessageDialog(null, "两次密码不一致，或密码为空",
+                    "错误 ", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
-    private int registerCheck(String username, char[] password, char[] pwdConfirm) {
+    private int registerCheck(String username, String password, String pwdConfirm) {
+        UserController uc = new UserController();
+        if(!password.equals(pwdConfirm) || password.equals("")
+                || pwdConfirm.equals("")){
+            return -1;
+        }
+        boolean success = uc.register(username, password);
+        if(!success){
+            return 0;
+        }
         System.out.println("username = " + username);
-        for (char c : password) {
-            System.out.print(c);
-        }
         System.out.println();
-        for (char c : pwdConfirm) {
-            System.out.print(c);
-        }
         return 1;
     }
 }

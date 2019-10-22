@@ -29,7 +29,7 @@ public class Database {
     /**
      * @param args the command line arguments
      */
-    public Database(String host, String user, String pass) {
+    private Database(String host, String user, String pass) {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             this.conn = DriverManager.getConnection(host);
@@ -41,7 +41,10 @@ public class Database {
         }
 
     }
-
+    public Database(){
+        this("jdbc:derby:Memorize_helper;create=true",
+                "root", "root");
+    }
     public void init() {
         try {
             File[] files = this.getConfigFiles();
@@ -169,12 +172,36 @@ public class Database {
         }
         return result;
     }
-
-    public ResultSet get(String table_name, String key, String condition) {
+    
+    public ResultSet get(String table_name, String key, String condition){
         String sql_str = "select * from " + table_name.toUpperCase() + " where \""
                 + key.toUpperCase() + "\" = \'" + condition + "\'";
         try {
             ResultSet res = this.controller.executeQuery(sql_str);
+            return res;
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return null;
+    }
+    public ResultSet get(String table_name, String[] key, String[] condition) {
+        StringBuilder str_bd = new StringBuilder("select * from ");
+        str_bd.append(table_name.toUpperCase());
+        str_bd.append(" where ");
+        int index = 0;
+        for(String k : key){
+            str_bd.append("\"");
+            str_bd.append(k.toUpperCase());
+            str_bd.append("\"").append(" = ").append("\'");
+            str_bd.append(condition[index]);
+            str_bd.append("\'");
+            if(index != key.length - 1){
+                str_bd.append(" and ");
+            }
+            index +=1;
+        }
+        try {
+            ResultSet res = this.controller.executeQuery(str_bd.toString());
             return res;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
@@ -228,7 +255,7 @@ public class Database {
         str_bd.append(")");
         try {
             boolean res = this.controller.execute(str_bd.toString());
-            return res;
+            return true;
         } catch (Exception e) {
             System.out.println(str_bd.toString());
             System.err.println("SQLException from method add: " + e.getMessage());
@@ -247,12 +274,23 @@ public class Database {
         }
         return false;
     }
-
+    public void close(){
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public static void main(String[] args) {
-        Database t = new Database("jdbc:derby:Memorize_helper;create=true",
-                "root", "root");
+        Database t = new Database();
         t.init();
-//        t.get("CET4", "word", "dislike");
+        String[] keys = {"word","chinese"};
+        String[] vals = {"abandon","vt.丢弃放弃抛弃n.放纵"};
+        ResultSet res = t.get("CET4", keys, vals);
+        try {
+            if(res.next()){
+                System.out.println(res.getString("WORD"));
+            }
 //        t.set("CET4", "word", "dislike", "chinese", "test");
 //        t.delete("CET4", "word", "a");
 //        ResultSet res = t.get("student", "name", "黄平川");
@@ -264,6 +302,9 @@ public class Database {
 //        }catch(Exception e){
 //            
 //        }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

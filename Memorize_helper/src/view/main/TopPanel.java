@@ -5,7 +5,7 @@
  */
 package view.main;
 
-import cotroller.main.*;
+import controller.main.SearchController;
 import java.awt.*;
 import javax.swing.*;
 import model.*;

@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Mon Oct 21 22:33:38 CST 2019:
-正在使用类加载程序 sun.misc.Launcher$ExtClassLoader@a09ee92 引导数据库
-目录 E:\工程\COMP603_Project\Memorize_helper\Memorize_helper 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) 实例 a816c00e-016d-eebc-e0ad-00000eb3fee0
+Tue Oct 22 13:22:33 CST 2019:
+正在使用类加载程序 sun.misc.Launcher$ExtClassLoader@70f07431 引导数据库
+目录 E:\工程\COMP603_Project\Memorize_helper\Memorize_helper 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) 实例 a816c00e-016d-f1ea-b386-00000d7bb698
 已从 file:/C:/Program%20Files/Java/jdk1.8.0_221/jre/lib/ext/derby.jar 加载
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_221-b11
