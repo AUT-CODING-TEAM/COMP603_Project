@@ -1,4 +1,4 @@
-a	"ei,ə"	art.一(个)每一(个)
+a	ei,ə	art.一(个)每一(个)
 abandon	ə'bændən	vt.丢弃放弃抛弃n.放纵
 ability	ə'biliti	n.能力能耐本领
 able	'eibl	adj.能干的有能力的出色的
