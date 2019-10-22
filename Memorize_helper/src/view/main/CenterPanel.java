@@ -5,8 +5,7 @@
  */
 package view.main;
 
-import controller.main.ChangePlanController;
-import controller.main.ShowVocabularyController;
+import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
 import model.*;
@@ -66,7 +65,7 @@ public class CenterPanel extends MainViewViewTemplate {
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
         
-        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumber() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
         
         JButton btn_cP_vocabulary = new JButton("单词列表");
@@ -77,38 +76,34 @@ public class CenterPanel extends MainViewViewTemplate {
     }
     
     private void addRemainingDayRest() {
-        JPanel jPanel = new JPanel();
-        jPanel.setOpaque(true);
-        jPanel.setBackground(Color.decode("#F8F6F1"));
+        JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
         JLabel lbl_cP_remainingDayPart2 = new JLabel(String.valueOf(user.getRemainingDay()), SwingConstants.CENTER);
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
-        
+
         JLabel lbl_cP_remainingDayPart3 = new JLabel("天", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
-        
+
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
     }
     
     private void addTodayTargetNumberRest() {
-        JPanel jPanel = new JPanel();
-        jPanel.setOpaque(true);
-        jPanel.setBackground(Color.decode("#F8F6F1"));
+        JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
         JLabel lbl_cP_todayTargetNumberPart2 = new JLabel(String.valueOf(user.getTodayTargetNumber()), SwingConstants.CENTER);
         lbl_cP_todayTargetNumberPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_todayTargetNumberPart2);
-        
+
         JLabel lbl_cP_todayTargetNumberPart3 = new JLabel("个", SwingConstants.CENTER);
         jPanel.add(lbl_cP_todayTargetNumberPart3);
-        
+
         add(jPanel, new GridBagTool().setGridx(2).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
     }
     
     private void addProgressBar() {
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
-        int progress = user.getFinishedNumber() * 100 / user.getStudyPlan().getTotalNumber();
+        int progress = user.getFinishedNumberInPlan() * 100 / user.getStudyPlan().getTotalNumber();
         System.out.println("progress = " + progress);
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);

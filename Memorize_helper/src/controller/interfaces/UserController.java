@@ -13,9 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Memorize;
-import model.User;
-import model.Word;
+import model.*;
 
 /**
  *

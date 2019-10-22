@@ -5,7 +5,7 @@
  */
 package view.main;
 
-import controller.main.SearchController;
+import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
 import model.*;
@@ -49,25 +49,42 @@ public class TopPanel extends MainViewViewTemplate {
         //middle fill label
         add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
 
+        addProfilePanel();
+
+        addSearchPanel();
+    }
+
+    private void addProfilePanel() {
+        JPanel profilePanel = new JPanel();
+
         JLabel lbl_tP_username = new JLabel("你好，" + user.getUsername());
 //        lbl_tP_username.setBorder(new TitledBorder("lbl_tP_username"));
-        add(lbl_tP_username, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
-        //
+        profilePanel.add(lbl_tP_username);
 
-        JPanel jPanel = new JPanel();
-//        jPanel.setBorder(new TitledBorder("jPanel"));
+        JButton btn_tP_rankList = new JButton("排行榜");
+        btn_tP_rankList.addActionListener(new ShowRankListController(mainView, user));
+        profilePanel.add(btn_tP_rankList);
+
+        add(profilePanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
+
+    }
+
+    private void addSearchPanel() {
+        JPanel searchPanel = new JPanel();
+//        searchPanel.setBorder(new TitledBorder("searchPanel"));
 
         JLabel lbl_tP_searchTip = new JLabel("查词");
-        jPanel.add(lbl_tP_searchTip);
+        searchPanel.add(lbl_tP_searchTip);
 
         JTextField tf_tP_keyword = new JTextField(15);
-        jPanel.add(tf_tP_keyword);
+        searchPanel.add(tf_tP_keyword);
 
         JButton btn_tP_ok = new JButton("确定");
-        btn_tP_ok.addActionListener(new SearchController(mainView, user));
-        jPanel.add(btn_tP_ok);
+        btn_tP_ok.addActionListener(new SearchController(mainView, tf_tP_keyword.getText()));
+        searchPanel.add(btn_tP_ok);
 
-        add(jPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
+        add(searchPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
+        //
     }
 
 }

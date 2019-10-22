@@ -8,8 +8,8 @@ package view.main;
 import controller.main.StartLearnController;
 import java.awt.*;
 import javax.swing.*;
-import model.User;
-import view.GridBagTool;
+import model.*;
+import view.*;
 
 /**
  *

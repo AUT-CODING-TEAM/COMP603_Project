@@ -8,6 +8,7 @@ package controller.main;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import model.*;
+import view.memory.*;
 
 /**
  *
@@ -22,6 +23,7 @@ public class StartLearnController extends MainViewControllerTemplate{
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("开始背单词JFrame");
+        new MemoryPanel(new MemoryPage());
         mainView.dispose();
     }
 }

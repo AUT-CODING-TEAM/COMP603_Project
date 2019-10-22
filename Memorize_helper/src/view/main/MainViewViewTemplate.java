@@ -5,9 +5,8 @@
  */
 package view.main;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import model.User;
+import javax.swing.*;
+import model.*;
 
 /**
  *

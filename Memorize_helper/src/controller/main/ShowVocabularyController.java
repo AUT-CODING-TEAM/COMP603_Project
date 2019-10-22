@@ -22,6 +22,6 @@ public class ShowVocabularyController extends MainViewControllerTemplate {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("单词列表JFrame");
-        mainView.dispose();
+        mainView.setVisible(false);
     }
 }

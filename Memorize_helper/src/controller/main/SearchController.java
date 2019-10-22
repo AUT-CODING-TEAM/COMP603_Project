@@ -6,23 +6,27 @@
 package controller.main;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
-import model.*;
 
 /**
  *
  * @author ThinkPad
  */
-public class SearchController extends MainViewControllerTemplate {
+public class SearchController implements ActionListener {
 
-    public SearchController(JFrame mainView, User user) {
-        super(mainView, user);
+    private JFrame mainView;
+    private String word;
+
+    public SearchController(JFrame mainView, String word) {
+        this.mainView = mainView;
+        this.word = word;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("查询结果JFrame");
-        mainView.dispose();
+        System.out.println(word + "查询结果JFrame");
+        mainView.setVisible(false);
     }
 
 }
