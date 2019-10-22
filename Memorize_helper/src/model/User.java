@@ -12,6 +12,7 @@ package model;
 public class User {
     private String username;
     private String password;
+    private int id;
     private int todayLearnedNumber;
     private int todayTargetNumber;
     private int todayReviewNumber;
@@ -21,6 +22,7 @@ public class User {
     
     public User(){//develop use only
         this.username = "小明";
+        this.id = 0;
         this.todayLearnedNumber = 13;
         this.todayTargetNumber = 15;
         this.todayReviewNumber = 2;
@@ -29,9 +31,10 @@ public class User {
         this.finishedNumber = 2;
     }
     
-    public User(String name, String pass){
+    public User(String name, String pass,int id){
         this.username = name;
         this.password = pass;
+        this.id = id;
         this.todayLearnedNumber = 13;
         this.todayTargetNumber = 15;
         this.todayReviewNumber = 2;
@@ -45,7 +48,9 @@ public class User {
     public String getUsername() {
         return username;
     }
-
+    public int getID(){
+        return this.id;
+    }
     public User setUsername(String username) {
         this.username = username;
         return this;

@@ -95,13 +95,13 @@ public class Database {
                 String str1 = "create table memorize\n"
                         + "(\n"
                         + "	ID int generated always as identity,\n"
-                        + "	user_id int not null,\n"
-                        + "	word_id int not null,\n"
+                        + "	user_id varchar(5) not null,\n"
+                        + "	word_id varchar(5) not null,\n"
                         + "	word_source varchar(20) not null,\n"
                         + "	correct int default 0 not null,\n"
                         + "	wrong int default 0 not null,\n"
-                        + "	last_mem_time int default 0 not null,\n"
-                        + "	age int default 0 not null\n"
+                        + "	last_mem_time varchar(40) not null,\n"
+                        + "	aging int default 0 not null\n"
                         + ")";
                 String str2 = "create unique index memorize_ID_uindex\n"
                         + "	on memorize (ID)";
@@ -246,12 +246,80 @@ public class Database {
         return null;
     }
 
+    public boolean set(String table_name, String[] key, String[] condition,
+            String column, String value) {
+        StringBuilder str_bd = new StringBuilder("update ");
+        str_bd.append(table_name.toUpperCase()).append(" set \"");
+        str_bd.append(column.toUpperCase()).append("\"").append(" = \'");
+        str_bd.append(value).append("\'").append(" where ");
+        int index = 0;
+        for (String k : key) {
+            str_bd.append("\"");
+            str_bd.append(k.toUpperCase());
+            str_bd.append("\"").append(" = ").append("\'");
+            str_bd.append(condition[index]);
+            str_bd.append("\'");
+            if (index != key.length - 1) {
+                str_bd.append(" and ");
+            }
+            index += 1;
+        }
+        try {
+            boolean res = this.controller.execute(str_bd.toString());
+            return res;
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean set(String table_name, String[] key, String[] condition,
+            String column, int value) {
+        StringBuilder str_bd = new StringBuilder("update ");
+        str_bd.append(table_name.toUpperCase()).append(" set \"");
+        str_bd.append(column.toUpperCase()).append("\"").append(" = ");
+        str_bd.append(value).append(" where ");
+        int index = 0;
+        for (String k : key) {
+            str_bd.append("\"");
+            str_bd.append(k.toUpperCase());
+            str_bd.append("\"").append(" = ").append("\'");
+            str_bd.append(condition[index]);
+            str_bd.append("\'");
+            if (index != key.length - 1) {
+                str_bd.append(" and ");
+            }
+            index += 1;
+        }
+        try {
+            boolean res = this.controller.execute(str_bd.toString());
+            return res;
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return false;
+    }
+
     public boolean set(String table_name, String key, String condition,
             String column, String value) {
         String sql_str = "update " + table_name.toUpperCase() + " set \""
                 + column.toUpperCase() + "\" = \'"
                 + value + "\' where \"" + key.toUpperCase() + "\" = \'"
                 + condition + "\'";
+
+        try {
+            boolean res = this.controller.execute(sql_str);
+            return res;
+        } catch (Exception e) {
+            System.err.println("SQLException from method set: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean set(String table_name, String key, String condition,
+            String column, int value) {
+        String sql_str = "update " + table_name.toUpperCase() + " set \""
+                + column.toUpperCase() + "\" = \'"
+                + value + "\' where \"" + key.toUpperCase() + "\" = "
+                + condition;
 
         try {
             boolean res = this.controller.execute(sql_str);
@@ -320,9 +388,14 @@ public class Database {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
         t.init();
+        ResultSet res = t.get("MEMORIZE", "last_mem_time", "123456");
+        if (res.next()) {
+            int id = res.getInt("LAST_MEM_TIME");
+            System.out.println(id);
+        }
 //        }
     }
 
