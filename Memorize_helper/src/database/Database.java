@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author Yun_c
  */
 public class Database {
-
+    private volatile static Database instance = null;
     private Connection conn;
     private DatabaseMetaData meta;
     private String username;
@@ -41,10 +41,21 @@ public class Database {
         }
 
     }
-    public Database(){
+    private Database(){
         this("jdbc:derby:Memorize_helper;create=true",
                 "root", "root");
     }
+    public static Database getInstance(){
+        if(Database.instance == null){
+            synchronized(Database.class){
+                if(Database.instance == null){
+                    Database.instance = new Database();
+                }
+            }
+        }
+        return Database.instance;
+    }
+    
     public void init() {
         try {
             File[] files = this.getConfigFiles();
@@ -136,7 +147,7 @@ public class Database {
                     if (line.equals("")) {
                         continue;
                     }
-                    String[] info = line.split(" ");
+                    String[] info = line.split("\t");
                     System.out.println(info[0]);
                     
                     String[] col = {"word", "phonetic", "chinese"};
@@ -282,29 +293,9 @@ public class Database {
         }
     }
     public static void main(String[] args) {
-        Database t = new Database();
+        Database t = Database.getInstance();
         t.init();
-        String[] keys = {"word","chinese"};
-        String[] vals = {"abandon","vt.丢弃放弃抛弃n.放纵"};
-        ResultSet res = t.get("CET4", keys, vals);
-        try {
-            if(res.next()){
-                System.out.println(res.getString("WORD"));
-            }
-//        t.set("CET4", "word", "dislike", "chinese", "test");
-//        t.delete("CET4", "word", "a");
-//        ResultSet res = t.get("student", "name", "黄平川");
-//        try{
-//            while(res.next()){
-//                System.out.println(res.getString("name"));
-//                System.out.println(res.getString("gender"));
-//            }
-//        }catch(Exception e){
-//            
 //        }
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }

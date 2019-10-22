@@ -5,6 +5,7 @@
  */
 package view.main;
 
+import database.Database;
 import view.prepare.*;
 import java.awt.*;
 import javax.swing.*;
@@ -73,6 +74,9 @@ public class MainView extends JFrame {
     }
 
     public static void main(String[] args) {
+        //init the database
+        Database db = Database.getInstance();
+        db.init();
         new LoginDialog();
     }
 }

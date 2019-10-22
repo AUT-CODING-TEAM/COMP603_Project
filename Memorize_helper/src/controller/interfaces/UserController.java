@@ -22,7 +22,7 @@ import model.User;
 public class UserController {
 
     public User getUser(String username) {
-        Database db = new Database();
+        Database db = Database.getInstance();
         ResultSet res = db.get("USERS", "USERNAME", username);
         User user = null;
         try {
@@ -34,18 +34,16 @@ public class UserController {
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        db.close();
         return user;
     }
 
     public boolean register(String username, String password) {
-        Database db = new Database();
+        Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         String seq_pass = sha256.SHA256(String.valueOf(password));
         String[] col = {"username", "password"};
         String[] val = { username, seq_pass};
         boolean res = db.add("users",col, val);
-        db.close();
         return res;
     }
 
@@ -65,7 +63,7 @@ public class UserController {
     }
 
     public boolean checkPassword(String username, String password) {
-        Database db = new Database();
+        Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         String seq_pass = sha256.SHA256(password);
         String[] keys = {"username", "password"};
@@ -78,7 +76,6 @@ public class UserController {
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        db.close();
         return false;
 
     }
