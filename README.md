@@ -125,3 +125,15 @@ COMP603_Project\Memorize_helper\vocabulary_config\cet4.txt
 | 2    | abandon | vt.丢弃放弃抛弃n.放纵 | ə'bændən |
 | 3    | ability | n.能力能耐本领        | ə'biliti |
 
+
+
+**MEMORIZE表**
+
+该表在Database进行初始化时自动创建
+
+| ID   | USER_ID | WORD_ID | WORD_SOURCE | CORRECT | WRONG | LAST_MEM_TIME | AGING |
+| ---- | ------- | ------- | ----------- | ------- | ----- | ------------- | ----- |
+| 1    | 1       | 1       | CET4        | 1       | 0     | 1571540000    | 0     |
+| 2    | 1       | 2       | CET4        | 1       | 3     | 1571541022    | 0     |
+| 3    | 2       | 13      | CET6        | 2       | 174   | 1571543389    | 1     |
+
