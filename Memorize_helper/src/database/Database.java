@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  * @author Yun_c
  */
 public class Database {
+
     private volatile static Database instance = null;
     private Connection conn;
     private DatabaseMetaData meta;
@@ -41,21 +42,23 @@ public class Database {
         }
 
     }
-    private Database(){
+
+    private Database() {
         this("jdbc:derby:Memorize_helper;create=true",
                 "root", "root");
     }
-    public static Database getInstance(){
-        if(Database.instance == null){
-            synchronized(Database.class){
-                if(Database.instance == null){
+
+    public static Database getInstance() {
+        if (Database.instance == null) {
+            synchronized (Database.class) {
+                if (Database.instance == null) {
                     Database.instance = new Database();
                 }
             }
         }
         return Database.instance;
     }
-    
+
     public void init() {
         try {
             File[] files = this.getConfigFiles();
@@ -86,6 +89,28 @@ public class Database {
                 this.controller.execute(str2);
                 this.controller.execute(str3);
                 this.controller.execute(str4);
+            }
+            ResultSet mem_table = this.meta.getTables(null, null, "MEMORIZE", null);
+            if (!mem_table.next()) {
+                String str1 = "create table memorize\n"
+                        + "(\n"
+                        + "	ID int generated always as identity,\n"
+                        + "	user_id int not null,\n"
+                        + "	word_id int not null,\n"
+                        + "	word_source varchar(20) not null,\n"
+                        + "	correct int default 0 not null,\n"
+                        + "	wrong int default 0 not null,\n"
+                        + "	last_mem_time int default 0 not null,\n"
+                        + "	age int default 0 not null\n"
+                        + ")";
+                String str2 = "create unique index memorize_ID_uindex\n"
+                        + "	on memorize (ID)";
+                String str3 = "alter table memorize\n"
+                        + "	add constraint memorize_pk\n"
+                        + "		primary key (ID)";
+                this.controller.execute(str1);
+                this.controller.execute(str2);
+                this.controller.execute(str3);
             }
 
             for (File f : files) {
@@ -141,7 +166,7 @@ public class Database {
 
                 InputStreamReader isr = new InputStreamReader(new FileInputStream("vocabulary_config/" + f.getName()), "UTF-8");
                 BufferedReader bf = new BufferedReader(isr);
-                
+
                 String line = "";
                 while ((line = bf.readLine()) != null) {
                     if (line.equals("")) {
@@ -149,7 +174,7 @@ public class Database {
                     }
                     String[] info = line.split("\t");
                     System.out.println(info[0]);
-                    
+
                     String[] col = {"word", "phonetic", "chinese"};
                     info[1] = info[1].replace("'", "''");
                     if (info.length > 3) {
@@ -183,8 +208,8 @@ public class Database {
         }
         return result;
     }
-    
-    public ResultSet get(String table_name, String key, String condition){
+
+    public ResultSet get(String table_name, String key, String condition) {
         String sql_str = "select * from " + table_name.toUpperCase() + " where \""
                 + key.toUpperCase() + "\" = \'" + condition + "\'";
         try {
@@ -195,21 +220,22 @@ public class Database {
         }
         return null;
     }
+
     public ResultSet get(String table_name, String[] key, String[] condition) {
         StringBuilder str_bd = new StringBuilder("select * from ");
         str_bd.append(table_name.toUpperCase());
         str_bd.append(" where ");
         int index = 0;
-        for(String k : key){
+        for (String k : key) {
             str_bd.append("\"");
             str_bd.append(k.toUpperCase());
             str_bd.append("\"").append(" = ").append("\'");
             str_bd.append(condition[index]);
             str_bd.append("\'");
-            if(index != key.length - 1){
+            if (index != key.length - 1) {
                 str_bd.append(" and ");
             }
-            index +=1;
+            index += 1;
         }
         try {
             ResultSet res = this.controller.executeQuery(str_bd.toString());
@@ -222,11 +248,11 @@ public class Database {
 
     public boolean set(String table_name, String key, String condition,
             String column, String value) {
-        String sql_str = "update " + table_name.toUpperCase() + " set \"" 
+        String sql_str = "update " + table_name.toUpperCase() + " set \""
                 + column.toUpperCase() + "\" = \'"
-                + value + "\' where \"" + key.toUpperCase() + "\" = \'" 
+                + value + "\' where \"" + key.toUpperCase() + "\" = \'"
                 + condition + "\'";
-        
+
         try {
             boolean res = this.controller.execute(sql_str);
             return res;
@@ -252,7 +278,7 @@ public class Database {
         str_bd.append(") values (");
 
         for (int i = 0; i < columns.length; i++) {
-            if(i>= values.length){
+            if (i >= values.length) {
                 System.out.println(values.toString());
             }
             str_bd.append(" \'");
@@ -276,7 +302,7 @@ public class Database {
 
     public boolean delete(String table_name, String key, String condition) {
         String sql_str = "delete from " + table_name.toUpperCase() + " where \""
-                + key.toUpperCase()+ "\" = \'" + condition + "\'";
+                + key.toUpperCase() + "\" = \'" + condition + "\'";
         try {
             boolean res = this.controller.execute(sql_str);
             return res;
@@ -285,13 +311,15 @@ public class Database {
         }
         return false;
     }
-    public void close(){
+
+    public void close() {
         try {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void main(String[] args) {
         Database t = Database.getInstance();
         t.init();
