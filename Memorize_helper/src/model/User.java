@@ -14,10 +14,6 @@ public class User {
     private String username;
     private String password;
     private int id;
-    private int todayLearnedNumber;
-    private int todayTargetNumber;
-    private int todayReviewNumber;
-    private int remainingDay;
     private StudyPlan studyPlan;
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
@@ -25,11 +21,7 @@ public class User {
     public User() {//develop use only
         this.username = "小明";
         this.id = 0;
-        this.todayLearnedNumber = 13;
-        this.todayTargetNumber = 15;
-        this.todayReviewNumber = 2;
-        this.remainingDay = 3;
-        this.studyPlan = new StudyPlan();
+        this.studyPlan = null;
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
     }
@@ -38,11 +30,7 @@ public class User {
         this.username = name;
         this.password = pass;
         this.id = id;
-        this.todayLearnedNumber = 13;
-        this.todayTargetNumber = 15;
-        this.todayReviewNumber = 2;
-        this.remainingDay = 3;
-        this.studyPlan = new StudyPlan();
+        this.studyPlan = null;
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
     }
@@ -74,40 +62,21 @@ public class User {
     }
 
     public int getTodayLearnedNumber() {
-        return todayLearnedNumber;
-    }
-
-    public User setTodayLearnedNumber(int todayLearnedNumber) {
-        this.todayLearnedNumber = todayLearnedNumber;
-        return this;
+        return this.studyPlan.getTodayMemorizedNumber();
     }
 
     public int getTodayTargetNumber() {
-        return todayTargetNumber;
-    }
-
-    public User setTodayTargetNumber(int todayTargetNumber) {
-        this.todayTargetNumber = todayTargetNumber;
-        return this;
+        return this.studyPlan.getTodayTargetNumber();
     }
 
     public int getTodayReviewNumber() {
-        return todayReviewNumber;
-    }
-
-    public User setTodayReviewNumber(int todayReviewNumber) {
-        this.todayReviewNumber = todayReviewNumber;
-        return this;
+        return this.studyPlan.getTodayReviewedNumber();
     }
 
     public int getRemainingDay() {
-        return remainingDay;
+        return this.studyPlan.getRemainDay();
     }
 
-    public User setRemainingDay(int remainingDay) {
-        this.remainingDay = remainingDay;
-        return this;
-    }
 
     public StudyPlan getStudyPlan() {
         return studyPlan;

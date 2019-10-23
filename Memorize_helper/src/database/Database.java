@@ -74,7 +74,8 @@ public class Database {
                         + "(\n"
                         + "	ID int generated always as identity,\n"
                         + "	username varchar(20) not null,\n"
-                        + "	password long varchar not null\n"
+                        + "	password long varchar not null,\n"
+                        + "	study_plan varchar(20) not null\n"
                         + ")";
                 String str2 = "create unique index users_ID_uindex\n"
                         + "	on users (ID)";
@@ -108,6 +109,27 @@ public class Database {
                 String str3 = "alter table memorize\n"
                         + "	add constraint memorize_pk\n"
                         + "		primary key (ID)";
+                this.controller.execute(str1);
+                this.controller.execute(str2);
+                this.controller.execute(str3);
+            }
+            ResultSet plan_table = this.meta.getTables(null, null, "PLAN", null);
+            if (!plan_table.next()) {
+                String str1 = "create table plan\n"
+                        + "(\n"
+                        + "	ID int generated always as identity,\n"
+                        + "	user_id varchar(10) not null,\n"
+                        + "	book varchar(20) not null,\n"
+                        + "	total_day int not null,\n"
+                        + "	start_time bigint not null,\n"
+                        + "	today_target_number int not null\n"
+                        + ")";
+                String str2 = "create unique index plan_ID_uindex\n"
+                        + "	on plan (ID)";
+                String str3 = "alter table plan\n"
+                        + "	add constraint plan_pk\n"
+                        + "		primary key (ID)";
+                
                 this.controller.execute(str1);
                 this.controller.execute(str2);
                 this.controller.execute(str3);
@@ -209,6 +231,22 @@ public class Database {
         return result;
     }
 
+    public int count(String table_name, String key, String condition){
+        String sql_str = "select count(*) as \"NUMBER\" from " + table_name.toUpperCase();
+        int num = 0;
+        if (!key.equals("")) {
+            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
+        }
+        try {
+            ResultSet res = this.controller.executeQuery(sql_str);
+            if(res.next()){
+                num = res.getInt("NUMBER");
+            }
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return num;
+    }
     public ResultSet get(String table_name, String key, String condition) {
         String sql_str = "select * from " + table_name.toUpperCase();
 
@@ -277,11 +315,21 @@ public class Database {
         }
         return res;
     }
-    
-    public ResultSet SQL(String sql){
+
+    public ResultSet SQLqr(String sql) {
         ResultSet res = null;
         try {
             res = this.controller.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+    public boolean SQL(String sql) {
+        boolean res = false;
+        try {
+            this.controller.execute(sql);
+            res = true;
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -313,7 +361,7 @@ public class Database {
         }
         return false;
     }
-
+    
     public boolean set(String table_name, String[] key, String[] condition,
             String column, int value) {
         StringBuilder str_bd = new StringBuilder("update ");
@@ -434,11 +482,6 @@ public class Database {
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
         t.init();
-        ResultSet res = t.get("MEMORIZE", "last_mem_time", "123456");
-        if (res.next()) {
-            int id = res.getInt("LAST_MEM_TIME");
-            System.out.println(id);
-        }
 //        }
     }
 

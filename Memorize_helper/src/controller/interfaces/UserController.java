@@ -11,10 +11,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 
+//TODO: 复习单词 （老化memorize列表项）
 /**
  *
  * @author Yun_c
@@ -27,6 +30,8 @@ public class UserController {
      */
     public User getUser(String username) {
         Database db = Database.getInstance();
+        PlanController pct = new PlanController();
+
         ResultSet res = db.get("USERS", "USERNAME", username);
         User user = null;
         try {
@@ -34,8 +39,12 @@ public class UserController {
                 String name = res.getString("USERNAME");
                 String pass = res.getString("PASSWORD");
                 int id = res.getInt("ID");
+                int pid = res.getInt("STUDY_PLAN");
                 user = new User(name, pass, id);
+                user.setStudyPlan(pct.getPlan(pid));
             }
+            this.updateTodayPlanInfo(user);
+
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,8 +60,8 @@ public class UserController {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         String seq_pass = sha256.SHA256(String.valueOf(password));
-        String[] col = {"username", "password"};
-        String[] val = {username, seq_pass};
+        String[] col = {"username", "password", "study_plan"};
+        String[] val = {username, seq_pass, "0"};
         boolean res = db.add("users", col, val);
         return res;
     }
@@ -104,6 +113,110 @@ public class UserController {
     }
 
     /**
+     * @param user who want to activate a new plan
+     * @param book which book param.user want to choose
+     * @param everyday_num how many words param.user want to memorize everyday
+     * @return if plan is activated
+     */
+    public boolean activateStudyPlan(User user, String book, int everyday_num) {
+        PlanController pct = new PlanController();
+        int res = pct.addPlan(book, everyday_num, user.getID());
+        if (res == 0) {
+            return false;
+        }
+        user.setStudyPlan(pct.getPlan(res));
+        this.updateTodayPlanInfo(user);
+
+        return true;
+    }
+
+    /**
+     * @param user which user's plan info(such as memorize number or review
+     * number)should be update(not update in database but update at the instance
+     * of class StudyPlan.database update is already done at memorize function
+     * and review function)
+     *
+     */
+    public void updateTodayPlanInfo(User user) {
+        if (user != null) {
+            StudyPlan p = user.getStudyPlan();
+            if (p != null) {
+                p.setTodayMemorized(this.getTodayMemorizedNum(user));
+                p.setTodayReviewd(this.getTodayReviewedNum(user));
+            }
+
+        }
+    }
+
+    /**
+     * @param user get this user's today memorized number
+     * @return memorized word number today
+     */
+    public int getTodayMemorizedNum(User user) {
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getStudyPlan();
+        if (plan == null) {
+            return 0;
+        }
+
+        String table = plan.getStudyPlanName();
+        Long time = System.currentTimeMillis();
+        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                - TimeZone.getDefault().getRawOffset();
+        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        //get today memorized word
+        int mem_num = 0;
+        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
+        bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
+        bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
+        bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
+        bd.append(" and \"AGING\" = 0");
+        ResultSet res = db.SQLqr(bd.toString());
+        try {
+            if (res.next()) {
+                mem_num = res.getInt("NUMBER");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mem_num;
+    }
+
+    /**
+     * @param user get this user's today reviewed number
+     * @return reviewed word number today
+     */
+    public int getTodayReviewedNum(User user) {
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getStudyPlan();
+        if (plan == null) {
+            return 0;
+        }
+
+        String table = plan.getStudyPlanName();
+        Long time = System.currentTimeMillis();
+        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                - TimeZone.getDefault().getRawOffset();
+        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        //get today memorized word
+        int review_num = 0;
+        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
+        bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
+        bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
+        bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
+        bd.append(" and \"AGING\" > 0");
+        ResultSet res = db.SQLqr(bd.toString());
+        try {
+            if (res.next()) {
+                review_num = res.getInt("NUMBER");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return review_num;
+    }
+
+    /**
      * @param username user's username
      * @param word the word wait to be memorized
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
@@ -117,7 +230,7 @@ public class UserController {
                 return false;
             }
             String user_id = user.getString("ID");
-            
+
             ResultSet wd = db.get(source, "word", word);
             if (!wd.next()) {
                 return false;
@@ -202,6 +315,12 @@ public class UserController {
         return mct.wrong(user, wd);
     }
 
+    public ArrayList<Word> getMemorizedWord(User user) {
+        Database db = Database.getInstance();
+        return null;
+        //TODO: continue coding
+    }
+
     /**
      * help build sha256 string
      */
@@ -239,8 +358,9 @@ public class UserController {
     public static void main(String[] args) {
         UserController uct = new UserController();
         WordController wct = new WordController();
-        System.out.println(uct.register("test", "test"));
+        System.out.println(uct.register("yyz", "123456"));
         User user = uct.getUser("yyz");
+        uct.activateStudyPlan(user, "CET4", 15);
         System.out.println(uct.checkPassword(user, "123456"));
         System.out.println(uct.checkPassword(user, "456789"));
         Word wd = wct.getBookWordByName("cet4", "able");
