@@ -31,7 +31,7 @@ public class SearchResultInfo {
         String[] s = new String[results.size()];
 
         for (int i = 1; i < s.length; i++) {
-            s[i] = String.format("%s", results.get(i));
+            s[i] = String.format("%50s", results.get(i));
         }
 
         return s;

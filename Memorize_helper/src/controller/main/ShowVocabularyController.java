@@ -14,7 +14,7 @@ import model.*;
  * @author ThinkPad
  */
 public class ShowVocabularyController extends MainViewControllerTemplate {
-
+    
     public ShowVocabularyController(JFrame mainView, User user) {
         super(mainView, user);
     }

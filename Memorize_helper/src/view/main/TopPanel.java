@@ -61,7 +61,7 @@ public class TopPanel extends MainViewViewTemplate {
     }
 
     private void addProfilePanel() {
-        JPanel profilePanel = new JPanel();
+        JPanel profilePanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
 
         JLabel lbl_tP_username = new JLabel("你好，" + user.getUsername());
 //        lbl_tP_username.setBorder(new TitledBorder("lbl_tP_username"));
@@ -76,7 +76,7 @@ public class TopPanel extends MainViewViewTemplate {
     }
 
     private void addSearchPanel() {
-        searchPanel = new JPanel();
+        searchPanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
 //        searchPanel.setBorder(new TitledBorder("searchPanel"));
 
         JLabel lbl_tP_searchTip = new JLabel("查词");

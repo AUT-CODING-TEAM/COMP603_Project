@@ -5,11 +5,13 @@
  */
 package view.search;
 
+import controller.WordDetailController;
 import controller.main.SearchController;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import model.*;
 import view.*;
 import view.main.MainView;
@@ -81,17 +83,22 @@ public class SearchResultListPanel extends GroundPanelTemplate {
 
     private void addSearchPanel() {
         JPanel searchPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
-//        searchPanel.setBorder(new TitledBorder("searchPanel"));
-
+        searchPanel.setLayout(new GridLayout(3, 1));
+        
+        //hard to let lbl_sRLP_searchTip and tf_sRLP_keyword stay in the center directly
+        JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         JLabel lbl_sRLP_searchTip = new JLabel("查词");
-        searchPanel.add(lbl_sRLP_searchTip);
+        jPanel.add(lbl_sRLP_searchTip);
 
         tf_sRLP_keyword = new JTextField(inputKeyWord, 15);
-
         tf_sRLP_keyword.getDocument().addDocumentListener(new SearchController(this));
-        searchPanel.add(tf_sRLP_keyword);
+        jPanel.add(tf_sRLP_keyword);
 
-        add(searchPanel, new GridBagTool().setAnchor(GridBagConstraints.SOUTH).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+        searchPanel.add(new JLabel());
+        searchPanel.add(jPanel);
+        searchPanel.add(new JLabel());
+
+        add(searchPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.01));
     }
 
     public void addSearchResultListPanel() {
@@ -100,10 +107,12 @@ public class SearchResultListPanel extends GroundPanelTemplate {
 
         list_sP_searchResultList = new ListInScrollTemplate(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
         list_sP_searchResultList.setEnabled(true);
+        list_sP_searchResultList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list_sP_searchResultList.addListSelectionListener(new WordDetailController(user, list_sP_searchResultList));
         jPanel.add(list_sP_searchResultList);
 
         JScrollPane jScrollPane = new JScrollPane(jPanel);
-        add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.8));
+        add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.89));
     }
 
     public JFrame getSearchResultListFrame() {
