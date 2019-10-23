@@ -8,9 +8,12 @@ package view.main;
 import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import model.*;
 import view.*;
+import view.search.SearchResultListPanel;
 
 /**
  *
@@ -81,7 +84,21 @@ public class TopPanel extends MainViewViewTemplate {
 
         JTextField tf_tP_keyword = new JTextField(15);
 
-        tf_tP_keyword.getDocument().addDocumentListener(new SearchController(mainView, tf_tP_keyword, searchPanel));
+        tf_tP_keyword.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                new SearchResultListPanel(tf_tP_keyword.getText(), user);
+                mainView.dispose();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
         searchPanel.add(tf_tP_keyword);
 
         add(searchPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));

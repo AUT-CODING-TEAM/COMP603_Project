@@ -5,12 +5,14 @@
  */
 package view.search;
 
+import controller.main.SearchController;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
 import model.*;
 import view.*;
+import view.main.MainView;
 
 /**
  *
@@ -18,18 +20,16 @@ import view.*;
  */
 public class SearchResultListPanel extends GroundPanelTemplate {
 
-    private JFrame mainView;
-    private SearchResultInfo searchResultInfo;
-    //get existed searchPanel in view/main/TopPanel
-    private JPanel mainViewSearchPanel;
     private JFrame searchResultListFrame;
-    private JList list_sP_searchResultListPart1;
+    private JList list_sP_searchResultList;
+    private String inputKeyWord;
+    private User user;
+    private JTextField tf_sRLP_keyword;
 
-    public SearchResultListPanel(JFrame mainView, SearchResultInfo searchResultInfo, JPanel mainViewSearchPanel) {
+    public SearchResultListPanel(String inputKeyWord, User user) {
         super(GroundPanelTemplate.BACK);
-        this.mainView = mainView;
-        this.searchResultInfo = searchResultInfo;
-        this.mainViewSearchPanel = mainViewSearchPanel;
+        this.inputKeyWord = inputKeyWord;
+        this.user = user;
         setProperty();
         addComponents();
     }
@@ -56,7 +56,7 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         searchResultListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
 //                super.windowClosing(e);
-                mainView.setVisible(true);
+                backToMain();
             }
         });
 
@@ -68,29 +68,39 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        
-        add(mainViewSearchPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
-        
+
+        addSearchPanel();
+
         addSearchResultListPanel();
-        
+
         searchResultListFrame.add(this);
-        
-        //visibility should be controlled
-//        searchResultListFrame.setVisible(true);
+
+        //visibility should be controlled?
+        searchResultListFrame.setVisible(true);
     }
-    
-    public void addSearchResultListPanel(){
+
+    private void addSearchPanel() {
+        JPanel searchPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
+//        searchPanel.setBorder(new TitledBorder("searchPanel"));
+
+        JLabel lbl_sRLP_searchTip = new JLabel("查词");
+        searchPanel.add(lbl_sRLP_searchTip);
+
+        tf_sRLP_keyword = new JTextField(inputKeyWord, 15);
+
+        tf_sRLP_keyword.getDocument().addDocumentListener(new SearchController(this));
+        searchPanel.add(tf_sRLP_keyword);
+
+        add(searchPanel, new GridBagTool().setAnchor(GridBagConstraints.SOUTH).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+    }
+
+    public void addSearchResultListPanel() {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         jPanel.setLayout(new GridLayout(1, 1));
-        
-        list_sP_searchResultListPart1 = new ListInScrollTemplate(searchResultInfo.getSearchResultListInfo(SearchResultInfo.WORD));
-        jPanel.add(list_sP_searchResultListPart1);
-        
-//        JList list_sP_searchResultListPart2 = new ListInScrollTemplate(searchResultInfo.getSearchResultListInfo(SearchResultInfo.PHONETIC_SYMBOL));
-//        jPanel.add(list_sP_searchResultListPart2);
-//        
-//        JList list_sP_searchResultListPart3 = new ListInScrollTemplate(searchResultInfo.getSearchResultListInfo(SearchResultInfo.PARAPHRASE));
-//        jPanel.add(list_sP_searchResultListPart3);
+
+        list_sP_searchResultList = new ListInScrollTemplate(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
+        list_sP_searchResultList.setEnabled(true);
+        jPanel.add(list_sP_searchResultList);
 
         JScrollPane jScrollPane = new JScrollPane(jPanel);
         add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.8));
@@ -100,7 +110,15 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         return searchResultListFrame;
     }
 
-    public JList getList_sP_searchResultListPart1() {
-        return list_sP_searchResultListPart1;
+    public JList getList_sP_searchResultList() {
+        return list_sP_searchResultList;
+    }
+
+    public JTextField getTf_sRLP_keyword() {
+        return tf_sRLP_keyword;
+    }
+
+    public void backToMain() {
+        new MainView(user);
     }
 }
