@@ -12,10 +12,20 @@ package model;
 public class StudyPlan {
     private String studyPlanName;
     private int totalNumber;
+    private int added;//is added by the user or not
     
     public StudyPlan() {//develop use only
         this.studyPlanName = "小学人教版一年级上";
         this.totalNumber = 35;
+    }
+
+    public int getAdded() {
+        return added;
+    }
+
+    public StudyPlan setAdded(int added) {
+        this.added = added;
+        return this;
     }
 
     public String getStudyPlanName() {

@@ -8,10 +8,13 @@ package view.memory;
 import controller.main.*;
 import controller.memory.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import model.*;
 import view.*;
+import view.main.MainView;
 
 /**
  *
@@ -20,10 +23,12 @@ import view.*;
 public class MemoryPanel extends GroundPanelTemplate {
     
     private MemoryPage memoryPage;
+    private User user;
     
-    public MemoryPanel(MemoryPage memoryPage) {
+    public MemoryPanel(MemoryPage memoryPage, User user) {
         super(GroundPanelTemplate.BACK);
         this.memoryPage = memoryPage;
+        this.user = user;
         setProperty();
         addComponents();
         
@@ -47,7 +52,13 @@ public class MemoryPanel extends GroundPanelTemplate {
     public void addComponents() {
         JFrame memoryFrame = new JFrame("学习");
         setSize(memoryFrame);
-        memoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        memoryFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+//                super.windowClosing(e);
+                new MainView(user);
+            }
+        });
 
         //left fill label
         add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(7).setWeightx(0.05).setWeighty(1));

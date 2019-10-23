@@ -18,12 +18,12 @@ import view.*;
 public class RankListPanel extends GroundPanelTemplate {
 
     private JFrame mainView;
-    private RankInfo rankInfo;
+    private RankListInfo rankListInfo;
 
-    public RankListPanel(JFrame mainView, RankInfo rankInfo) {
+    public RankListPanel(JFrame mainView, RankListInfo rankListInfo) {
         super(GroundPanelTemplate.BACK);
         this.mainView = mainView;
-        this.rankInfo = rankInfo;
+        this.rankListInfo = rankListInfo;
 //        setBorder(new TitledBorder("RankListPanel"));
         setProperty();
         addComponents();
@@ -64,13 +64,13 @@ public class RankListPanel extends GroundPanelTemplate {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         jPanel.setLayout(new GridLayout(1, 3));
         
-        JList list_rLP_rankListPart1 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.NUMBERS));
+        JList list_rLP_rankListPart1 = new ListInScrollTemplate(rankListInfo.getRankListInfo(RankListInfo.NUMBERS));
         jPanel.add(list_rLP_rankListPart1);
         
-        JList list_rLP_rankListPart2 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.NAMES));
+        JList list_rLP_rankListPart2 = new ListInScrollTemplate(rankListInfo.getRankListInfo(RankListInfo.NAMES));
         jPanel.add(list_rLP_rankListPart2);
         
-        JList list_rLP_rankListPart3 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.WORDS));
+        JList list_rLP_rankListPart3 = new ListInScrollTemplate(rankListInfo.getRankListInfo(RankListInfo.WORDS));
         jPanel.add(list_rLP_rankListPart3);
 
         JScrollPane jScrollPane = new JScrollPane(jPanel);
