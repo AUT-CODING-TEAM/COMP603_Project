@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author ThinkPad
  */
-public class RankInfo {
+public class RankListInfo {
 
     public static final int NUMBERS = 0;
     public static final int NAMES = 1;
@@ -20,7 +20,7 @@ public class RankInfo {
     private int listNumber;
     private ArrayList<User> users;
 
-    public RankInfo() {// develop use only
+    public RankListInfo() {// develop use only
         listNumber = 50;
         users = new ArrayList<>();
 
@@ -30,8 +30,8 @@ public class RankInfo {
         }
     }
 
-    public String[] getRankInfo(int col) {
-        String[] s = new String[listNumber + 1];
+    public String[] getRankListInfo(int col) {
+        String[] s = new String[users.size()];
         if (col == 0) {
             s[0] = String.format("%18s", "排名");
         } else if (col == 1) {

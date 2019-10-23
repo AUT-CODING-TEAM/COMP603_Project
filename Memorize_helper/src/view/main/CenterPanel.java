@@ -16,11 +16,11 @@ import view.*;
  * @author ThinkPad
  */
 public class CenterPanel extends MainViewViewTemplate {
-    
+
     public CenterPanel(JFrame mainView, User user) {
         super(mainView, user);
     }
-    
+
     private void setSize() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -30,7 +30,7 @@ public class CenterPanel extends MainViewViewTemplate {
         int frameHeight = 480;
         setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
     }
-    
+
     @Override
     public void setProperty() {
         //        setSize();
@@ -40,41 +40,44 @@ public class CenterPanel extends MainViewViewTemplate {
         setOpaque(true);
         setBackground(Color.decode("#F8F6F1"));
     }
-    
+
     @Override
     public void addComponents() {
         //left fill label
         add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
         //right fill label
         add(new JLabel(), new GridBagTool().setGridx(3).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
-        
+
         JLabel lbl_cP_remainingDayPart1 = new JLabel("剩余", SwingConstants.CENTER);
         add(lbl_cP_remainingDayPart1, new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.15));
-        
+
         JLabel lbl_cP_todayTargetNumberPart1 = new JLabel("今日单词", SwingConstants.CENTER);
         add(lbl_cP_todayTargetNumberPart1, new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.15));
-        
+
         addRemainingDayRest();
-        
+
         addTodayTargetNumberRest();
-        
+
         JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + user.getStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
-        
+
         JButton btn_cP_changePlan = new JButton("修改计划");
-        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
+
+//        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
+        //jump to ShowPlanListController temporarily
+        btn_cP_changePlan.addActionListener(new ShowPlanListController(user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
-        
+
         JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
-        
+
         JButton btn_cP_vocabulary = new JButton("单词列表");
         btn_cP_vocabulary.addActionListener(new ShowVocabularyController(mainView, user));
         add(btn_cP_vocabulary, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
-        
+
         addProgressBar();
     }
-    
+
     private void addRemainingDayRest() {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
@@ -87,7 +90,7 @@ public class CenterPanel extends MainViewViewTemplate {
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
     }
-    
+
     private void addTodayTargetNumberRest() {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
@@ -100,7 +103,7 @@ public class CenterPanel extends MainViewViewTemplate {
 
         add(jPanel, new GridBagTool().setGridx(2).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
     }
-    
+
     private void addProgressBar() {
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
         int progress = user.getFinishedNumberInPlan() * 100 / user.getStudyPlan().getTotalNumber();

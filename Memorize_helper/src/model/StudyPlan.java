@@ -19,6 +19,7 @@ public class StudyPlan {
     private int todayTargetNumber;
     private int todayMemorizedNumber;
     private int todayReviewedNumber;
+    private int added;//is added by the user or not
     
     public StudyPlan() {//develop use only
         this.studyPlanName = "小学人教版一年级上";
@@ -43,6 +44,16 @@ public class StudyPlan {
         this.todayReviewedNumber = num;
     }
     
+
+    public int getAdded() {
+        return added;
+    }
+
+    public StudyPlan setAdded(int added) {
+        this.added = added;
+        return this;
+    }
+
     public String getStudyPlanName() {
         return studyPlanName;
     }

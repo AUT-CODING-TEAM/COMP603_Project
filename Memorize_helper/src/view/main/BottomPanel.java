@@ -5,7 +5,7 @@
  */
 package view.main;
 
-import controller.main.StartLearnController;
+import controller.StartLearnController;
 import java.awt.*;
 import javax.swing.*;
 import model.*;
