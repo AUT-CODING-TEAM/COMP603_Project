@@ -210,8 +210,26 @@ public class Database {
     }
 
     public ResultSet get(String table_name, String key, String condition) {
-        String sql_str = "select * from " + table_name.toUpperCase() + " where \""
-                + key.toUpperCase() + "\" = \'" + condition + "\'";
+        String sql_str = "select * from " + table_name.toUpperCase();
+
+        if (!key.equals("")) {
+            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
+        }
+        try {
+            ResultSet res = this.controller.executeQuery(sql_str);
+            return res;
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public ResultSet get(String table_name, String key, int condition) {
+        String sql_str = "select * from " + table_name.toUpperCase();
+
+        if (!key.equals("")) {
+            sql_str += " where \"" + key.toUpperCase() + "\" = " + condition;
+        }
         try {
             ResultSet res = this.controller.executeQuery(sql_str);
             return res;
@@ -246,6 +264,29 @@ public class Database {
         return null;
     }
 
+    public ResultSet search(String table_name, String key, String condition) {
+        StringBuilder strbd = new StringBuilder("select * from ");
+        strbd.append(table_name.toUpperCase()).append(" where ").append("\"");
+        strbd.append(key.toUpperCase()).append("\"").append(" like ").append("\'");
+        strbd.append(condition).append("%\'");
+        ResultSet res = null;
+        try {
+            res = this.controller.executeQuery(strbd.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+    
+    public ResultSet SQL(String sql){
+        ResultSet res = null;
+        try {
+            res = this.controller.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
     public boolean set(String table_name, String[] key, String[] condition,
             String column, String value) {
         StringBuilder str_bd = new StringBuilder("update ");
@@ -272,6 +313,7 @@ public class Database {
         }
         return false;
     }
+
     public boolean set(String table_name, String[] key, String[] condition,
             String column, int value) {
         StringBuilder str_bd = new StringBuilder("update ");
@@ -314,6 +356,7 @@ public class Database {
         }
         return false;
     }
+
     public boolean set(String table_name, String key, String condition,
             String column, int value) {
         String sql_str = "update " + table_name.toUpperCase() + " set \""

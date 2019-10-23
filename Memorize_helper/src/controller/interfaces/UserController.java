@@ -111,21 +111,22 @@ public class UserController {
      */
     public boolean memorize(String username, String word, String source) {
         Database db = Database.getInstance();
-        ResultSet user = db.get("users", "username", username);
         try {
+            ResultSet user = db.get("users", "username", username);
             if (!user.next()) {
                 return false;
             }
+            String user_id = user.getString("ID");
+            
             ResultSet wd = db.get(source, "word", word);
             if (!wd.next()) {
                 return false;
             }
             String word_id = wd.getString("ID");
-            String user_id = user.getString("ID");
 
             return this.memorize(
-                    Integer.valueOf(word_id),
                     Integer.valueOf(user_id),
+                    Integer.valueOf(word_id),
                     source
             );
 
@@ -180,20 +181,20 @@ public class UserController {
     }
 
     /**
-     *  @param user the instance of class User
-     *  @param wd   the instance of class Word
-     *  @return if the correct count of this user memorize this word is added
+     * @param user the instance of class User
+     * @param wd the instance of class Word
+     * @return if the correct count of this user memorize this word is added
      */
     public boolean correct(User user, Word wd) {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
         return mct.correct(user, wd);
     }
-    
+
     /**
-     *  @param user the instance of class User
-     *  @param wd   the instance of class Word
-     *  @return if the wrong count of this user memorize this word is added
+     * @param user the instance of class User
+     * @param wd the instance of class Word
+     * @return if the wrong count of this user memorize this word is added
      */
     public boolean wrong(User user, Word wd) {
         Database db = Database.getInstance();
@@ -233,5 +234,20 @@ public class UserController {
             }
             return stringBuffer.toString();
         }
+    }
+
+    public static void main(String[] args) {
+        UserController uct = new UserController();
+        WordController wct = new WordController();
+        System.out.println(uct.register("test", "test"));
+        User user = uct.getUser("yyz");
+        System.out.println(uct.checkPassword(user, "123456"));
+        System.out.println(uct.checkPassword(user, "456789"));
+        Word wd = wct.getBookWordByName("cet4", "able");
+        System.out.println(uct.memorize(user, wd));
+        boolean bl = uct.memorize(user.getUsername(), wd.getWord(), wd.getSource());
+        System.out.println(bl);
+        uct.correct(user, wd);
+        uct.wrong(user, wd);
     }
 }

@@ -33,20 +33,35 @@ public class Word {
         this.phonetic = phonetic;
         this.source = source;
     }
-    
-    public int getID(){
+
+    public int getID() {
         return this.id;
     }
-    public String getWord(){
+
+    public String getWord() {
         return this.word;
     }
-    public String getChinese(){
+
+    public String getChinese() {
         return this.chinese;
     }
-    public String getPhonetic(){
+
+    public String getPhonetic() {
         return this.phonetic;
     }
-    public String getSource(){
+
+    public String getSource() {
         return this.source;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder bd = new StringBuilder();
+        bd.append("ID:\t\t").append(this.id).append("\n");
+        bd.append("from:\t\t").append(this.source).append("\n");
+        bd.append("word:\t\t").append(this.word).append("\n");
+        bd.append("chinese:\t").append(this.chinese).append("\n");
+        bd.append("phonetic:\t").append(this.phonetic).append("\n");
+        return bd.toString();
     }
 }
