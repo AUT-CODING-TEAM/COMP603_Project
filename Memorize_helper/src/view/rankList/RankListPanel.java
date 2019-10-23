@@ -64,13 +64,13 @@ public class RankListPanel extends GroundPanelTemplate {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         jPanel.setLayout(new GridLayout(1, 3));
         
-        JList list_rLP_rankListPart1 = new rankListList(rankInfo.getRankInfo(RankInfo.NUMBERS));
+        JList list_rLP_rankListPart1 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.NUMBERS));
         jPanel.add(list_rLP_rankListPart1);
         
-        JList list_rLP_rankListPart2 = new rankListList(rankInfo.getRankInfo(RankInfo.NAMES));
+        JList list_rLP_rankListPart2 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.NAMES));
         jPanel.add(list_rLP_rankListPart2);
         
-        JList list_rLP_rankListPart3 = new rankListList(rankInfo.getRankInfo(RankInfo.WORDS));
+        JList list_rLP_rankListPart3 = new ListInScrollTemplate(rankInfo.getRankInfo(RankInfo.WORDS));
         jPanel.add(list_rLP_rankListPart3);
 
         JScrollPane jScrollPane = new JScrollPane(jPanel);
@@ -78,17 +78,5 @@ public class RankListPanel extends GroundPanelTemplate {
 
         rankListFrame.add(this);
         rankListFrame.setVisible(true);
-    }
-}
-
-class rankListList extends JList {
-
-    public rankListList(String[] s) {
-        super(s);
-//        setBorder(new TitledBorder(""));
-        setEnabled(false);
-        setFont(new Font("FACE_SYSTEM", Font.BOLD, 20));
-        setOpaque(false);
-        setBackground(Color.decode("#F8F6F1"));
     }
 }

@@ -8,6 +8,7 @@ package view.main;
 import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.text.Document;
 import model.*;
 import view.*;
 
@@ -16,6 +17,8 @@ import view.*;
  * @author ThinkPad
  */
 public class TopPanel extends MainViewViewTemplate {
+
+    private JPanel searchPanel;
 
     public TopPanel(JFrame mainView, User user) {
         super(mainView, user);
@@ -70,21 +73,17 @@ public class TopPanel extends MainViewViewTemplate {
     }
 
     private void addSearchPanel() {
-        JPanel searchPanel = new JPanel();
+        searchPanel = new JPanel();
 //        searchPanel.setBorder(new TitledBorder("searchPanel"));
 
         JLabel lbl_tP_searchTip = new JLabel("查词");
         searchPanel.add(lbl_tP_searchTip);
 
         JTextField tf_tP_keyword = new JTextField(15);
+
+        tf_tP_keyword.getDocument().addDocumentListener(new SearchController(mainView, tf_tP_keyword, searchPanel));
         searchPanel.add(tf_tP_keyword);
 
-        JButton btn_tP_ok = new JButton("确定");
-        btn_tP_ok.addActionListener(new SearchController(mainView, tf_tP_keyword.getText()));
-        searchPanel.add(btn_tP_ok);
-
         add(searchPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
-        //
     }
-
 }

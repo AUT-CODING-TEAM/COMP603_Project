@@ -63,7 +63,6 @@ public class MemoryPanel extends GroundPanelTemplate {
         addChoicesPanel();
         
         JButton btn_mP_hint = new JButton("提示");
-        btn_mP_hint.addActionListener(new SearchController(memoryFrame, memoryPage.getWord()));
         add(btn_mP_hint, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
         
         memoryFrame.add(this);
