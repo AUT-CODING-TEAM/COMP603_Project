@@ -22,7 +22,6 @@ public class WordController {
     private static final String[] NOT_WORD_TABLE = {
         "USERS", "MEMORIZE", "PLAN"
     };
-
     /**
      * @param id word's id
      * @return the words whose ID is param.id in all books

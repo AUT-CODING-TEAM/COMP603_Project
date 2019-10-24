@@ -8,9 +8,11 @@ package controller.interfaces;
 import database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Memorize;
+import model.StudyPlan;
 import model.User;
 import model.Word;
 
@@ -60,6 +62,110 @@ public class MemorizeController {
         return memo;
     }
 
+    public boolean initMemorize(User user) {
+        boolean result = true;
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getStudyPlan();
+        String uid = String.valueOf(user.getID());
+        WordController wct = new WordController();
+        if (plan == null) {
+            return false;
+        }
+        String book = plan.getStudyPlanName();
+        ArrayList<Word> words = wct.getBookContent(book);
+        String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
+        String[] val = {
+            uid,
+            "",
+            book,
+            "0"
+        };
+        for (Word wd : words) {
+            val[1] = String.valueOf(wd.getID());
+            if (!db.add("memorize", col, val)) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param userid the user's ID
+     * @param wordid the word's ID
+     * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
+     * @return if the last memory time are updated
+     */
+    public boolean updateTime(int userid, int wordid, String source) {
+        Database db = Database.getInstance();
+        String[] col2 = {"user_id", "word_id", "word_source"};
+        String[] val2 = {
+            String.valueOf(userid),
+            String.valueOf(wordid),
+            source
+        //String.valueOf(System.currentTimeMillis())
+        };
+        boolean res = db.set("memorize", col2, val2,
+                "last_mem_time", String.valueOf(System.currentTimeMillis()));
+        return res;
+
+    }
+
+    /**
+     * @param username user's username
+     * @param word the word wait to be memorized
+     * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
+     * @return if the last memory time are updated
+     */
+    public boolean updateTime(String username, String word, String source) {
+        Database db = Database.getInstance();
+        try {
+            ResultSet user = db.get("users", "username", username);
+            if (!user.next()) {
+                return false;
+            }
+            String user_id = user.getString("ID");
+
+            ResultSet wd = db.get(source, "word", word);
+            if (!wd.next()) {
+                return false;
+            }
+            String word_id = wd.getString("ID");
+
+            return this.updateTime(
+                    Integer.valueOf(user_id),
+                    Integer.valueOf(word_id),
+                    source
+            );
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * @param user the instance of class User
+     * @param wd the instance of class Word
+     * @return if the last memory time are updated
+     */
+    public boolean updateTime(User user, Word wd) {
+        return this.updateTime(user.getID(), wd.getID(), wd.getSource());
+    }
+
+    public boolean aging(int userid, int wordid, String source, int ag) {
+        Database db = Database.getInstance();
+        String[] col2 = {"user_id", "word_id", "word_source"};
+        String[] val2 = {
+            String.valueOf(userid),
+            String.valueOf(wordid),
+            source
+        //String.valueOf(System.currentTimeMillis())
+        };
+        boolean res = db.set("memorize", col2, val2,
+                "aging", ag);
+        return res;
+    }
+
     /**
      * @param user whose memorize situation shoud be search
      * @param wd what word's correct count shoud be search
@@ -104,6 +210,13 @@ public class MemorizeController {
             memo.getWordSource()
         };
         boolean res = db.set("memorize", key, con, "correct", memo.getCorrect());
+        this.updateTime(memo.getUserID(), memo.getWordID(), memo.getWordSource());
+        this.aging(
+                memo.getUserID(),
+                memo.getWordID(),
+                memo.getWordSource(),
+                memo.getAge()
+        );
         return res;
     }
 
@@ -144,5 +257,37 @@ public class MemorizeController {
         Database db = Database.getInstance();
         Memorize memo = this.getMemorize(user, wd);
         return this.wrong(memo);
+    }
+
+    public ArrayList<Word> getMemorizedWord(User user) {
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getStudyPlan();
+        WordController wct = new WordController();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ArrayList<Word> words = new ArrayList<Word>();
+        if (plan == null) {
+            return null;
+        }
+        String book = plan.getStudyPlanName();
+        StringBuilder bd = new StringBuilder("select \"WORD_ID\" from \"MEMORIZE\"");
+        bd.append(" where \"").append("USER_ID\"").append(" = \'");
+        bd.append(String.valueOf(user.getID())).append("\' and ");
+        bd.append("\"WORD_SOURCE\" = \'").append(book).append("\' and ");
+        bd.append("\"LAST_MEM_TIME\" != \'0\'");
+        ResultSet res = db.SQLqr(bd.toString());
+        try {
+            while (res.next()) {
+                ids.add(res.getInt("WORD_ID"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MemorizeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i : ids) {
+            Word wd = wct.getBookWordByID(book, i);
+            if (wd != null) {
+                words.add(wd);
+            }
+        }
+        return words;
     }
 }

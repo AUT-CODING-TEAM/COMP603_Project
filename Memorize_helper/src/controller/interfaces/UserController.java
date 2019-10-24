@@ -11,13 +11,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 
-//TODO: 复习单词 （老化memorize列表项）
 /**
  *
  * @author Yun_c
@@ -43,7 +40,7 @@ public class UserController {
                 user = new User(name, pass, id);
                 user.setStudyPlan(pct.getPlan(pid));
             }
-            this.updateTodayPlanInfo(user);
+            pct.updateTodayPlanInfo(user);
 
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,177 +117,36 @@ public class UserController {
      */
     public boolean activateStudyPlan(User user, String book, int everyday_num) {
         PlanController pct = new PlanController();
+        MemorizeController mct = new MemorizeController();
+
         int res = pct.addPlan(book, everyday_num, user.getID());
         if (res == 0) {
             return false;
         }
         user.setStudyPlan(pct.getPlan(res));
-        this.updateTodayPlanInfo(user);
+        mct.initMemorize(user);
+        pct.updateTodayPlanInfo(user);
 
         return true;
     }
 
     /**
-     * @param user which user's plan info(such as memorize number or review
-     * number)should be update(not update in database but update at the instance
-     * of class StudyPlan.database update is already done at memorize function
-     * and review function)
-     *
+     * @param user who learn the word
+     * @param wd which word be learnt
+     * @param chosen which chinese meanning user choose
+     * @return if param.chosen is the correcr meaning of param.wd
      */
-    public void updateTodayPlanInfo(User user) {
-        if (user != null) {
-            StudyPlan p = user.getStudyPlan();
-            if (p != null) {
-                p.setTodayMemorized(this.getTodayMemorizedNum(user));
-                p.setTodayReviewd(this.getTodayReviewedNum(user));
-            }
-
+    public boolean learn(User user, Word wd, String chosen) {
+        String chinese = wd.getChinese();
+        boolean result;
+        if (chinese.equals(chosen)) {
+            this.correct(user, wd);
+            result = true;
+        } else {
+            this.wrong(user, wd);
+            result = false;
         }
-    }
-
-    /**
-     * @param user get this user's today memorized number
-     * @return memorized word number today
-     */
-    public int getTodayMemorizedNum(User user) {
-        Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
-        if (plan == null) {
-            return 0;
-        }
-
-        String table = plan.getStudyPlanName();
-        Long time = System.currentTimeMillis();
-        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
-                - TimeZone.getDefault().getRawOffset();
-        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
-        //get today memorized word
-        int mem_num = 0;
-        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
-        bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
-        bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
-        bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
-        bd.append(" and \"AGING\" = 0");
-        ResultSet res = db.SQLqr(bd.toString());
-        try {
-            if (res.next()) {
-                mem_num = res.getInt("NUMBER");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return mem_num;
-    }
-
-    /**
-     * @param user get this user's today reviewed number
-     * @return reviewed word number today
-     */
-    public int getTodayReviewedNum(User user) {
-        Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
-        if (plan == null) {
-            return 0;
-        }
-
-        String table = plan.getStudyPlanName();
-        Long time = System.currentTimeMillis();
-        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
-                - TimeZone.getDefault().getRawOffset();
-        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
-        //get today memorized word
-        int review_num = 0;
-        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
-        bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
-        bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
-        bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
-        bd.append(" and \"AGING\" > 0");
-        ResultSet res = db.SQLqr(bd.toString());
-        try {
-            if (res.next()) {
-                review_num = res.getInt("NUMBER");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return review_num;
-    }
-
-    /**
-     * @param username user's username
-     * @param word the word wait to be memorized
-     * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
-     * @return if a new memorize clause added into database
-     */
-    public boolean memorize(String username, String word, String source) {
-        Database db = Database.getInstance();
-        try {
-            ResultSet user = db.get("users", "username", username);
-            if (!user.next()) {
-                return false;
-            }
-            String user_id = user.getString("ID");
-
-            ResultSet wd = db.get(source, "word", word);
-            if (!wd.next()) {
-                return false;
-            }
-            String word_id = wd.getString("ID");
-
-            return this.memorize(
-                    Integer.valueOf(user_id),
-                    Integer.valueOf(word_id),
-                    source
-            );
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    /**
-     * @param userid the user's ID
-     * @param wordid the word's ID
-     * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
-     * @return if a new memorize clause added into database
-     */
-    public boolean memorize(int userid, int wordid, String source) {
-        Database db = Database.getInstance();
-        String[] col = {"user_id", "word_id", "word_source"};
-        String[] val = {
-            String.valueOf(userid),
-            String.valueOf(wordid),
-            source
-        };
-
-        ResultSet check = db.get("memorize", col, val);
-        try {
-            if (check.next()) {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String[] col2 = {"user_id", "word_id", "word_source", "last_mem_time"};
-        String[] val2 = {
-            String.valueOf(userid),
-            String.valueOf(wordid),
-            source,
-            String.valueOf(System.currentTimeMillis())
-        };
-        boolean res = db.add("memorize", col2, val2);
-        return res;
-
-    }
-
-    /**
-     * @param user the instance of class User
-     * @param wd the instance of class Word
-     * @return if a new memorize clause added into database
-     */
-    public boolean memorize(User user, Word wd) {
-        return this.memorize(user.getID(), wd.getID(), wd.getSource());
+        return result;
     }
 
     /**
@@ -298,7 +154,7 @@ public class UserController {
      * @param wd the instance of class Word
      * @return if the correct count of this user memorize this word is added
      */
-    public boolean correct(User user, Word wd) {
+    private boolean correct(User user, Word wd) {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
         return mct.correct(user, wd);
@@ -309,16 +165,10 @@ public class UserController {
      * @param wd the instance of class Word
      * @return if the wrong count of this user memorize this word is added
      */
-    public boolean wrong(User user, Word wd) {
+    private boolean wrong(User user, Word wd) {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
         return mct.wrong(user, wd);
-    }
-
-    public ArrayList<Word> getMemorizedWord(User user) {
-        Database db = Database.getInstance();
-        return null;
-        //TODO: continue coding
     }
 
     /**
@@ -358,16 +208,14 @@ public class UserController {
     public static void main(String[] args) {
         UserController uct = new UserController();
         WordController wct = new WordController();
+        MemorizeController mct = new MemorizeController();
         System.out.println(uct.register("yyz", "123456"));
         User user = uct.getUser("yyz");
-        uct.activateStudyPlan(user, "CET4", 15);
         System.out.println(uct.checkPassword(user, "123456"));
         System.out.println(uct.checkPassword(user, "456789"));
+        uct.activateStudyPlan(user, "CET4", 15);
         Word wd = wct.getBookWordByName("cet4", "able");
-        System.out.println(uct.memorize(user, wd));
-        boolean bl = uct.memorize(user.getUsername(), wd.getWord(), wd.getSource());
-        System.out.println(bl);
-        uct.correct(user, wd);
-        uct.wrong(user, wd);
+        uct.learn(user, wd, "不知道");
+     
     }
 }

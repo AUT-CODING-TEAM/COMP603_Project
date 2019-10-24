@@ -129,7 +129,7 @@ public class Database {
                 String str3 = "alter table plan\n"
                         + "	add constraint plan_pk\n"
                         + "		primary key (ID)";
-                
+
                 this.controller.execute(str1);
                 this.controller.execute(str2);
                 this.controller.execute(str3);
@@ -198,6 +198,7 @@ public class Database {
                     System.out.println(info[0]);
 
                     String[] col = {"word", "phonetic", "chinese"};
+                    info[0] = info[0].replace("'", "''");
                     info[1] = info[1].replace("'", "''");
                     if (info.length > 3) {
                         for (int i = 3; i < info.length; i++) {
@@ -231,7 +232,7 @@ public class Database {
         return result;
     }
 
-    public int count(String table_name, String key, String condition){
+    public int count(String table_name, String key, String condition) {
         String sql_str = "select count(*) as \"NUMBER\" from " + table_name.toUpperCase();
         int num = 0;
         if (!key.equals("")) {
@@ -239,6 +240,28 @@ public class Database {
         }
         try {
             ResultSet res = this.controller.executeQuery(sql_str);
+            if (res.next()) {
+                num = res.getInt("NUMBER");
+            }
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return num;
+    }
+
+    public int count(String table_name, String[] key, String[] condition) {
+        int num = 0;
+        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from \"");
+        bd.append(table_name.toUpperCase()).append("\"").append(" where ");
+        for(int i=0;i< key.length;i++){
+            bd.append("\"").append(key[i].toUpperCase()).append("\"").append(" = ");
+            bd.append("\'").append(condition[i]).append("\'");
+            if(i < key.length - 1){
+                bd.append(" and ");
+            }
+        }
+        try {
+            ResultSet res = this.controller.executeQuery(bd.toString());
             if(res.next()){
                 num = res.getInt("NUMBER");
             }
@@ -247,6 +270,7 @@ public class Database {
         }
         return num;
     }
+
     public ResultSet get(String table_name, String key, String condition) {
         String sql_str = "select * from " + table_name.toUpperCase();
 
@@ -325,6 +349,7 @@ public class Database {
         }
         return res;
     }
+
     public boolean SQL(String sql) {
         boolean res = false;
         try {
@@ -335,6 +360,7 @@ public class Database {
         }
         return res;
     }
+
     public boolean set(String table_name, String[] key, String[] condition,
             String column, String value) {
         StringBuilder str_bd = new StringBuilder("update ");
@@ -361,7 +387,7 @@ public class Database {
         }
         return false;
     }
-    
+
     public boolean set(String table_name, String[] key, String[] condition,
             String column, int value) {
         StringBuilder str_bd = new StringBuilder("update ");
@@ -459,6 +485,65 @@ public class Database {
         return false;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //not done yet
+    public boolean add(String table_name, String[] columns, String[][] values) {
+        StringBuilder str_bd = new StringBuilder("insert into ");
+        str_bd.append(table_name.toUpperCase());
+        str_bd.append(" (");
+        for (int i = 0; i < columns.length; i++) {
+            str_bd.append(" \"");
+            str_bd.append(columns[i].toUpperCase());
+            str_bd.append("\"");
+            if (i == columns.length - 1) {
+                break;
+            }
+            str_bd.append(",");
+        }
+        str_bd.append(") values ");
+        for (int i = 0; i < columns.length; i++) {
+            if (i >= values.length) {
+                System.out.println(values.toString());
+            }
+            str_bd.append(" \'");
+            str_bd.append(values[i]);
+            str_bd.append("\'");
+            if (i == columns.length - 1) {
+                break;
+            }
+            str_bd.append(",");
+        }
+        str_bd.append(")");
+        try {
+            boolean res = this.controller.execute(str_bd.toString());
+            return true;
+        } catch (Exception e) {
+            System.out.println(str_bd.toString());
+            System.err.println("SQLException from method add: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public boolean delete(String table_name, String key, String condition) {
         String sql_str = "delete from " + table_name.toUpperCase() + " where \""
                 + key.toUpperCase() + "\" = \'" + condition + "\'";
@@ -470,9 +555,10 @@ public class Database {
         }
         return false;
     }
-    public void reset(){
+
+    public void reset() {
         ArrayList<String> table = this.getAllTable();
-        for(String str : table){
+        for (String str : table) {
             try {
                 this.controller.execute("drop table " + str.toUpperCase());
             } catch (SQLException ex) {
@@ -480,6 +566,7 @@ public class Database {
             }
         }
     }
+
     public void close() {
         try {
             conn.close();

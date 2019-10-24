@@ -62,21 +62,32 @@ public class User {
     }
 
     public int getTodayLearnedNumber() {
+        if (this.studyPlan == null) {
+            return 0;
+        }
         return this.studyPlan.getTodayMemorizedNumber();
     }
 
     public int getTodayTargetNumber() {
+        if (this.studyPlan == null) {
+            return 0;
+        }
         return this.studyPlan.getTodayTargetNumber();
     }
 
     public int getTodayReviewNumber() {
+        if (this.studyPlan == null) {
+            return 0;
+        }
         return this.studyPlan.getTodayReviewedNumber();
     }
 
     public int getRemainingDay() {
+        if (this.studyPlan == null) {
+            return 0;
+        }
         return this.studyPlan.getRemainDay();
     }
-
 
     public StudyPlan getStudyPlan() {
         return studyPlan;
