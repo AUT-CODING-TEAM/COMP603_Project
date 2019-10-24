@@ -470,7 +470,16 @@ public class Database {
         }
         return false;
     }
-
+    public void reset(){
+        ArrayList<String> table = this.getAllTable();
+        for(String str : table){
+            try {
+                this.controller.execute("drop table " + str.toUpperCase());
+            } catch (SQLException ex) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public void close() {
         try {
             conn.close();
@@ -481,6 +490,7 @@ public class Database {
 
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
+        t.reset();
         t.init();
 //        }
     }
