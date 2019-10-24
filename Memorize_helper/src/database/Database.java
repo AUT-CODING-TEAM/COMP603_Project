@@ -483,18 +483,24 @@ public class Database {
             System.err.println("SQLException from method add: " + e.getMessage());
         }
         return false;
-    }
-
+    } 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    //not done yet
+    /**
+     * 
+     * @param table_name
+     * The name of target table.
+     * 
+     * @param columns
+     * Columns hold the data inserted.
+     * 
+     * @param values
+     * values[i] holds each lines of record.
+     * values[i][j] holds data of each column.
+     * 
+     * @return 
+     * True : Succeed,
+     * False : Failed.
+     */
     public boolean add(String table_name, String[] columns, String[][] values) {
         StringBuilder str_bd = new StringBuilder("insert into ");
         str_bd.append(table_name.toUpperCase());
@@ -509,20 +515,26 @@ public class Database {
             str_bd.append(",");
         }
         str_bd.append(") values ");
-        for (int i = 0; i < columns.length; i++) {
-            if (i >= values.length) {
-                System.out.println(values.toString());
+        for(int i = 0; i < values.length; i++){
+            str_bd.append("(");
+            for (int j = 0; j < columns.length; j++) {
+                if (j >= values[i].length) {
+                    System.out.println(values.toString());
+                }
+                str_bd.append(" \'");
+                str_bd.append(values[i][j]);
+                str_bd.append("\'");
+                if (j == columns.length - 1) {
+                    break;
+                }
+                str_bd.append(",");
             }
-            str_bd.append(" \'");
-            str_bd.append(values[i]);
-            str_bd.append("\'");
-            if (i == columns.length - 1) {
-                break;
+            str_bd.append(")");
+            if(i < values.length - 1){
+                str_bd.append(",");
             }
-            str_bd.append(",");
         }
-        str_bd.append(")");
-        try {
+        try { 
             boolean res = this.controller.execute(str_bd.toString());
             return true;
         } catch (Exception e) {
@@ -531,18 +543,6 @@ public class Database {
         }
         return false;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     public boolean delete(String table_name, String key, String condition) {
         String sql_str = "delete from " + table_name.toUpperCase() + " where \""
@@ -577,9 +577,25 @@ public class Database {
 
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
-        t.reset();
+//        t.reset();
         t.init();
-//        }
+        String [] col = {
+            "username",
+            "password",
+            "study_plan"
+        };
+        String[][] values = {
+            {
+                "yyz",
+                "yyz_pw",
+                "1"
+            },
+            {
+                "hpc",
+                "hpc_pw",
+                "2"
+            }
+        };
+        t.add("users", col, values);
     }
-
 }
