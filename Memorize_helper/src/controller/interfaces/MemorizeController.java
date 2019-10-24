@@ -62,6 +62,10 @@ public class MemorizeController {
         return memo;
     }
 
+    /**
+     * @param user who want initialize a new plan
+     * @return if init success
+     */
     public boolean initMemorize(User user) {
         boolean result = true;
         Database db = Database.getInstance();
@@ -152,6 +156,13 @@ public class MemorizeController {
         return this.updateTime(user.getID(), wd.getID(), wd.getSource());
     }
 
+    /**
+     * @param userid user's id
+     * @param wordid word's id
+     * @param source which book word belongs to
+     * @param ag the after +1 aging number
+     * @return if age updated success
+     */
     public boolean aging(int userid, int wordid, String source, int ag) {
         Database db = Database.getInstance();
         String[] col2 = {"user_id", "word_id", "word_source"};
@@ -215,7 +226,7 @@ public class MemorizeController {
                 memo.getUserID(),
                 memo.getWordID(),
                 memo.getWordSource(),
-                memo.getAge()
+                memo.getAge() + 1
         );
         return res;
     }
@@ -259,6 +270,10 @@ public class MemorizeController {
         return this.wrong(memo);
     }
 
+    /**
+     * @param user get this user's all memorized word
+     * @return all memorized word
+     */
     public ArrayList<Word> getMemorizedWord(User user) {
         Database db = Database.getInstance();
         StudyPlan plan = user.getStudyPlan();

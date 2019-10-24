@@ -20,6 +20,10 @@ import model.User;
  */
 public class PlanController {
 
+    /**
+     * @param pid the plan's id
+     * @return an instance of StudyPlan whose ID is param.pid
+     */
     public StudyPlan getPlan(int pid) {
         Database db = Database.getInstance();
         StudyPlan plan = null;
@@ -45,10 +49,23 @@ public class PlanController {
         return plan;
     }
 
+    /**
+     * @param user this user's plan info will be got
+     * @return an instance of StudyPlan
+     *
+     * this function equals to User.getStudyPlan()
+     *
+     */
     public StudyPlan getPlan(User user) {
         return user.getStudyPlan();
     }
 
+    /**
+     * @param book the name of book that user want to choose
+     * @param everyday_num how many number of word user want to learn everyday
+     * @param user_id user's id
+     * @return new plan's ID. if no plan created, the return value is 0
+     */
     public int addPlan(String book, int everyday_num, int user_id) {
         Database db = Database.getInstance();
         int pid = 0;
@@ -91,6 +108,10 @@ public class PlanController {
         return pid;
     }
 
+    /**
+     * @param plan get this plan's total word number
+     * @return total word number
+     */
     public int getTotalWordNum(StudyPlan plan) {
         if (plan == null) {
             return 0;
@@ -100,6 +121,12 @@ public class PlanController {
         return num;
     }
 
+    /**
+     * @param id an user's id
+     * @param plan get word number according to this plan
+     * @return the number of words that param.id memorized in param.plan. If
+     * he/she is never set a plan, return value is 0
+     */
     public int getFinishWordNum(int id, StudyPlan plan) {
         int num = 0;
         if (plan == null) {
@@ -112,6 +139,11 @@ public class PlanController {
         return num;
     }
 
+    /**
+     * @param user an instance of user
+     * @return the number of words that param.user memorized in his plan. If
+     * he/she is never set a plan, return value is 0
+     */
     public int getFinishWordNum(User user) {
         int num = 0;
         StudyPlan plan = user.getStudyPlan();
@@ -125,6 +157,12 @@ public class PlanController {
         return num;
     }
 
+    /**
+     * @param id user's id
+     * @param plan get word number according to this plan
+     * @return the number of word that param.id not memorized yet. If user is
+     * never set a plan, return value is 0
+     */
     public int getRemainWordNum(int id, StudyPlan plan) {
         int num = 0;
         if (plan == null) {
@@ -135,6 +173,11 @@ public class PlanController {
         return num - finish;
     }
 
+    /**
+     * @param plan an instance of StudyPlan
+     * @return the plan name.If plan is not exist,return value will tell "no
+     * activated plan"
+     */
     public String getPlanName(StudyPlan plan) {
         String name = "No Activated Plan";
         if (plan == null) {
@@ -147,8 +190,8 @@ public class PlanController {
     /**
      * @param user which user's plan info(such as memorize number or review
      * number)should be update(not update in database but update at the instance
-     * of class StudyPlan.database update is already done at memorize function
-     * and review function)
+     * of class StudyPlan.database update is already done at correct/wrong 
+     * function in other controller)
      *
      */
     public void updateTodayPlanInfo(User user) {
