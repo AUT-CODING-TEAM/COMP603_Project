@@ -5,6 +5,7 @@
  */
 package view.main;
 
+import controller.myPlan.ShowPlanListController;
 import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
@@ -62,17 +63,14 @@ public class CenterPanel extends MainViewViewTemplate {
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_changePlan = new JButton("修改计划");
-
-//        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
-        //jump to ShowPlanListController temporarily
-        btn_cP_changePlan.addActionListener(new ShowPlanListController(user));
+        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_vocabulary = new JButton("单词列表");
-        btn_cP_vocabulary.addActionListener(new ShowVocabularyController(mainView, user));
+        btn_cP_vocabulary.addActionListener(new ShowVocabularyListController(mainView, user));
         add(btn_cP_vocabulary, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         addProgressBar();

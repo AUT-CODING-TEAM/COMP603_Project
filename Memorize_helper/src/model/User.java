@@ -12,8 +12,6 @@ package model;
 public class User {
 
     private String username;
-    private String password;
-    private int id;
     private int todayLearnedNumber;
     private int todayTargetNumber;
     private int todayReviewNumber;
@@ -24,7 +22,6 @@ public class User {
 
     public User() {//develop use only
         this.username = "小明";
-        this.id = 0;
         this.todayLearnedNumber = 13;
         this.todayTargetNumber = 15;
         this.todayReviewNumber = 2;
@@ -32,36 +29,6 @@ public class User {
         this.studyPlan = new StudyPlan();
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
-    }
-
-    public User(String name, String pass, int id) {
-        this.username = name;
-        this.password = pass;
-        this.id = id;
-        this.todayLearnedNumber = 13;
-        this.todayTargetNumber = 15;
-        this.todayReviewNumber = 2;
-        this.remainingDay = 3;
-        this.studyPlan = new StudyPlan();
-        this.finishedNumberInPlan = 2;
-        this.finishedNumberInTotal = 500;
-    }
-
-    public String getSeqPassword() {
-        return this.password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getID() {
-        return this.id;
-    }
-
-    public User setUsername(String username) {
-        this.username = username;
-        return this;
     }
 
     public int getFinishedNumberInTotal() {
@@ -70,6 +37,15 @@ public class User {
 
     public User setFinishedNumberInTotal(int finishedNumberInTotal) {
         this.finishedNumberInTotal = finishedNumberInTotal;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public User setUsername(String username) {
+        this.username = username;
         return this;
     }
 

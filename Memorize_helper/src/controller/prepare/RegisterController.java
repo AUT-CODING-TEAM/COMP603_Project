@@ -5,8 +5,6 @@
  */
 package controller.prepare;
 
-import controller.interfaces.UserController;
-import database.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -53,17 +51,9 @@ public class RegisterController implements ActionListener {
     }
 
     private int registerCheck(String username, String password, String pwdConfirm) {
-        UserController uc = new UserController();
-        if(!password.equals(pwdConfirm) || password.equals("")
-                || pwdConfirm.equals("")){
-            return -1;
-        }
-        boolean success = uc.register(username, password);
-        if(!success){
-            return 0;
-        }
         System.out.println("username = " + username);
-        System.out.println();
+        System.out.println("password = " + password);
+        System.out.println("pwdConfirm = " + pwdConfirm);
         return 1;
     }
 }

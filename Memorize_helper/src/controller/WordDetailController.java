@@ -5,35 +5,67 @@
  */
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.User;
+import model.Word;
+import model.WordExplainPage;
+import view.WordExplainPanel;
 import view.main.MainView;
 
 /**
  *
  * @author ThinkPad
  */
-public class WordDetailController implements ListSelectionListener {
+public class WordDetailController implements ListSelectionListener, ActionListener {
 
     private User user;
     private JList list_sP_searchResultList;
+    private JFrame searchResultListFrame;
+    private JFrame memoryFrame;
+    private WordExplainPage wordExplainPage;
 
-    public WordDetailController(User user, JList list_sP_searchResultList) {
+    //from SearchResultListPanel
+    public WordDetailController(User user, JList list_sP_searchResultList, JFrame searchResultListFrame) {
         this.user = user;
         this.list_sP_searchResultList = list_sP_searchResultList;
+        this.searchResultListFrame = searchResultListFrame;
+    }
 
+    // from MemoryPanel
+    public WordDetailController(User user, WordExplainPage wordExplainPage, JFrame memoryFrame) {
+        this.user = user;
+        this.wordExplainPage = wordExplainPage;
+        this.memoryFrame = memoryFrame;
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (list_sP_searchResultList.getValueIsAdjusting()) {
-            String word = list_sP_searchResultList.getSelectedValue().toString().trim();
-            System.out.println(word + "详细页面JFrame");
-            //there is no mainView exists from search
-            //new MainView(user);
+        if (list_sP_searchResultList != null) {
+            if (list_sP_searchResultList.getValueIsAdjusting()) {
+                wordExplainPage = new WordExplainPage();
+                wordExplainPage.setWord(list_sP_searchResultList.getSelectedValue().toString().trim());
+                System.out.println(wordExplainPage.getWord() + "详细页面JFrame");
+
+                new WordExplainPanel(wordExplainPage, searchResultListFrame);
+                searchResultListFrame.setVisible(false);
+
+                //there is no mainView exists from search
+                //new MainView(user);
+            }
+        }
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (memoryFrame != null) {
+            new WordExplainPanel(wordExplainPage, memoryFrame);
+            memoryFrame.setVisible(false);
         }
     }
 }

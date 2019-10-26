@@ -11,7 +11,6 @@ import javax.swing.*;
 import model.*;
 import view.main.*;
 import view.prepare.*;
-import controller.interfaces.*;
 /**
  *
  * @author ThinkPad
@@ -44,25 +43,13 @@ public class LoginController implements ActionListener {
     }
 
     private int loginCheck(String username, String password) {
-        UserController uc = new UserController();
-        User user = this.getUser(username);
-        if(user == null){
-            return 0;
-        }
-        
-        boolean correct = uc.checkPassword(user,password);
-        if(!correct){
-            return 0;
-        }
-        
         System.out.println("username = " + username);
         System.out.println("password = " + password);
-        this.user = user;
+        this.user = getUser();
         return 1;
     }
 
-    private User getUser(String username) {
-        UserController uc = new UserController();
-        return uc.getUser(username);
+    private User getUser() {
+        return new User();
     } 
 }

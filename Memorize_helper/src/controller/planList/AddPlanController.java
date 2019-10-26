@@ -8,7 +8,7 @@ package controller.planList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
-import view.planList.OnePlanPanel;
+import view.OnePlanPanel;
 
 /**
  *

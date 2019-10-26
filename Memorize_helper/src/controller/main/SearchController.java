@@ -5,13 +5,13 @@
  */
 package controller.main;
 
+import view.searchResultList.SearchResultListPanel;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.Document;
 import model.SearchResultInfo;
 import model.User;
 import view.main.MainView;
-import view.search.*;
 
 /**
  *
