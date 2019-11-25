@@ -86,10 +86,10 @@ public class Database {
                         + "	add constraint users_pk\n"
                         + "		primary key (ID)";
 
-                this.controller.execute(str1);
-                this.controller.execute(str2);
-                this.controller.execute(str3);
-                this.controller.execute(str4);
+                this.controller.executeUpdate(str1);
+                this.controller.executeUpdate(str2);
+                this.controller.executeUpdate(str3);
+                this.controller.executeUpdate(str4);
             }
             ResultSet mem_table = this.meta.getTables(null, null, "MEMORIZE", null);
             if (!mem_table.next()) {
@@ -109,9 +109,9 @@ public class Database {
                 String str3 = "alter table memorize\n"
                         + "	add constraint memorize_pk\n"
                         + "		primary key (ID)";
-                this.controller.execute(str1);
-                this.controller.execute(str2);
-                this.controller.execute(str3);
+                this.controller.executeUpdate(str1);
+                this.controller.executeUpdate(str2);
+                this.controller.executeUpdate(str3);
             }
             ResultSet plan_table = this.meta.getTables(null, null, "PLAN", null);
             if (!plan_table.next()) {
@@ -130,9 +130,9 @@ public class Database {
                         + "	add constraint plan_pk\n"
                         + "		primary key (ID)";
 
-                this.controller.execute(str1);
-                this.controller.execute(str2);
-                this.controller.execute(str3);
+                this.controller.executeUpdate(str1);
+                this.controller.executeUpdate(str2);
+                this.controller.executeUpdate(str3);
             }
 
             for (File f : files) {
@@ -179,10 +179,10 @@ public class Database {
                     + "	add constraint " + table_name + "_pk\n"
                     + "		primary key (ID)";
 
-            this.controller.execute(sql_str1);
-            this.controller.execute(sql_str2);
-            this.controller.execute(sql_str3);
-            this.controller.execute(sql_str4);
+            this.controller.executeUpdate(sql_str1);
+            this.controller.executeUpdate(sql_str2);
+            this.controller.executeUpdate(sql_str3);
+            this.controller.executeUpdate(sql_str4);
 
             try {
 
@@ -380,8 +380,8 @@ public class Database {
             index += 1;
         }
         try {
-            boolean res = this.controller.execute(str_bd.toString());
-            return res;
+            int res = this.controller.executeUpdate(str_bd.toString());
+            return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
         }
@@ -407,8 +407,8 @@ public class Database {
             index += 1;
         }
         try {
-            boolean res = this.controller.execute(str_bd.toString());
-            return res;
+            int res = this.controller.executeUpdate(str_bd.toString());
+            return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
         }
@@ -423,8 +423,8 @@ public class Database {
                 + condition + "\'";
 
         try {
-            boolean res = this.controller.execute(sql_str);
-            return res;
+            int res = this.controller.executeUpdate(sql_str);
+            return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
         }
@@ -439,8 +439,8 @@ public class Database {
                 + condition;
 
         try {
-            boolean res = this.controller.execute(sql_str);
-            return res;
+            int res = this.controller.executeUpdate(sql_str);
+            return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
         }
@@ -476,8 +476,8 @@ public class Database {
         }
         str_bd.append(")");
         try {
-            boolean res = this.controller.execute(str_bd.toString());
-            return true;
+            int res = this.controller.executeUpdate(str_bd.toString());
+            return res != 0;
         } catch (Exception e) {
             System.out.println(str_bd.toString());
             System.err.println("SQLException from method add: " + e.getMessage());
@@ -535,8 +535,8 @@ public class Database {
             }
         }
         try { 
-            boolean res = this.controller.execute(str_bd.toString());
-            return true;
+            int res = this.controller.executeUpdate(str_bd.toString());
+            return res != 0;
         } catch (Exception e) {
             System.out.println(str_bd.toString());
             System.err.println("SQLException from method add: " + e.getMessage());
@@ -548,8 +548,8 @@ public class Database {
         String sql_str = "delete from " + table_name.toUpperCase() + " where \""
                 + key.toUpperCase() + "\" = \'" + condition + "\'";
         try {
-            boolean res = this.controller.execute(sql_str);
-            return res;
+            int res = this.controller.executeUpdate(sql_str);
+            return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method delete: " + e.getMessage());
         }
@@ -560,7 +560,7 @@ public class Database {
         ArrayList<String> table = this.getAllTable();
         for (String str : table) {
             try {
-                this.controller.execute("drop table " + str.toUpperCase());
+                this.controller.executeUpdate("drop table " + str.toUpperCase());
             } catch (SQLException ex) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             }
