@@ -234,20 +234,18 @@ public class Database {
 
     public int count(String table_name, String key, String condition) {
 //        String sql_str = "select count(*) as \"NUMBER\" from " + table_name.toUpperCase();
-        String sql_str = "select count(*) as \"NUMBER\" from ?";
+        StringBuilder strbd = new StringBuilder("select count(*) as \"NUMBER\" from ");
+        strbd.append(table_name.toUpperCase());
         int num = 0;
         if (!key.equals("")) {
-            sql_str += " where ? = ?";
+            strbd.append(" where ").append(key.toUpperCase()).append(" = ?");
         }
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
-            pst.setString(1, table_name.toUpperCase());
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
             if (!key.equals("")) {
-                pst.setString(2, key.toUpperCase());
-                pst.setString(3, condition);
+                pst.setString(1,condition);
             }
-            
-            ResultSet res = pst.executeQuery(sql_str);
+            ResultSet res = pst.executeQuery();
             if (res.next()) {
                 num = res.getInt("NUMBER");
             }
@@ -285,13 +283,19 @@ public class Database {
 //        if (!key.equals("")) {
 //            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
 //        }
-        String sql_str = "select * from ? where ? = ?";
+        StringBuilder strbd = new StringBuilder("select * from ");
+        strbd.append(table_name.toUpperCase());
+        if (!key.equals("")) {
+            strbd.append(" where ");
+            strbd.append(key.toUpperCase()).append(" = ?");
+        }
+
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
-            pst.setString(1, table_name.toUpperCase());
-            pst.setString(2, key.toUpperCase());
-            pst.setString(3, condition);
-            ResultSet res = this.controller.executeQuery(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            if (!key.equals("")) {
+                pst.setString(1, condition);
+            }
+            ResultSet res = pst.executeQuery();
             return res;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
@@ -305,13 +309,19 @@ public class Database {
 //        if (!key.equals("")) {
 //            sql_str += " where \"" + key.toUpperCase() + "\" = " + condition;
 //        }
-        String sql_str = "select * from ? where ? = ?";
+        StringBuilder strbd = new StringBuilder("select * from ");
+        strbd.append(table_name.toUpperCase());
+        if (!key.equals("")) {
+            strbd.append(" where ");
+            strbd.append(key.toUpperCase()).append(" = ?");
+        }
+
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
-            pst.setString(1, table_name.toUpperCase());
-            pst.setString(2, key.toUpperCase());
-            pst.setInt(3, condition);
-            ResultSet res = pst.executeQuery(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            if (!key.equals("")) {
+                pst.setInt(1, condition);
+            }
+            ResultSet res = pst.executeQuery();
             return res;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
@@ -345,19 +355,15 @@ public class Database {
     }
 
     public ResultSet search(String table_name, String key, String condition) {
-//        StringBuilder strbd = new StringBuilder("select * from ");
-//        strbd.append(table_name.toUpperCase()).append(" where ").append("\"");
-//        strbd.append(key.toUpperCase()).append("\"").append(" like ").append("\'");
-//        strbd.append(condition).append("%\'");
-        String sql_str = "select * from ? where ? like ?%";
+        StringBuilder strbd = new StringBuilder("select * from ");
+        strbd.append(table_name.toUpperCase()).append(" where ").append("\"");
+        strbd.append(key.toUpperCase()).append("\"").append(" like ?");
         ResultSet res = null;
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            pst.setString(1, condition + "%");
+            res = pst.executeQuery();
 
-            pst.setString(1, table_name.toUpperCase());
-            pst.setString(2, key.toUpperCase());
-            pst.setString(3, condition);
-            res = pst.executeQuery(sql_str);
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -445,16 +451,14 @@ public class Database {
 //                + column.toUpperCase() + "\" = \'"
 //                + value + "\' where \"" + key.toUpperCase() + "\" = \'"
 //                + condition + "\'";
-        String sql_str = "update ? set ? = ? where ? = ?";
+        StringBuilder strbd = new StringBuilder("update ");
+        strbd.append(table_name.toUpperCase()).append(" set ").append(column.toUpperCase());
+        strbd.append(" = ? where ").append(key.toUpperCase()).append(" = ?");
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
-
-            pst.setString(1, table_name.toUpperCase());
-            pst.setString(2, column.toUpperCase());
-            pst.setString(3, value);
-            pst.setString(4, key.toUpperCase());
-            pst.setString(5, condition);
-            int res = pst.executeUpdate(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            pst.setString(1, value);
+            pst.setString(2, condition);
+            int res = pst.executeUpdate();
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
@@ -468,17 +472,14 @@ public class Database {
 //                + column.toUpperCase() + "\" = \'"
 //                + value + "\' where \"" + key.toUpperCase() + "\" = "
 //                + condition;
-        String sql_str = "update ? set ? = ? where ? = ?";
+        StringBuilder strbd = new StringBuilder("update ");
+        strbd.append(table_name.toUpperCase()).append(" set ").append(column.toUpperCase());
+        strbd.append(" = ? where ").append(key.toUpperCase()).append(" = ?");
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
-
-            pst.setString(1, table_name.toUpperCase());
-            pst.setString(2, column.toUpperCase());
-            pst.setInt(3, value);
-            pst.setString(4, key.toUpperCase());
-            pst.setString(5, condition);
-
-            int res = pst.executeUpdate(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            pst.setInt(1, value);
+            pst.setString(2, condition);
+            int res = pst.executeUpdate();
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
@@ -581,13 +582,15 @@ public class Database {
     public boolean delete(String table_name, String key, String condition) {
 //        String sql_str = "delete from " + table_name.toUpperCase() + " where \""
 //                + key.toUpperCase() + "\" = \'" + condition + "\'";
-        String sql_str = "delete from ? where ? = ?";
+        StringBuilder strbd = new StringBuilder("delete from ");
+        strbd.append(table_name.toUpperCase());
+        strbd.append(" where ").append(key.toUpperCase()).append(" = ?");
         try {
-            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
             pst.setString(1, table_name.toUpperCase());
             pst.setString(2, key.toUpperCase());
             pst.setString(3, condition);
-            int res = pst.executeUpdate(sql_str);
+            int res = pst.executeUpdate();
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method delete: " + e.getMessage());
