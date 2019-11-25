@@ -233,13 +233,21 @@ public class Database {
     }
 
     public int count(String table_name, String key, String condition) {
-        String sql_str = "select count(*) as \"NUMBER\" from " + table_name.toUpperCase();
+//        String sql_str = "select count(*) as \"NUMBER\" from " + table_name.toUpperCase();
+        String sql_str = "select count(*) as \"NUMBER\" from ?";
         int num = 0;
         if (!key.equals("")) {
-            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
+            sql_str += " where ? = ?";
         }
         try {
-            ResultSet res = this.controller.executeQuery(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            pst.setString(1, table_name.toUpperCase());
+            if (!key.equals("")) {
+                pst.setString(2, key.toUpperCase());
+                pst.setString(3, condition);
+            }
+            
+            ResultSet res = pst.executeQuery(sql_str);
             if (res.next()) {
                 num = res.getInt("NUMBER");
             }
@@ -253,16 +261,16 @@ public class Database {
         int num = 0;
         StringBuilder bd = new StringBuilder("select count(*) as NUMBER from \"");
         bd.append(table_name.toUpperCase()).append("\"").append(" where ");
-        for(int i=0;i< key.length;i++){
+        for (int i = 0; i < key.length; i++) {
             bd.append("\"").append(key[i].toUpperCase()).append("\"").append(" = ");
             bd.append("\'").append(condition[i]).append("\'");
-            if(i < key.length - 1){
+            if (i < key.length - 1) {
                 bd.append(" and ");
             }
         }
         try {
             ResultSet res = this.controller.executeQuery(bd.toString());
-            if(res.next()){
+            if (res.next()) {
                 num = res.getInt("NUMBER");
             }
         } catch (Exception e) {
@@ -272,12 +280,17 @@ public class Database {
     }
 
     public ResultSet get(String table_name, String key, String condition) {
-        String sql_str = "select * from " + table_name.toUpperCase();
-
-        if (!key.equals("")) {
-            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
-        }
+//        String sql_str = "select * from " + table_name.toUpperCase();
+//
+//        if (!key.equals("")) {
+//            sql_str += " where \"" + key.toUpperCase() + "\" = \'" + condition + "\'";
+//        }
+        String sql_str = "select * from ? where ? = ?";
         try {
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, key.toUpperCase());
+            pst.setString(3, condition);
             ResultSet res = this.controller.executeQuery(sql_str);
             return res;
         } catch (Exception e) {
@@ -287,13 +300,18 @@ public class Database {
     }
 
     public ResultSet get(String table_name, String key, int condition) {
-        String sql_str = "select * from " + table_name.toUpperCase();
-
-        if (!key.equals("")) {
-            sql_str += " where \"" + key.toUpperCase() + "\" = " + condition;
-        }
+//        String sql_str = "select * from " + table_name.toUpperCase();
+//
+//        if (!key.equals("")) {
+//            sql_str += " where \"" + key.toUpperCase() + "\" = " + condition;
+//        }
+        String sql_str = "select * from ? where ? = ?";
         try {
-            ResultSet res = this.controller.executeQuery(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, key.toUpperCase());
+            pst.setInt(3, condition);
+            ResultSet res = pst.executeQuery(sql_str);
             return res;
         } catch (Exception e) {
             System.err.println("SQLException from method get: " + e.getMessage());
@@ -327,13 +345,19 @@ public class Database {
     }
 
     public ResultSet search(String table_name, String key, String condition) {
-        StringBuilder strbd = new StringBuilder("select * from ");
-        strbd.append(table_name.toUpperCase()).append(" where ").append("\"");
-        strbd.append(key.toUpperCase()).append("\"").append(" like ").append("\'");
-        strbd.append(condition).append("%\'");
+//        StringBuilder strbd = new StringBuilder("select * from ");
+//        strbd.append(table_name.toUpperCase()).append(" where ").append("\"");
+//        strbd.append(key.toUpperCase()).append("\"").append(" like ").append("\'");
+//        strbd.append(condition).append("%\'");
+        String sql_str = "select * from ? where ? like ?%";
         ResultSet res = null;
         try {
-            res = this.controller.executeQuery(strbd.toString());
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, key.toUpperCase());
+            pst.setString(3, condition);
+            res = pst.executeQuery(sql_str);
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -417,13 +441,20 @@ public class Database {
 
     public boolean set(String table_name, String key, String condition,
             String column, String value) {
-        String sql_str = "update " + table_name.toUpperCase() + " set \""
-                + column.toUpperCase() + "\" = \'"
-                + value + "\' where \"" + key.toUpperCase() + "\" = \'"
-                + condition + "\'";
-
+//        String sql_str = "update " + table_name.toUpperCase() + " set \""
+//                + column.toUpperCase() + "\" = \'"
+//                + value + "\' where \"" + key.toUpperCase() + "\" = \'"
+//                + condition + "\'";
+        String sql_str = "update ? set ? = ? where ? = ?";
         try {
-            int res = this.controller.executeUpdate(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, column.toUpperCase());
+            pst.setString(3, value);
+            pst.setString(4, key.toUpperCase());
+            pst.setString(5, condition);
+            int res = pst.executeUpdate(sql_str);
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
@@ -433,13 +464,21 @@ public class Database {
 
     public boolean set(String table_name, String key, String condition,
             String column, int value) {
-        String sql_str = "update " + table_name.toUpperCase() + " set \""
-                + column.toUpperCase() + "\" = \'"
-                + value + "\' where \"" + key.toUpperCase() + "\" = "
-                + condition;
-
+//        String sql_str = "update " + table_name.toUpperCase() + " set \""
+//                + column.toUpperCase() + "\" = \'"
+//                + value + "\' where \"" + key.toUpperCase() + "\" = "
+//                + condition;
+        String sql_str = "update ? set ? = ? where ? = ?";
         try {
-            int res = this.controller.executeUpdate(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, column.toUpperCase());
+            pst.setInt(3, value);
+            pst.setString(4, key.toUpperCase());
+            pst.setString(5, condition);
+
+            int res = pst.executeUpdate(sql_str);
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method set: " + e.getMessage());
@@ -483,23 +522,18 @@ public class Database {
             System.err.println("SQLException from method add: " + e.getMessage());
         }
         return false;
-    } 
-    
+    }
+
     /**
-     * 
-     * @param table_name
-     * The name of target table.
-     * 
-     * @param columns
-     * Columns hold the data inserted.
-     * 
-     * @param values
-     * values[i] holds each lines of record.
-     * values[i][j] holds data of each column.
-     * 
-     * @return 
-     * True : Succeed,
-     * False : Failed.
+     *
+     * @param table_name The name of target table.
+     *
+     * @param columns Columns hold the data inserted.
+     *
+     * @param values values[i] holds each lines of record. values[i][j] holds
+     * data of each column.
+     *
+     * @return True : Succeed, False : Failed.
      */
     public boolean add(String table_name, String[] columns, String[][] values) {
         StringBuilder str_bd = new StringBuilder("insert into ");
@@ -515,7 +549,7 @@ public class Database {
             str_bd.append(",");
         }
         str_bd.append(") values ");
-        for(int i = 0; i < values.length; i++){
+        for (int i = 0; i < values.length; i++) {
             str_bd.append("(");
             for (int j = 0; j < columns.length; j++) {
                 if (j >= values[i].length) {
@@ -530,11 +564,11 @@ public class Database {
                 str_bd.append(",");
             }
             str_bd.append(")");
-            if(i < values.length - 1){
+            if (i < values.length - 1) {
                 str_bd.append(",");
             }
         }
-        try { 
+        try {
             int res = this.controller.executeUpdate(str_bd.toString());
             return res != 0;
         } catch (Exception e) {
@@ -543,12 +577,17 @@ public class Database {
         }
         return false;
     }
-    
+
     public boolean delete(String table_name, String key, String condition) {
-        String sql_str = "delete from " + table_name.toUpperCase() + " where \""
-                + key.toUpperCase() + "\" = \'" + condition + "\'";
+//        String sql_str = "delete from " + table_name.toUpperCase() + " where \""
+//                + key.toUpperCase() + "\" = \'" + condition + "\'";
+        String sql_str = "delete from ? where ? = ?";
         try {
-            int res = this.controller.executeUpdate(sql_str);
+            PreparedStatement pst = this.conn.prepareStatement(sql_str);
+            pst.setString(1, table_name.toUpperCase());
+            pst.setString(2, key.toUpperCase());
+            pst.setString(3, condition);
+            int res = pst.executeUpdate(sql_str);
             return res != 0;
         } catch (Exception e) {
             System.err.println("SQLException from method delete: " + e.getMessage());
@@ -579,7 +618,7 @@ public class Database {
         Database t = Database.getInstance();
 //        t.reset();
         t.init();
-        String [] col = {
+        String[] col = {
             "username",
             "password",
             "study_plan"
