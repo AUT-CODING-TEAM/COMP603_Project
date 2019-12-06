@@ -14,14 +14,21 @@ public class User {
     private String username;
     private String password;
     private int id;
+    private int todayLearnedNumber;
+    private int todayTargetNumber;
+    private int todayReviewNumber;
+    private int remainingDay;
     private StudyPlan studyPlan;
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
 
     public User() {//develop use only
         this.username = "小明";
-        this.id = 0;
-        this.studyPlan = null;
+        this.todayLearnedNumber = 13;
+        this.todayTargetNumber = 15;
+        this.todayReviewNumber = 2;
+        this.remainingDay = 3;
+        this.studyPlan = new StudyPlan();
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
     }
@@ -66,6 +73,11 @@ public class User {
             return 0;
         }
         return this.studyPlan.getTodayMemorizedNumber();
+    }
+    
+    public User setTodayLearnedNumber(int todayLearnedNumber) {
+        this.todayLearnedNumber = todayLearnedNumber;
+        return this;
     }
 
     public int getTodayTargetNumber() {
