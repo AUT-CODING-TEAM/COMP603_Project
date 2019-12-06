@@ -16,12 +16,12 @@ public class MyPlanInfo {
     private int listNumber;
     private ArrayList<StudyPlan> studyPlans;
 
-    public MyPlanInfo() {// develop use only
+    public MyPlanInfo(boolean developMode) {// develop use only
         listNumber = 7;
         studyPlans = new ArrayList<>();
 
         for (int i = 0; i < listNumber; i++) {
-            StudyPlan studyPlan = new StudyPlan().setStudyPlanName("小学人教版" + i + "年级").setTotalNumber(i + 100).setFinished(i % 2);
+            StudyPlan studyPlan = new StudyPlan(developMode).setStudyPlanName("小学人教版" + i + "年级").setTotalNumber(i + 100).setFinished(i % 2);
             studyPlans.add(studyPlan);
             if (i % 2 == 0) {
                 studyPlan.setPlanFinishedDay("2019-10-27");

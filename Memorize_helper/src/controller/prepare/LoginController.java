@@ -12,6 +12,8 @@ import model.*;
 import view.main.*;
 import view.prepare.*;
 import controller.interfaces.*;
+import controller.myPlan.ShowPlanListController;
+import view.planList.PlanListPanel;
 /**
  *
  * @author ThinkPad
@@ -36,7 +38,12 @@ public class LoginController implements ActionListener {
 
         int loginCheck = loginCheck(username, password);
         if (loginCheck == 1) {
-            new MainView(user);
+            if (user.getStudyPlan() == null) {
+                new PlanListPanel(user, new PlanListInfo());
+            }
+            else{
+                new MainView(user);
+            }
             loginDialog.dispose();
         } else if (loginCheck == 0) {
             JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误 ", JOptionPane.ERROR_MESSAGE);

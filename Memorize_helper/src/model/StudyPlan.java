@@ -24,9 +24,15 @@ public class StudyPlan {
     private int finished;//is finished or not
     private String planFinishedDay;//if not finished
 
-    public StudyPlan() {//develop use only
+    public StudyPlan(boolean developMode) {//develop use only
         this.studyPlanName = "小学人教版0年级";
         this.totalNumber = 35;
+    }
+
+    public StudyPlan(String studyPlanName, int totalNumber, int added) {
+        this.studyPlanName = studyPlanName;
+        this.totalNumber = totalNumber;
+        this.added = added;
     }
 
     public StudyPlan(String name, int id, int t_num, int t_day,

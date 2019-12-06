@@ -22,13 +22,13 @@ public class User {
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
 
-    public User() {//develop use only
+    public User(boolean developMode) {//develop use only
         this.username = "小明";
         this.todayLearnedNumber = 13;
         this.todayTargetNumber = 15;
         this.todayReviewNumber = 2;
         this.remainingDay = 3;
-        this.studyPlan = new StudyPlan();
+        this.studyPlan = new StudyPlan(developMode);
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
     }

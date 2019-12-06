@@ -20,13 +20,13 @@ public class RankListInfo {
     private int listNumber;
     private ArrayList<User> users;
 
-    public RankListInfo() {// develop use only
+    public RankListInfo(boolean developMode) {// develop use only
         listNumber = 50;
         users = new ArrayList<>();
 
-        users.add(new User().setUsername("admin").setFinishedNumberInTotal(-999));
+        users.add(new User(developMode).setUsername("admin").setFinishedNumberInTotal(-999));
         for (int i = 1; i <= listNumber; i++) {
-            users.add(new User().setUsername("testUser" + i).setFinishedNumberInTotal(100 - i));
+            users.add(new User(developMode).setUsername("testUser" + i).setFinishedNumberInTotal(100 - i));
         }
     }
 

@@ -74,7 +74,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
 //                super.windowClosing(e);
-                new MyPlanPanel(user, new MyPlanInfo());
+                new MyPlanPanel(user, new MyPlanInfo(true));
             }
         });
 
