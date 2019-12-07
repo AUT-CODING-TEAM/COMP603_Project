@@ -5,6 +5,7 @@
  */
 package view.planList;
 
+import view.OnePlanPanel;
 import controller.planList.AddPlanController;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import model.MyPlanInfo;
 import model.PlanListInfo;
 import model.RankListInfo;
 import model.User;
@@ -29,6 +31,7 @@ import view.GridBagTool;
 import view.GroundPanelTemplate;
 import view.ListInScrollTemplate;
 import view.main.MainView;
+import view.myPlan.MyPlanPanel;
 
 /**
  *
@@ -71,7 +74,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
 //                super.windowClosing(e);
-                new MainView(user);
+                new MyPlanPanel(user, new MyPlanInfo(true));
             }
         });
 
@@ -116,8 +119,6 @@ public class PlanListPanel extends GroundPanelTemplate {
                 jPanel.setBackground(new Color(91, 110, 125));
                 jPanel.setBorder(new TitledBorder("已添加"));
             }
-            
-            
             
             planListPanel.add(jPanel);
         }

@@ -16,9 +16,16 @@ import view.memory.*;
  * @author ThinkPad
  */
 public class StartLearnController extends MainViewControllerTemplate{
+    private JFrame vocabularyListFrame;
 
     public StartLearnController(JFrame mainView, User user) {
         super(mainView, user);
+    }
+    
+    //from vocabularyListFrame
+    public StartLearnController(JFrame mainView, User user, JFrame vocabularyListFrame) {
+        super(mainView, user);
+        this.vocabularyListFrame = vocabularyListFrame;
     }
 
     @Override
@@ -26,5 +33,9 @@ public class StartLearnController extends MainViewControllerTemplate{
         System.out.println("开始背单词JFrame");
         new MemoryPanel(new MemoryPage(), user);
         mainView.dispose();
+        
+        if (vocabularyListFrame != null) {
+            vocabularyListFrame.dispose();
+        }
     }
 }

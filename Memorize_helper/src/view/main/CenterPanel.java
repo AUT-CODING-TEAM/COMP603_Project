@@ -5,7 +5,7 @@
  */
 package view.main;
 
-import controller.interfaces.PlanController;
+import controller.myPlan.ShowPlanListController;
 import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
@@ -59,26 +59,18 @@ public class CenterPanel extends MainViewViewTemplate {
 
         addTodayTargetNumberRest();
 
-        PlanController pct = new PlanController();
-
-        JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + pct.getPlanName(pct.getPlan(user)), SwingConstants.CENTER);
+        JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + user.getStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_changePlan = new JButton("修改计划");
-
-//        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
-        //jump to ShowPlanListController temporarily
-        btn_cP_changePlan.addActionListener(new ShowPlanListController(user));
+        btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        int finish = pct.getFinishWordNum(user);
-        int total = pct.getTotalWordNum(pct.getPlan(user));
-
-        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + finish + "/" + total, SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_vocabulary = new JButton("单词列表");
-        btn_cP_vocabulary.addActionListener(new ShowVocabularyController(mainView, user));
+        btn_cP_vocabulary.addActionListener(new ShowVocabularyListController(mainView, user));
         add(btn_cP_vocabulary, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         addProgressBar();
@@ -111,15 +103,8 @@ public class CenterPanel extends MainViewViewTemplate {
     }
 
     private void addProgressBar() {
-        PlanController pct = new PlanController();
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
-        
-        int total = pct.getTotalWordNum(pct.getPlan(user));
-        int finish = pct.getFinishWordNum(user);
-        int progress = 0;
-        if (total != 0) {
-            progress = (finish / total) * 100;
-        }
+        int progress = user.getFinishedNumberInPlan() * 100 / user.getStudyPlan().getTotalNumber();
         System.out.println("progress = " + progress);
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);

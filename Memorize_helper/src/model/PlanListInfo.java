@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.interfaces.WordController;
 import java.util.ArrayList;
 
 /**
@@ -16,13 +17,20 @@ public class PlanListInfo {
     private int listNumber;
     private ArrayList<StudyPlan> studyPlans;
 
-    public PlanListInfo() {// develop use only
+    public PlanListInfo(boolean developMode) {// develop use only
         listNumber = 52;
         studyPlans = new ArrayList<>();
 
         for (int i = 0; i < listNumber; i++) {
-            studyPlans.add(new StudyPlan().setStudyPlanName("小学人教版" + i + "年级").setTotalNumber(i).setAdded(i % 2));
+            studyPlans.add(new StudyPlan(developMode).setStudyPlanName("小学人教版" + i + "年级").setTotalNumber(i).setAdded(i % 2));
         }
+    }
+    
+    public PlanListInfo(){
+//        ArrayList booksNameInDB = new WordController().getAllBook();
+//        
+//        listNumber = booksNameInDB.size();
+        
     }
 
     public ArrayList<StudyPlan> getStudyPlans() {

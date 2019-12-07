@@ -13,7 +13,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import model.*;
 import view.*;
-import view.search.SearchResultListPanel;
+import view.searchResultList.SearchResultListPanel;
 
 /**
  *

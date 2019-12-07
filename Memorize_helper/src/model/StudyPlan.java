@@ -10,6 +10,7 @@ package model;
  * @author ThinkPad
  */
 public class StudyPlan {
+
     private String studyPlanName;
     private int ID;
     private int totalNumber;
@@ -20,30 +21,58 @@ public class StudyPlan {
     private int todayMemorizedNumber;
     private int todayReviewedNumber;
     private int added;//is added by the user or not
-    
-    public StudyPlan() {//develop use only
-        this.studyPlanName = "小学人教版一年级上";
+    private int finished;//is finished or not
+    private String planFinishedDay;//if not finished
+
+    public StudyPlan(boolean developMode) {//develop use only
+        this.studyPlanName = "小学人教版0年级";
         this.totalNumber = 35;
     }
-    public StudyPlan(String name, int id, int t_num, int t_day, 
-            long start, int today_target){
+
+    public StudyPlan(String studyPlanName, int totalNumber, int added) {
+        this.studyPlanName = studyPlanName;
+        this.totalNumber = totalNumber;
+        this.added = added;
+    }
+
+    public StudyPlan(String name, int id, int t_num, int t_day,
+            long start, int today_target) {
         this.studyPlanName = name;
         this.ID = id;
         this.totalNumber = t_num;
         this.totalDay = t_day;
         this.startTime = start;
-        this.todayTargetNumber = today_target;    
+        this.todayTargetNumber = today_target;
         long now = System.currentTimeMillis();
-        int keep = (int) ((now - this.startTime)/(1000 * 24 * 60 * 60));
+        int keep = (int) ((now - this.startTime) / (1000 * 24 * 60 * 60));
         this.remainDay = this.totalDay - keep;
     }
-    public void setTodayMemorized(int num){
+
+    public void setTodayMemorized(int num) {
         this.todayMemorizedNumber = num;
     }
-    public void setTodayReviewd(int num){
+
+    public void setTodayReviewd(int num) {
         this.todayReviewedNumber = num;
     }
-    
+
+    public String getPlanFinishedDay() {
+        return planFinishedDay;
+    }
+
+    public StudyPlan setPlanFinishedDay(String planFinishedDay) {
+        this.planFinishedDay = planFinishedDay;
+        return this;
+    }
+
+    public int getFinished() {
+        return finished;
+    }
+
+    public StudyPlan setFinished(int finished) {
+        this.finished = finished;
+        return this;
+    }
 
     public int getAdded() {
         return added;
@@ -99,5 +128,5 @@ public class StudyPlan {
     public int getTodayReviewedNumber() {
         return todayReviewedNumber;
     }
-    
+
 }

@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Tue Oct 22 14:11:55 CST 2019:
-正在使用类加载程序 sun.misc.Launcher$ExtClassLoader@47f6473 引导数据库
-目录 E:\工程\COMP603_Project\Memorize_helper\Memorize_helper 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) 实例 a816c00e-016d-f217-e66a-00000e89ae80
-已从 file:/C:/Program%20Files/Java/jdk1.8.0_221/jre/lib/ext/derby.jar 加载
+Fri Dec 06 14:45:33 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-016e-d9f4-d43a-00000e806f70 
+on database directory D:\Users\ThinkPad\Documents\NetBeansProjects\COMP603_Project\Memorize_helper\Memorize_helper with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
+Loaded from file:/D:/Users/ThinkPad/Documents/NetBeansProjects/COMP603_Project/Memorize_helper/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_221-b11
-user.dir=E:\工程\COMP603_Project\Memorize_helper
+java.runtime.version=1.8.0_211-b12
+user.dir=D:\Users\ThinkPad\Documents\NetBeansProjects\COMP603_Project\Memorize_helper
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
-数据库类加载程序已启动 - derby.database.classpath=''
+Database Class Loader started - derby.database.classpath=''
