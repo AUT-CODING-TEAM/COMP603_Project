@@ -11,6 +11,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
@@ -129,7 +132,27 @@ public class UserController {
 
         return true;
     }
-
+    
+    /**
+     * @param user the user
+     * @return all the book this user could choose to be a plan
+     *          return data structure is below:
+     *          key(string) : value(string)
+     *          bookname    : wordnumber,alreadyisplan
+     */
+    public Map<String,String> bookPlanList(User user){
+        PlanController pct = new PlanController();
+        WordController wct = new WordController();
+        Map<String,String> result = new HashMap<String,String>();
+        ArrayList<String> books = wct.getAllBook();
+        for(String book : books){
+            int num = wct.getWordNumber(book);
+            boolean isplan = pct.isPlan(user, book);
+            result.put(book,String.valueOf(num) + "," + isplan);
+        }
+        return result;
+    }
+    
     /**
      * @param user who learn the word
      * @param wd which word be learnt

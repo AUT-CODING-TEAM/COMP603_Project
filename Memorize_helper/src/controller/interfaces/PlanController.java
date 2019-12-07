@@ -8,6 +8,7 @@ package controller.interfaces;
 import database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +59,46 @@ public class PlanController {
      */
     public StudyPlan getPlan(User user) {
         return user.getStudyPlan();
+    }
+
+    /**
+     * @param user the user
+     * @return all book which is user's plan
+     */
+    public ArrayList<String> getAllPlanByUser(User user) {
+        Database db = Database.getInstance();
+        ResultSet p = db.get("PLAN", "USER_ID", user.getID());
+        ArrayList<String> s = new ArrayList<String>();
+        try {
+            while (p.next()) {
+                s.add(p.getString("BOOK"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+    }
+
+    /**
+     * @param user the user
+     * @param book the book name
+     * @return if the book is one of the user's plan
+     */
+    public boolean isPlan(User user, String book) {
+        Database db = Database.getInstance();
+        boolean res = false;
+        ResultSet p = db.get("PLAN", "USER_ID", user.getID());
+        try {
+            while (p.next()) {
+                if(p.getString("BOOK").equals(book)){
+                    res = true;
+                    break;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
     }
 
     /**
@@ -190,7 +231,7 @@ public class PlanController {
     /**
      * @param user which user's plan info(such as memorize number or review
      * number)should be update(not update in database but update at the instance
-     * of class StudyPlan.database update is already done at correct/wrong 
+     * of class StudyPlan.database update is already done at correct/wrong
      * function in other controller)
      *
      */

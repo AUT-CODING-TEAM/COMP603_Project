@@ -22,6 +22,7 @@ public class WordController {
     private static final String[] NOT_WORD_TABLE = {
         "USERS", "MEMORIZE", "PLAN"
     };
+
     /**
      * @param id word's id
      * @return the words whose ID is param.id in all books
@@ -108,6 +109,16 @@ public class WordController {
             books.remove(tb);
         }
         return books;
+    }
+
+    /**
+     * @param book book name
+     * @return the number of word in a book
+     */
+    public int getWordNumber(String book) {
+        Database db = Database.getInstance();
+        int num = db.count(book);
+        return num;
     }
 
     /**

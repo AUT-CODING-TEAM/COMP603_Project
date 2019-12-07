@@ -243,8 +243,24 @@ public class Database {
         try {
             PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
             if (!key.equals("")) {
-                pst.setString(1,condition);
+                pst.setString(1, condition);
             }
+            ResultSet res = pst.executeQuery();
+            if (res.next()) {
+                num = res.getInt("NUMBER");
+            }
+        } catch (Exception e) {
+            System.err.println("SQLException from method get: " + e.getMessage());
+        }
+        return num;
+    }
+
+    public int count(String table_name) {
+        StringBuilder strbd = new StringBuilder("select count(*) as \"NUMBER\" from ");
+        strbd.append(table_name.toUpperCase());
+        int num = 0;
+        try {
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
             ResultSet res = pst.executeQuery();
             if (res.next()) {
                 num = res.getInt("NUMBER");
