@@ -127,7 +127,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         addMakePlanPanel();
 
         btn_myPP_handleByBookSituation = new JButton();
-        if (user.getStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(0).getStudyPlanName())) {
+        if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(0).getStudyPlanName())) {
             btn_myPP_handleByBookSituation.setEnabled(false);
             btn_myPP_handleByBookSituation.setText("继续学习该计划");
         } else if (myPlanInfo.getStudyPlans().get(0).getFinished() == 0) {
@@ -179,7 +179,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
                         btn_myPP_handleByBookSituation.setEnabled(true);
                         btn_myPP_handleByBookSituation.setText("复习该计划");
                     }
-                    if (user.getStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(index).getStudyPlanName())) {
+                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(index).getStudyPlanName())) {
                         btn_myPP_handleByBookSituation.setEnabled(false);
                         btn_myPP_handleByBookSituation.setText("继续学习该计划");
                     }

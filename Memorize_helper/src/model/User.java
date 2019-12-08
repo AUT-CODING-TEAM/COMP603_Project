@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ThinkPad
@@ -18,7 +20,7 @@ public class User {
     private int todayTargetNumber;
     private int todayReviewNumber;
     private int remainingDay;
-    private StudyPlan studyPlan;
+    private StudyPlan currentStudyPlan;
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
 
@@ -28,7 +30,7 @@ public class User {
         this.todayTargetNumber = 15;
         this.todayReviewNumber = 2;
         this.remainingDay = 3;
-        this.studyPlan = new StudyPlan(developMode);
+        this.currentStudyPlan = new StudyPlan(developMode);
         this.finishedNumberInPlan = 2;
         this.finishedNumberInTotal = 500;
     }
@@ -37,9 +39,6 @@ public class User {
         this.username = name;
         this.password = pass;
         this.id = id;
-        this.studyPlan = null;
-        this.finishedNumberInPlan = 2;
-        this.finishedNumberInTotal = 500;
     }
 
     public String getSeqPassword() {
@@ -69,10 +68,10 @@ public class User {
     }
 
     public int getTodayLearnedNumber() {
-        if (this.studyPlan == null) {
+        if (this.currentStudyPlan == null) {
             return 0;
         }
-        return this.studyPlan.getTodayMemorizedNumber();
+        return this.currentStudyPlan.getTodayMemorizedNumber();
     }
     
     public User setTodayLearnedNumber(int todayLearnedNumber) {
@@ -81,32 +80,32 @@ public class User {
     }
 
     public int getTodayTargetNumber() {
-        if (this.studyPlan == null) {
+        if (this.currentStudyPlan == null) {
             return 0;
         }
-        return this.studyPlan.getTodayTargetNumber();
+        return this.currentStudyPlan.getTodayTargetNumber();
     }
 
     public int getTodayReviewNumber() {
-        if (this.studyPlan == null) {
+        if (this.currentStudyPlan == null) {
             return 0;
         }
-        return this.studyPlan.getTodayReviewedNumber();
+        return this.currentStudyPlan.getTodayReviewedNumber();
     }
 
     public int getRemainingDay() {
-        if (this.studyPlan == null) {
+        if (this.currentStudyPlan == null) {
             return 0;
         }
-        return this.studyPlan.getRemainDay();
+        return this.currentStudyPlan.getRemainDay();
     }
 
-    public StudyPlan getStudyPlan() {
-        return studyPlan;
+    public StudyPlan getCurrentStudyPlan() {
+        return currentStudyPlan;
     }
 
-    public User setStudyPlan(StudyPlan studyPlan) {
-        this.studyPlan = studyPlan;
+    public User setCurrentStudyPlan(StudyPlan currentStudyPlan) {
+        this.currentStudyPlan = currentStudyPlan;
         return this;
     }
 

@@ -29,7 +29,7 @@ public class ShowPlanListController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("查看所有计划JFrame");
-        new PlanListPanel(user, new PlanListInfo());
+        new PlanListPanel(user, new PlanListInfo(user));
         myPlanFrame.dispose();
     }
 }

@@ -8,18 +8,31 @@ package controller.planList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
+import model.MyPlanInfo;
+import model.User;
 import view.OnePlanPanel;
+import view.myPlan.MyPlanPanel;
 
 /**
  *
  * @author ThinkPad
  */
 public class AddPlanController implements MouseListener{
+    private User user;
+    
+    public AddPlanController(User user){
+        this.user = user;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         OnePlanPanel jPanel = (OnePlanPanel)e.getSource();
         System.out.println(jPanel.getLbl_pLP_studyPlanName().getText());
+        
+        MyPlanInfo myPlanInfo = new MyPlanInfo();
+        myPlanInfo.getStudyPlans().add(jPanel.getStudyPlan());
+        
+        new MyPlanPanel(user, myPlanInfo);
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -73,8 +74,14 @@ public class PlanListPanel extends GroundPanelTemplate {
         //better jump to changePlanPanel
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-//                super.windowClosing(e);
-                new MyPlanPanel(user, new MyPlanInfo(true));
+                try {
+                    new MyPlanPanel(user, new MyPlanInfo(true));
+                } catch (Exception exception) {
+                    if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+                        JOptionPane.showMessageDialog(null, "please choose a vocabulary book first", "error ", JOptionPane.ERROR_MESSAGE);
+                        new PlanListPanel(user, new PlanListInfo(user));
+                    }
+                }
             }
         });
 
@@ -96,12 +103,13 @@ public class PlanListPanel extends GroundPanelTemplate {
         int row = planListInfo.getStudyPlans().size() / col + 1;
 
         planListPanel.setLayout(new GridLayout(row, col, 20, 20));
-        
-        AddPlanController addPlanController = new AddPlanController();
+
+        AddPlanController addPlanController = new AddPlanController(user);
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
 //            JPanel jPanel = new JPanel(new GridBagLayout());
             OnePlanPanel jPanel = new OnePlanPanel();
+            jPanel.setStudyPlan(planListInfo.getStudyPlans().get(i));
 
             JLabel lbl_pLP_studyPlanName = new JLabel(planListInfo.getStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
             lbl_pLP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
@@ -110,16 +118,19 @@ public class PlanListPanel extends GroundPanelTemplate {
             JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
             lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
-            
-            if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
+
+            if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
+                jPanel.setBackground(new Color(248, 246, 241));
+                lbl_pLP_studyPlanName.setText("");
+                lbl_pLP_totalNumber.setText("");
+            } else if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
                 jPanel.setBackground(new Color(186, 187, 185));
                 jPanel.addMouseListener(addPlanController);
-            }
-            else{
+            } else {
                 jPanel.setBackground(new Color(91, 110, 125));
                 jPanel.setBorder(new TitledBorder("已添加"));
             }
-            
+
             planListPanel.add(jPanel);
         }
 

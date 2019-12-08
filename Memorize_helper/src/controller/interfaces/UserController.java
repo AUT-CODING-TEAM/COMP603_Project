@@ -41,7 +41,7 @@ public class UserController {
                 int id = res.getInt("ID");
                 int pid = res.getInt("STUDY_PLAN");
                 user = new User(name, pass, id);
-                user.setStudyPlan(pct.getPlan(pid));
+                user.setCurrentStudyPlan(pct.getPlan(pid));
             }
             pct.updateTodayPlanInfo(user);
 
@@ -126,7 +126,7 @@ public class UserController {
         if (res == 0) {
             return false;
         }
-        user.setStudyPlan(pct.getPlan(res));
+        user.setCurrentStudyPlan(pct.getPlan(res));
         mct.initMemorize(user);
         pct.updateTodayPlanInfo(user);
 
