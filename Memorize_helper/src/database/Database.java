@@ -122,7 +122,8 @@ public class Database {
                         + "	book varchar(20) not null,\n"
                         + "	total_day int not null,\n"
                         + "	start_time bigint not null,\n"
-                        + "	today_target_number int not null\n"
+                        + "	today_target_number int not null,\n"
+                        + "	finish varchar(1) not null\n"
                         + ")";
                 String str2 = "create unique index plan_ID_uindex\n"
                         + "	on plan (ID)";
@@ -463,10 +464,6 @@ public class Database {
 
     public boolean set(String table_name, String key, String condition,
             String column, String value) {
-//        String sql_str = "update " + table_name.toUpperCase() + " set \""
-//                + column.toUpperCase() + "\" = \'"
-//                + value + "\' where \"" + key.toUpperCase() + "\" = \'"
-//                + condition + "\'";
         StringBuilder strbd = new StringBuilder("update ");
         strbd.append(table_name.toUpperCase()).append(" set ").append(column.toUpperCase());
         strbd.append(" = ? where ").append(key.toUpperCase()).append(" = ?");
@@ -474,6 +471,23 @@ public class Database {
             PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
             pst.setString(1, value);
             pst.setString(2, condition);
+            int res = pst.executeUpdate();
+            return res != 0;
+        } catch (Exception e) {
+            System.err.println("SQLException from method set: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean set(String table_name, String key, int condition,
+            String column, String value) {
+        StringBuilder strbd = new StringBuilder("update ");
+        strbd.append(table_name.toUpperCase()).append(" set ").append(column.toUpperCase());
+        strbd.append(" = ? where ").append(key.toUpperCase()).append(" = ?");
+        try {
+            PreparedStatement pst = this.conn.prepareStatement(strbd.toString());
+            pst.setString(1, value);
+            pst.setInt(2, condition);
             int res = pst.executeUpdate();
             return res != 0;
         } catch (Exception e) {
@@ -635,25 +649,25 @@ public class Database {
 
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
-//        t.reset();
+        t.reset();
         t.init();
-        String[] col = {
-            "username",
-            "password",
-            "study_plan"
-        };
-        String[][] values = {
-            {
-                "yyz",
-                "yyz_pw",
-                "1"
-            },
-            {
-                "hpc",
-                "hpc_pw",
-                "2"
-            }
-        };
-        t.add("users", col, values);
+//        String[] col = {
+//            "username",
+//            "password",
+//            "study_plan"
+//        };
+//        String[][] values = {
+//            {
+//                "yyz",
+//                "yyz_pw",
+//                "1"
+//            },
+//            {
+//                "hpc",
+//                "hpc_pw",
+//                "2"
+//            }
+//        };
+//        t.add("users", col, values);
     }
 }

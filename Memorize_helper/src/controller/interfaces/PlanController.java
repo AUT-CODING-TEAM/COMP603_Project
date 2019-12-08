@@ -41,13 +41,53 @@ public class PlanController {
             int today_num = res.getInt("TODAY_TARGET_NUMBER");
             int total_day = res.getInt("TOTAL_DAY");
             long start = res.getLong("START_TIME");
+            int isFinish = res.getInt("FINISH");
             int total_num = db.count(book, "", "");
-            plan = new StudyPlan(book, id, total_num, total_day, start, today_num);
+            plan = new StudyPlan(book, id, total_num, total_day, start, today_num, isFinish);
 
         } catch (SQLException ex) {
             Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return plan;
+    }
+
+    public StudyPlan getPlan(User user, String book) {
+        Database db = Database.getInstance();
+        String[] key = {"USER_ID", "BOOK"};
+        String[] val = {String.valueOf(user.getID()), book};
+        ResultSet res = db.get("PLAN", key, val);
+        StudyPlan plan = null;
+        try {
+            if (res.next()) {
+                int id = res.getInt("ID");
+                int today_num = res.getInt("TODAY_TARGET_NUMBER");
+                int total_day = res.getInt("TOTAL_DAY");
+                long start = res.getLong("START_TIME");
+                int isFinish = res.getInt("FINISH");
+                int total_num = db.count(book, "", "");
+                plan = new StudyPlan(book, id, total_num, total_day, start, today_num,isFinish);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return plan;
+    }
+
+    public int getPlanIdByBook(User user, String book) {
+        Database db = Database.getInstance();
+        ResultSet res = db.get("PLAN", "USER_ID", user.getID());
+        int pid = 0;
+        try {
+            while (res.next()) {
+                if (res.getString("BOOK").equals(book)) {
+                    pid = res.getInt("ID");
+                    break;
+                };
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pid;
     }
 
     /**
@@ -90,7 +130,7 @@ public class PlanController {
         ResultSet p = db.get("PLAN", "USER_ID", user.getID());
         try {
             while (p.next()) {
-                if(p.getString("BOOK").equals(book)){
+                if (p.getString("BOOK").equals(book)) {
                     res = true;
                     break;
                 }
@@ -129,11 +169,61 @@ public class PlanController {
         long start_time = System.currentTimeMillis();
         StringBuilder bd = new StringBuilder("insert into \"PLAN\" (\"USER_ID");
         bd.append("\",\"BOOK\",\"TOTAL_DAY\",\"START_TIME\",\"TODAY_TARGET_NUMBER\"");
+        bd.append(",\"FINISH\"");
         bd.append(") values (\'").append(user_id).append("\',");
         bd.append("\'").append(book.toUpperCase()).append("\',");
         bd.append(" ").append(total_day).append(",");
         bd.append(" ").append(start_time).append(",");
-        bd.append(" ").append(everyday_num).append(")");
+        bd.append(" ").append(everyday_num).append(",");
+        bd.append(" 0)");
+
+        boolean res = db.SQL(bd.toString());
+        if (res) {
+            p = db.get("PLAN", col, val);
+            try {
+                if (p.next()) {
+                    pid = p.getInt("ID");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return pid;
+    }
+
+    /**
+     * @param book the name of book that user want to choose
+     * @param total_day how many days user want to spend learning all words
+     * @param user_id user's id
+     * @return new plan's ID. if no plan created, the return value is 0
+     */
+    public int addPlan(int total_day, String book, int user_id) {
+        Database db = Database.getInstance();
+        int pid = 0;
+        String[] col = {"user_id", "book"};
+        String[] val = {String.valueOf(user_id), book};
+        ResultSet p = db.get("PLAN", col, val);
+        try {
+            if (p.next()) {
+                return pid;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        int total_word_num = db.count(book, "", "");
+        int everyday_num = total_word_num / total_day;
+        long start_time = System.currentTimeMillis();
+
+        StringBuilder bd = new StringBuilder("insert into \"PLAN\" (\"USER_ID");
+        bd.append("\",\"BOOK\",\"TOTAL_DAY\",\"START_TIME\",\"TODAY_TARGET_NUMBER\"");
+        bd.append(",\"FINISH\"");
+        bd.append(") values (\'").append(user_id).append("\',");
+        bd.append("\'").append(book.toUpperCase()).append("\',");
+        bd.append(" ").append(total_day).append(",");
+        bd.append(" ").append(start_time).append(",");
+        bd.append(" ").append(everyday_num).append(",");
+        bd.append(" 0)");
 
         boolean res = db.SQL(bd.toString());
         if (res) {
@@ -241,6 +331,11 @@ public class PlanController {
             if (p != null) {
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
+                MemorizeController mct = new MemorizeController();
+                if(mct.countMemorizedWord(user) == p.getTotalNumber()){
+                    Database db = Database.getInstance();
+                    db.set("PLAN", "ID", p.getID(), "FINISH", "1");
+                }
             }
 
         }

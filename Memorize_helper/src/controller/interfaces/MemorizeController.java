@@ -78,18 +78,16 @@ public class MemorizeController {
         String book = plan.getStudyPlanName();
         ArrayList<Word> words = wct.getBookContent(book);
         String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
-        String[] val = {
-            uid,
-            "",
-            book,
-            "0"
-        };
-        for (Word wd : words) {
-            val[1] = String.valueOf(wd.getID());
-            if (!db.add("memorize", col, val)) {
-                result = false;
-            }
+
+        int len = words.size();
+        String[][] val = new String[len][4];
+
+        for (int i = 0; i < len; i++) {
+            Word wd = words.get(i);
+            String[] temp = {uid, String.valueOf(wd.getID()), book, "0"};
+            val[i] = temp;
         }
+        result = db.add("memorize", col, val);
         return result;
     }
 
@@ -304,5 +302,10 @@ public class MemorizeController {
             }
         }
         return words;
+    }
+    
+    public int countMemorizedWord(User user){
+        ArrayList<Word> wd = this.getMemorizedWord(user);
+        return wd.size();
     }
 }

@@ -36,7 +36,7 @@ public class StudyPlan {
     }
 
     public StudyPlan(String name, int id, int t_num, int t_day,
-            long start, int today_target) {
+            long start, int today_target, int fns) {
         this.studyPlanName = name;
         this.ID = id;
         this.totalNumber = t_num;
@@ -46,6 +46,7 @@ public class StudyPlan {
         long now = System.currentTimeMillis();
         int keep = (int) ((now - this.startTime) / (1000 * 24 * 60 * 60));
         this.remainDay = this.totalDay - keep;
+        this.finished = fns;
     }
 
     public void setTodayMemorized(int num) {

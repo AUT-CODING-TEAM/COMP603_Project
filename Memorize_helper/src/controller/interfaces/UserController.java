@@ -118,7 +118,7 @@ public class UserController {
      * @param everyday_num how many words param.user want to memorize everyday
      * @return if plan is activated
      */
-    public boolean activateStudyPlan(User user, String book, int everyday_num) {
+    public boolean activateStudyPlanByNum(User user, String book, int everyday_num) {
         PlanController pct = new PlanController();
         MemorizeController mct = new MemorizeController();
 
@@ -132,32 +132,68 @@ public class UserController {
 
         return true;
     }
-    
+
+    /**
+     * @param user who want to activate a new plan
+     * @param book which book param.user want to choose
+     * @param totalDay how many days param.user want to spend memorizing all words
+     * @return if plan is activated
+     */
+    public boolean activateStudyPlanByDay(User user, String book, int totalDay) {
+        PlanController pct = new PlanController();
+        MemorizeController mct = new MemorizeController();
+
+        int res = pct.addPlan(totalDay, book, user.getID());
+        if (res == 0) {
+            return false;
+        }
+        user.setStudyPlan(pct.getPlan(res));
+        mct.initMemorize(user);
+        pct.updateTodayPlanInfo(user);
+
+        return true;
+    }
+
+    /**
+     * @param user
+     * @param book the name of book
+     * @return if the plan change successfully
+     */
+    public boolean changeStudyPlan(User user, String book) {
+        PlanController pct = new PlanController();
+        MemorizeController mct = new MemorizeController();
+        if (pct.isPlan(user, book)) {
+            user.setStudyPlan(pct.getPlan(user, book));
+            pct.updateTodayPlanInfo(user);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @param user the user
-     * @return all the book this user could choose to be a plan
-     *          return data structure is below:
-     *          key(string) : value(string)
-     *          bookname    : wordnumber,alreadyisplan
+     * @return all the book this user could choose to be a plan return data
+     * structure is below: key(string) : value(string) bookname :
+     * wordnumber,alreadyisplan
      */
-    public Map<String,String> bookPlanList(User user){
+    public Map<String, String> bookPlanList(User user) {
         PlanController pct = new PlanController();
         WordController wct = new WordController();
-        Map<String,String> result = new HashMap<String,String>();
+        Map<String, String> result = new HashMap<String, String>();
         ArrayList<String> books = wct.getAllBook();
-        for(String book : books){
+        for (String book : books) {
             int num = wct.getWordNumber(book);
             boolean isplan = pct.isPlan(user, book);
-            result.put(book,String.valueOf(num) + "," + isplan);
+            result.put(book, String.valueOf(num) + "," + isplan);
         }
         return result;
     }
-    
+
     /**
      * @param user who learn the word
      * @param wd which word be learnt
      * @param chosen which chinese meanning user choose
-     * @return if param.chosen is the correcr meaning of param.wd
+     * @return if param.chosen is the correct meaning of param.wd
      */
     public boolean learn(User user, Word wd, String chosen) {
         String chinese = wd.getChinese();
@@ -236,9 +272,9 @@ public class UserController {
         User user = uct.getUser("yyz");
         System.out.println(uct.checkPassword(user, "123456"));
         System.out.println(uct.checkPassword(user, "456789"));
-        uct.activateStudyPlan(user, "CET4", 15);
+        uct.activateStudyPlanByNum(user, "CET4", 15);
         Word wd = wct.getBookWordByName("cet4", "able");
         uct.learn(user, wd, "不知道");
-     
+
     }
 }
