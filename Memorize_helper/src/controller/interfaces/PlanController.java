@@ -65,7 +65,7 @@ public class PlanController {
                 long start = res.getLong("START_TIME");
                 int isFinish = res.getInt("FINISH");
                 int total_num = db.count(book, "", "");
-                plan = new StudyPlan(book, id, total_num, total_day, start, today_num,isFinish);
+                plan = new StudyPlan(book, id, total_num, total_day, start, today_num, isFinish);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,13 +105,21 @@ public class PlanController {
      * @param user the user
      * @return all book which is user's plan
      */
-    public ArrayList<String> getAllPlanByUser(User user) {
+    public ArrayList<StudyPlan> getAllPlanByUser(User user) {
         Database db = Database.getInstance();
-        ResultSet p = db.get("PLAN", "USER_ID", user.getID());
-        ArrayList<String> s = new ArrayList<String>();
+        ResultSet res = db.get("PLAN", "USER_ID", user.getID());
+        ArrayList<StudyPlan> s = new ArrayList<StudyPlan>();
         try {
-            while (p.next()) {
-                s.add(p.getString("BOOK"));
+            while (res.next()) {
+                int id = res.getInt("ID");
+                String book = res.getString("BOOK");
+                int today_num = res.getInt("TODAY_TARGET_NUMBER");
+                int total_day = res.getInt("TOTAL_DAY");
+                long start = res.getLong("START_TIME");
+                int isFinish = res.getInt("FINISH");
+                int total_num = db.count(book, "", "");
+                StudyPlan plan = new StudyPlan(book, id, total_num, total_day, start, today_num, isFinish);
+                s.add(plan);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlanController.class.getName()).log(Level.SEVERE, null, ex);
@@ -332,7 +340,7 @@ public class PlanController {
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
                 MemorizeController mct = new MemorizeController();
-                if(mct.countMemorizedWord(user) == p.getTotalNumber()){
+                if (mct.countMemorizedWord(user) == p.getTotalNumber()) {
                     Database db = Database.getInstance();
                     db.set("PLAN", "ID", p.getID(), "FINISH", "1");
                     p.setFinished(1);

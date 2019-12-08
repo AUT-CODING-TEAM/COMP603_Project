@@ -172,21 +172,12 @@ public class UserController {
 
     /**
      * @param user the user
-     * @return all the book this user could choose to be a plan return data
-     * structure is below: key(string) : value(string) bookname :
-     * wordnumber,alreadyisplan
+     * @return all the plan this user has choosen
+     * 
      */
-    public Map<String, String> bookPlanList(User user) {
+    public ArrayList<StudyPlan> bookPlanList(User user) {
         PlanController pct = new PlanController();
-        WordController wct = new WordController();
-        Map<String, String> result = new HashMap<String, String>();
-        ArrayList<String> books = wct.getAllBook();
-        for (String book : books) {
-            int num = wct.getWordNumber(book);
-            boolean isplan = pct.isPlan(user, book);
-            result.put(book, String.valueOf(num) + "," + isplan);
-        }
-        return result;
+        return pct.getAllPlanByUser(user);
     }
 
     /**
