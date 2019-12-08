@@ -126,6 +126,7 @@ public class UserController {
         if (res == 0) {
             return false;
         }
+        pct.setPlan(user, res);
         user.setCurrentStudyPlan(pct.getPlan(res));
         mct.putMemorize(user);
         pct.updateTodayPlanInfo(user);
@@ -148,6 +149,7 @@ public class UserController {
         if (res == 0) {
             return false;
         }
+        pct.setPlan(user, res);
         user.setCurrentStudyPlan(pct.getPlan(res));
         mct.putMemorize(user);
         pct.updateTodayPlanInfo(user);
@@ -164,7 +166,9 @@ public class UserController {
         PlanController pct = new PlanController();
         MemorizeController mct = new MemorizeController();
         if (pct.isPlan(user, book)) {
-            user.setCurrentStudyPlan(pct.getPlan(user, book));
+            StudyPlan spl = pct.getPlan(user, book);
+            pct.setPlan(user, spl.getID());
+            user.setCurrentStudyPlan(spl);
             pct.updateTodayPlanInfo(user);
             return true;
         }
@@ -183,16 +187,16 @@ public class UserController {
 
     /**
      * @param user the user
-     * @return all book info including book name, the number of words and if this
-     *          book is user's plan
+     * @return all book info including book name, the number of words and if
+     * this book is user's plan
      *
      */
     public Map<String, String> AllBookInfo(User user) {
         PlanController pct = new PlanController();
         WordController wct = new WordController();
         ArrayList<String> books = wct.getAllBook();
-        Map<String,String> result = new HashMap<String,String>();
-        for(String book : books){
+        Map<String, String> result = new HashMap<String, String>();
+        for (String book : books) {
             int num = wct.getWordNumber(book);
             boolean isp = pct.isPlan(user, book);
             result.put(book, String.valueOf(num) + "," + isp);
