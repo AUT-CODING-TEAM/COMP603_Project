@@ -118,18 +118,16 @@ public class PlanListPanel extends GroundPanelTemplate {
             lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
-            if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
+            if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
+                jPanel.setBackground(new Color(248, 246, 241));
+                lbl_pLP_studyPlanName.setText("");
+                lbl_pLP_totalNumber.setText("");
+            } else if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
                 jPanel.setBackground(new Color(186, 187, 185));
                 jPanel.addMouseListener(addPlanController);
             } else {
                 jPanel.setBackground(new Color(91, 110, 125));
                 jPanel.setBorder(new TitledBorder("已添加"));
-            }
-
-            if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
-                jPanel.setBackground(new Color(248, 246, 241));
-                lbl_pLP_studyPlanName.setText("");
-                lbl_pLP_totalNumber.setText("");
             }
 
             planListPanel.add(jPanel);
