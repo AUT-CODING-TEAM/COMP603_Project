@@ -5,8 +5,11 @@
  */
 package model;
 
+import controller.interfaces.UserController;
 import controller.interfaces.WordController;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -26,11 +29,23 @@ public class PlanListInfo {
         }
     }
     
-    public PlanListInfo(){
-//        ArrayList booksNameInDB = new WordController().getAllBook();
-//        
-//        listNumber = booksNameInDB.size();
+    public PlanListInfo(User user){
+        studyPlans = new ArrayList<>();
         
+        Map<String, String> booksInDB = new UserController().bookPlanList(user);
+        for (Map.Entry<String, String> entry : booksInDB.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            
+            int added = value.split(",")[1].equals("true")? 1 : 0;
+            studyPlans.add(new StudyPlan(key, Integer.parseInt(value.split(",")[0]), added));
+        }
+        
+        //fill
+        int studyPlansSize = studyPlans.size();
+        for (int i = 1; i + studyPlansSize < 6; i++) {
+            studyPlans.add(new StudyPlan("fill", -1, 0));
+        }
     }
 
     public ArrayList<StudyPlan> getStudyPlans() {

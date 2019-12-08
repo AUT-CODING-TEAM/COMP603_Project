@@ -96,7 +96,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         int row = planListInfo.getStudyPlans().size() / col + 1;
 
         planListPanel.setLayout(new GridLayout(row, col, 20, 20));
-        
+
         AddPlanController addPlanController = new AddPlanController();
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
@@ -110,16 +110,21 @@ public class PlanListPanel extends GroundPanelTemplate {
             JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
             lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
-            
+
             if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
                 jPanel.setBackground(new Color(186, 187, 185));
                 jPanel.addMouseListener(addPlanController);
-            }
-            else{
+            } else {
                 jPanel.setBackground(new Color(91, 110, 125));
                 jPanel.setBorder(new TitledBorder("已添加"));
             }
             
+            if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
+                jPanel.setBackground(new Color(248,246,241));
+                lbl_pLP_studyPlanName.setText("");
+                lbl_pLP_totalNumber.setText("");
+            }
+
             planListPanel.add(jPanel);
         }
 
