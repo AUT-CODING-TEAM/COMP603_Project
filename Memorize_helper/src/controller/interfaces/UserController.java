@@ -136,7 +136,8 @@ public class UserController {
     /**
      * @param user who want to activate a new plan
      * @param book which book param.user want to choose
-     * @param totalDay how many days param.user want to spend memorizing all words
+     * @param totalDay how many days param.user want to spend memorizing all
+     * words
      * @return if plan is activated
      */
     public boolean activateStudyPlanByDay(User user, String book, int totalDay) {
@@ -173,11 +174,30 @@ public class UserController {
     /**
      * @param user the user
      * @return all the plan this user has choosen
-     * 
+     *
      */
     public ArrayList<StudyPlan> bookPlanList(User user) {
         PlanController pct = new PlanController();
         return pct.getAllPlanByUser(user);
+    }
+
+    /**
+     * @param user the user
+     * @return all book info including book name, the number of words and if this
+     *          book is user's plan
+     *
+     */
+    public Map<String, String> AllBookInfo(User user) {
+        PlanController pct = new PlanController();
+        WordController wct = new WordController();
+        ArrayList<String> books = wct.getAllBook();
+        Map<String,String> result = new HashMap<String,String>();
+        for(String book : books){
+            int num = wct.getWordNumber(book);
+            boolean isp = pct.isPlan(user, book);
+            result.put(book, String.valueOf(num) + "," + isp);
+        }
+        return result;
     }
 
     /**
