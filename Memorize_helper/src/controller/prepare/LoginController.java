@@ -38,7 +38,7 @@ public class LoginController implements ActionListener {
 
         int loginCheck = loginCheck(username, password);
         if (loginCheck == 1) {
-            if (user.getStudyPlan() == null) {
+            if (user.getCurrentStudyPlan() == null) {
                 new PlanListPanel(user, new PlanListInfo(user));
             }
             else{

@@ -15,6 +15,10 @@ public class MyPlanInfo {
 
     private int listNumber;
     private ArrayList<StudyPlan> studyPlans;
+    
+    public MyPlanInfo(){
+       a
+    }
 
     public MyPlanInfo(boolean developMode) {// develop use only
         listNumber = 7;

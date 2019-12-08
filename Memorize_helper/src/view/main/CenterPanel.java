@@ -59,14 +59,14 @@ public class CenterPanel extends MainViewViewTemplate {
 
         addTodayTargetNumberRest();
 
-        JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + user.getStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
+        JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + user.getCurrentStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_changePlan = new JButton("修改计划");
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getStudyPlan().getTotalNumber(), SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_vocabulary = new JButton("单词列表");
@@ -104,7 +104,7 @@ public class CenterPanel extends MainViewViewTemplate {
 
     private void addProgressBar() {
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
-        int progress = user.getFinishedNumberInPlan() * 100 / user.getStudyPlan().getTotalNumber();
+        int progress = user.getFinishedNumberInPlan() * 100 / user.getCurrentStudyPlan().getTotalNumber();
         System.out.println("progress = " + progress);
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);

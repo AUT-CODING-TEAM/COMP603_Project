@@ -58,7 +58,7 @@ public class PlanController {
      *
      */
     public StudyPlan getPlan(User user) {
-        return user.getStudyPlan();
+        return user.getCurrentStudyPlan();
     }
 
     /**
@@ -187,7 +187,7 @@ public class PlanController {
      */
     public int getFinishWordNum(User user) {
         int num = 0;
-        StudyPlan plan = user.getStudyPlan();
+        StudyPlan plan = user.getCurrentStudyPlan();
         if (plan == null) {
             return num;
         }
@@ -237,7 +237,7 @@ public class PlanController {
      */
     public void updateTodayPlanInfo(User user) {
         if (user != null) {
-            StudyPlan p = user.getStudyPlan();
+            StudyPlan p = user.getCurrentStudyPlan();
             if (p != null) {
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
@@ -252,7 +252,7 @@ public class PlanController {
      */
     public int getTodayMemorizedNum(User user) {
         Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
+        StudyPlan plan = user.getCurrentStudyPlan();
         if (plan == null) {
             return 0;
         }
@@ -286,7 +286,7 @@ public class PlanController {
      */
     public int getTodayReviewedNum(User user) {
         Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
+        StudyPlan plan = user.getCurrentStudyPlan();
         if (plan == null) {
             return 0;
         }

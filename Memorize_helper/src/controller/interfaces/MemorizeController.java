@@ -69,7 +69,7 @@ public class MemorizeController {
     public boolean initMemorize(User user) {
         boolean result = true;
         Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
+        StudyPlan plan = user.getCurrentStudyPlan();
         String uid = String.valueOf(user.getID());
         WordController wct = new WordController();
         if (plan == null) {
@@ -276,7 +276,7 @@ public class MemorizeController {
      */
     public ArrayList<Word> getMemorizedWord(User user) {
         Database db = Database.getInstance();
-        StudyPlan plan = user.getStudyPlan();
+        StudyPlan plan = user.getCurrentStudyPlan();
         WordController wct = new WordController();
         ArrayList<Integer> ids = new ArrayList<Integer>();
         ArrayList<Word> words = new ArrayList<Word>();

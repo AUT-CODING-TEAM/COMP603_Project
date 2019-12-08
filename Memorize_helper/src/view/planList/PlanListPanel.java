@@ -104,11 +104,12 @@ public class PlanListPanel extends GroundPanelTemplate {
 
         planListPanel.setLayout(new GridLayout(row, col, 20, 20));
 
-        AddPlanController addPlanController = new AddPlanController();
+        AddPlanController addPlanController = new AddPlanController(user);
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
 //            JPanel jPanel = new JPanel(new GridBagLayout());
             OnePlanPanel jPanel = new OnePlanPanel();
+            jPanel.setStudyPlan(planListInfo.getStudyPlans().get(i));
 
             JLabel lbl_pLP_studyPlanName = new JLabel(planListInfo.getStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
             lbl_pLP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
