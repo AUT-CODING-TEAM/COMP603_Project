@@ -335,6 +335,7 @@ public class PlanController {
                 if(mct.countMemorizedWord(user) == p.getTotalNumber()){
                     Database db = Database.getInstance();
                     db.set("PLAN", "ID", p.getID(), "FINISH", "1");
+                    p.setFinished(1);
                 }
             }
 
