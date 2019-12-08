@@ -249,7 +249,7 @@ public class PlanController {
     
     public void setPlan(User user, int pid){
          Database db = Database.getInstance();
-         db.set("USERS", "USER_ID", String.valueOf(user.getID()), "STUDY_PLAN", pid);
+         db.set("USERS", "ID", user.getID(), "STUDY_PLAN", String.valueOf(pid));
     }
     /**
      * @param plan get this plan's total word number
