@@ -19,6 +19,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -73,8 +74,14 @@ public class PlanListPanel extends GroundPanelTemplate {
         //better jump to changePlanPanel
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-//                super.windowClosing(e);
-                new MyPlanPanel(user, new MyPlanInfo(true));
+                try {
+                    new MyPlanPanel(user, new MyPlanInfo(true));
+                } catch (Exception exception) {
+                    if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+                        JOptionPane.showMessageDialog(null, "please choose a vocabulary book first", "error ", JOptionPane.ERROR_MESSAGE);
+                        new PlanListPanel(user, new PlanListInfo(user));
+                    }
+                }
             }
         });
 
@@ -118,9 +125,9 @@ public class PlanListPanel extends GroundPanelTemplate {
                 jPanel.setBackground(new Color(91, 110, 125));
                 jPanel.setBorder(new TitledBorder("已添加"));
             }
-            
+
             if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
-                jPanel.setBackground(new Color(248,246,241));
+                jPanel.setBackground(new Color(248, 246, 241));
                 lbl_pLP_studyPlanName.setText("");
                 lbl_pLP_totalNumber.setText("");
             }
