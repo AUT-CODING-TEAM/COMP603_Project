@@ -7,11 +7,13 @@ package controller.planList;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.MyPlanInfo;
 import model.User;
 import view.OnePlanPanel;
 import view.myPlan.MyPlanPanel;
+import view.planList.CreatePlanPanel;
 
 /**
  *
@@ -19,20 +21,20 @@ import view.myPlan.MyPlanPanel;
  */
 public class AddPlanController implements MouseListener{
     private User user;
+    private JFrame planListFrame;
     
-    public AddPlanController(User user){
+    public AddPlanController(User user, JFrame planListFrame){
         this.user = user;
+        this.planListFrame = planListFrame;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         OnePlanPanel jPanel = (OnePlanPanel)e.getSource();
         System.out.println(jPanel.getLbl_pLP_studyPlanName().getText());
-        
-        MyPlanInfo myPlanInfo = new MyPlanInfo(user);
-        myPlanInfo.getMyStudyPlans().add(jPanel.getStudyPlan());
-        
-//        new MyPlanPanel(user, myPlanInfo);
+        System.out.println("1111111111");
+        new CreatePlanPanel(user, jPanel.getStudyPlan());
+        planListFrame.dispose();
     }
 
     @Override

@@ -104,7 +104,7 @@ public class PlanListPanel extends GroundPanelTemplate {
 
         planListPanel.setLayout(new GridLayout(row, col, 20, 20));
 
-        AddPlanController addPlanController = new AddPlanController(user);
+        AddPlanController addPlanController = new AddPlanController(user, planListFrame);
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
 //            JPanel jPanel = new JPanel(new GridBagLayout());

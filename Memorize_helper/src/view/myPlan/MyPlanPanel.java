@@ -97,7 +97,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        myPlanFrame = new JFrame("单词列表");
+        myPlanFrame = new JFrame("我的计划");
         setSize(myPlanFrame);
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         myPlanFrame.addWindowListener(new WindowAdapter() {
@@ -135,7 +135,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
             btn_myPP_handleByBookSituation.setText("复习该计划");
         }
-        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
+//        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
         add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
         myPlanFrame.add(this);
