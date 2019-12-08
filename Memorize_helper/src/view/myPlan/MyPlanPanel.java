@@ -127,12 +127,12 @@ public class MyPlanPanel extends GroundPanelTemplate {
         addMakePlanPanel();
 
         btn_myPP_handleByBookSituation = new JButton();
-        if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(0).getStudyPlanName())) {
+        if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName())) {
             btn_myPP_handleByBookSituation.setEnabled(false);
             btn_myPP_handleByBookSituation.setText("继续学习该计划");
-        } else if (myPlanInfo.getStudyPlans().get(0).getFinished() == 0) {
+        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
             btn_myPP_handleByBookSituation.setText("学习该计划");
-        } else if (myPlanInfo.getStudyPlans().get(0).getFinished() == 1) {
+        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
             btn_myPP_handleByBookSituation.setText("复习该计划");
         }
         btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
@@ -143,18 +143,18 @@ public class MyPlanPanel extends GroundPanelTemplate {
     }
 
     public void addMyBookPanel() {
-        JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getStudyPlans().size() + 1, 20, 20));
+        JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
 
-        for (int i = 0; i < myPlanInfo.getStudyPlans().size(); i++) {
+        for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {
 //            JPanel jPanel = new JPanel(new GridBagLayout());
             OnePlanPanel jPanel = new OnePlanPanel();
             jPanel.setName(String.valueOf(i));
 
-            JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
+            JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getMyStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
             lbl_myPP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
             jPanel.addStudyPlanName(lbl_myPP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
 
-            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
+            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
             lbl_myPP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
@@ -164,42 +164,42 @@ public class MyPlanPanel extends GroundPanelTemplate {
                 public void mouseClicked(MouseEvent e) {
                     OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
                     int index = Integer.parseInt(selectedPanel.getName());
-                    bookName = myPlanInfo.getStudyPlans().get(index).getStudyPlanName();
-                    selectedBookName.setText(myPlanInfo.getStudyPlans().get(index).getStudyPlanName());
-                    if (myPlanInfo.getStudyPlans().get(index).getFinished() == 0) {
-                        selectedBookTip.setText("计划完成日期 " + myPlanInfo.getStudyPlans().get(index).getPlanFinishedDay());
+                    bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
+                    selectedBookName.setText(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName());
+                    if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
+                        selectedBookTip.setText("计划完成日期 " + myPlanInfo.getMyStudyPlans().get(index).getPlanFinishedDay());
                         optionTabs.setTitleAt(0, "按每天背单词数学习");
                         optionTabs.setTitleAt(1, "按完成天数学习");
                         btn_myPP_handleByBookSituation.setEnabled(true);
                         btn_myPP_handleByBookSituation.setText("学习该计划");
-                    } else if (myPlanInfo.getStudyPlans().get(index).getFinished() == 1) {
+                    } else if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 1) {
                         selectedBookTip.setText("已学完整本计划，开始总复习吧");
                         optionTabs.setTitleAt(0, "按每天复习单词数复习");
                         optionTabs.setTitleAt(1, "按完成天数复习");
                         btn_myPP_handleByBookSituation.setEnabled(true);
                         btn_myPP_handleByBookSituation.setText("复习该计划");
                     }
-                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getStudyPlans().get(index).getStudyPlanName())) {
+                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
                         btn_myPP_handleByBookSituation.setEnabled(false);
                         btn_myPP_handleByBookSituation.setText("继续学习该计划");
                     }
 
                     String s0[] = null;
-                    if (myPlanInfo.getStudyPlans().get(index).getTotalNumber() % 5 == 0) {
-                        s0 = new String[myPlanInfo.getStudyPlans().get(index).getTotalNumber() / 5];
+                    if (myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() % 5 == 0) {
+                        s0 = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() / 5];
                         for (int i = 0; i < s0.length; i++) {
                             s0[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
                         }
                     } else {
-                        s0 = new String[myPlanInfo.getStudyPlans().get(index).getTotalNumber() / 5 + 1];
+                        s0 = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() / 5 + 1];
                         for (int i = 0; i < s0.length - 1; i++) {
                             s0[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
                         }
-                        s0[s0.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getStudyPlans().get(index).getTotalNumber() + "词"));
+                        s0[s0.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() + "词"));
                     }
                     makePlanListPart1.setListData(s0);
 
-                    String s1[] = new String[myPlanInfo.getStudyPlans().get(index).getTotalNumber()];
+                    String s1[] = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber()];
                     for (int i = 0; i < s1.length; i++) {
                         s1[i] = String.format("%50s", (i + 1) + "天");
                     }
@@ -222,7 +222,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
                 public void mouseExited(MouseEvent e) {
                 }
             });
-            if (myPlanInfo.getStudyPlans().get(i).getFinished() == 1) {
+            if (myPlanInfo.getMyStudyPlans().get(i).getFinished() == 1) {
                 jPanel.setBorder(new TitledBorder("已学完"));
             }
 
@@ -245,13 +245,13 @@ public class MyPlanPanel extends GroundPanelTemplate {
         topJPanel.setOpaque(true);
         topJPanel.setBackground(new Color(238, 236, 232));
 
-        selectedBookName = new JLabel(myPlanInfo.getStudyPlans().get(0).getStudyPlanName());
+        selectedBookName = new JLabel(myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
         selectedBookName.setFont(new Font("FACE_SYSTEM", Font.BOLD, 20));
         topJPanel.add(selectedBookName);
 
-        if (myPlanInfo.getStudyPlans().get(0).getFinished() == 0) {
-            selectedBookTip = new JLabel("计划完成日期 " + myPlanInfo.getStudyPlans().get(0).getPlanFinishedDay());
-        } else if (myPlanInfo.getStudyPlans().get(0).getFinished() == 1) {
+        if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
+            selectedBookTip = new JLabel("计划完成日期 " + myPlanInfo.getMyStudyPlans().get(0).getPlanFinishedDay());
+        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
             selectedBookTip = new JLabel("已学完整本计划，开始总复习吧");
         }
         selectedBookTip.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
@@ -263,10 +263,10 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
         MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
         MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
-        if (myPlanInfo.getStudyPlans().get(0).getFinished() == 0) {
+        if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
             optionTabs.addTab("按每天背单词数学习", makePlanTabPanelPart1);
             optionTabs.addTab("按完成天数学习", makePlanTabPanelPart2);
-        } else if (myPlanInfo.getStudyPlans().get(0).getFinished() == 1) {
+        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
             optionTabs.addTab("按每天复习单词数复习", makePlanTabPanelPart1);
             optionTabs.addTab("按完成天数复习", makePlanTabPanelPart2);
         }
@@ -293,17 +293,17 @@ public class MyPlanPanel extends GroundPanelTemplate {
         public void addComponents() {
             if (option == 0) {
                 String s[] = null;
-                if (myPlanInfo.getStudyPlans().get(0).getTotalNumber() % 5 == 0) {
-                    s = new String[myPlanInfo.getStudyPlans().get(0).getTotalNumber() / 5];
+                if (myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() % 5 == 0) {
+                    s = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() / 5];
                     for (int i = 0; i < s.length; i++) {
                         s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
                     }
                 } else {
-                    s = new String[myPlanInfo.getStudyPlans().get(0).getTotalNumber() / 5 + 1];
+                    s = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() / 5 + 1];
                     for (int i = 0; i < s.length - 1; i++) {
                         s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
                     }
-                    s[s.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getStudyPlans().get(0).getTotalNumber() + "词"));
+                    s[s.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() + "词"));
                 }
                 makePlanListPart1 = new ListInScrollTemplate(s);
                 makePlanListPart1.setEnabled(true);
@@ -319,7 +319,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
                 JScrollPane jScrollPane = new JScrollPane(makePlanListPart1);
                 add(jScrollPane);
             } else if (option == 1) {
-                String s[] = new String[myPlanInfo.getStudyPlans().get(0).getTotalNumber()];
+                String s[] = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
                     s[i] = String.format("%50s", (i + 1) + "天");
                 }

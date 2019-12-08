@@ -32,7 +32,7 @@ public class PlanListInfo {
     public PlanListInfo(User user){
         studyPlans = new ArrayList<>();
         
-        Map<String, String> booksInDB = new UserController().bookPlanList(user);
+        Map<String, String> booksInDB = new UserController().AllBookInfo(user);
         for (Map.Entry<String, String> entry : booksInDB.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
