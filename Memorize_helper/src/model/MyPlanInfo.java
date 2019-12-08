@@ -17,7 +17,6 @@ public class MyPlanInfo {
     private ArrayList<StudyPlan> studyPlans;
     
     public MyPlanInfo(){
-       a
     }
 
     public MyPlanInfo(boolean developMode) {// develop use only

@@ -112,7 +112,7 @@ public class User {
     public int getFinishedNumberInPlan() {
         return finishedNumberInPlan;
     }
-
+    
     public User setFinishedNumberInPlan(int finishedNumberInPlan) {
         this.finishedNumberInPlan = finishedNumberInPlan;
         return this;

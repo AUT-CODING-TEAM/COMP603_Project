@@ -147,7 +147,7 @@ public class UserController {
         if (res == 0) {
             return false;
         }
-        user.setStudyPlan(pct.getPlan(res));
+        user.setCurrentStudyPlan(pct.getPlan(res));
         mct.initMemorize(user);
         pct.updateTodayPlanInfo(user);
 
@@ -163,7 +163,7 @@ public class UserController {
         PlanController pct = new PlanController();
         MemorizeController mct = new MemorizeController();
         if (pct.isPlan(user, book)) {
-            user.setStudyPlan(pct.getPlan(user, book));
+            user.setCurrentStudyPlan(pct.getPlan(user, book));
             pct.updateTodayPlanInfo(user);
             return true;
         }
