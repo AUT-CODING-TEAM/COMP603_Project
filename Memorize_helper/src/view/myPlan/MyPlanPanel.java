@@ -52,11 +52,6 @@ public class MyPlanPanel extends GroundPanelTemplate {
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
-    private JLabel selectedBookName;
-    private JLabel selectedBookTip;
-    private JTabbedPane optionTabs;
-    private JList makePlanListPart1;
-    private JList makePlanListPart2;
     private JButton btn_myPP_handleByBookSituation;
     private String bookName;
     private String quantity;
@@ -88,7 +83,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         int screenHeight = (int) screenSize.getHeight();
 //        int frameWidth = 1280;
         int frameWidth = 720;
-        int frameHeight = 720;
+        int frameHeight = 360;
         jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
     }
 
@@ -108,13 +103,13 @@ public class MyPlanPanel extends GroundPanelTemplate {
         });
 
         //left fill label
-        add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(6).setWeightx(0.05).setWeighty(1));
+        add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
         //right fill label
-        add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(6).setWeightx(0.05).setWeighty(1));
+        add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
         //top fill label
 //        add(new JLabel(), new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         //bottom fill label
-        add(new JLabel(), new GridBagTool().setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
         JLabel lbl_myPP_myPlan = new JLabel("我的计划", SwingConstants.CENTER);
         add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
@@ -123,8 +118,6 @@ public class MyPlanPanel extends GroundPanelTemplate {
         add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         addMyBookPanel();
-
-        addMakePlanPanel();
 
         btn_myPP_handleByBookSituation = new JButton();
         if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName())) {
@@ -136,7 +129,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
             btn_myPP_handleByBookSituation.setText("复习该计划");
         }
 //        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
-        add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
@@ -165,17 +158,10 @@ public class MyPlanPanel extends GroundPanelTemplate {
                     OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
                     int index = Integer.parseInt(selectedPanel.getName());
                     bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
-                    selectedBookName.setText(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName());
                     if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
-                        selectedBookTip.setText("计划完成日期 " + myPlanInfo.getMyStudyPlans().get(index).getPlanFinishedDay());
-                        optionTabs.setTitleAt(0, "按每天背单词数学习");
-                        optionTabs.setTitleAt(1, "按完成天数学习");
                         btn_myPP_handleByBookSituation.setEnabled(true);
                         btn_myPP_handleByBookSituation.setText("学习该计划");
                     } else if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 1) {
-                        selectedBookTip.setText("已学完整本计划，开始总复习吧");
-                        optionTabs.setTitleAt(0, "按每天复习单词数复习");
-                        optionTabs.setTitleAt(1, "按完成天数复习");
                         btn_myPP_handleByBookSituation.setEnabled(true);
                         btn_myPP_handleByBookSituation.setText("复习该计划");
                     }
@@ -183,27 +169,6 @@ public class MyPlanPanel extends GroundPanelTemplate {
                         btn_myPP_handleByBookSituation.setEnabled(false);
                         btn_myPP_handleByBookSituation.setText("继续学习该计划");
                     }
-
-                    String s0[] = null;
-                    if (myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() % 5 == 0) {
-                        s0 = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() / 5];
-                        for (int i = 0; i < s0.length; i++) {
-                            s0[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
-                        }
-                    } else {
-                        s0 = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() / 5 + 1];
-                        for (int i = 0; i < s0.length - 1; i++) {
-                            s0[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
-                        }
-                        s0[s0.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getMyStudyPlans().get(index).getTotalNumber() + "词"));
-                    }
-                    makePlanListPart1.setListData(s0);
-
-                    String s1[] = new String[myPlanInfo.getMyStudyPlans().get(index).getTotalNumber()];
-                    for (int i = 0; i < s1.length; i++) {
-                        s1[i] = String.format("%50s", (i + 1) + "天");
-                    }
-                    makePlanListPart2.setListData(s1);
                 }
 
                 @Override
@@ -236,107 +201,5 @@ public class MyPlanPanel extends GroundPanelTemplate {
 //        JScrollPane jScrollPane = new JScrollPane(myBookPanel);
         JScrollPane jScrollPane = new JScrollPane(myBookPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.15));
-    }
-
-    public void addMakePlanPanel() {
-        JPanel makePlanPanel = new JPanel(new GridBagLayout());
-
-        JPanel topJPanel = new JPanel(new GridLayout(2, 1));
-        topJPanel.setOpaque(true);
-        topJPanel.setBackground(new Color(238, 236, 232));
-
-        selectedBookName = new JLabel(myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
-        selectedBookName.setFont(new Font("FACE_SYSTEM", Font.BOLD, 20));
-        topJPanel.add(selectedBookName);
-
-        if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
-            selectedBookTip = new JLabel("计划完成日期 " + myPlanInfo.getMyStudyPlans().get(0).getPlanFinishedDay());
-        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
-            selectedBookTip = new JLabel("已学完整本计划，开始总复习吧");
-        }
-        selectedBookTip.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
-        topJPanel.add(selectedBookTip);
-
-        makePlanPanel.add(topJPanel, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.05));
-
-        optionTabs = new JTabbedPane();
-
-        MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
-        MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
-        if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
-            optionTabs.addTab("按每天背单词数学习", makePlanTabPanelPart1);
-            optionTabs.addTab("按完成天数学习", makePlanTabPanelPart2);
-        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
-            optionTabs.addTab("按每天复习单词数复习", makePlanTabPanelPart1);
-            optionTabs.addTab("按完成天数复习", makePlanTabPanelPart2);
-        }
-
-        makePlanPanel.add(optionTabs, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.95));
-
-        add(makePlanPanel, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.5));
-    }
-
-    class MakePlanTabPanel extends JPanel {
-
-        private int option;
-
-        public MakePlanTabPanel(int option) {
-            this.option = option;
-            setProperty();
-            addComponents();
-        }
-
-        public void setProperty() {
-            setLayout(new GridLayout(1, 1));
-        }
-
-        public void addComponents() {
-            if (option == 0) {
-                String s[] = null;
-                if (myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() % 5 == 0) {
-                    s = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() / 5];
-                    for (int i = 0; i < s.length; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
-                    }
-                } else {
-                    s = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() / 5 + 1];
-                    for (int i = 0; i < s.length - 1; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
-                    }
-                    s[s.length - 1] = String.format("%50s", String.valueOf(myPlanInfo.getMyStudyPlans().get(0).getTotalNumber() + "词"));
-                }
-                makePlanListPart1 = new ListInScrollTemplate(s);
-                makePlanListPart1.setEnabled(true);
-                makePlanListPart1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                makePlanListPart1.addListSelectionListener(new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        if (makePlanListPart1.getValueIsAdjusting()) {
-                            quantity = makePlanListPart1.getSelectedValue().toString().trim();
-                        }
-                    }
-                });
-                JScrollPane jScrollPane = new JScrollPane(makePlanListPart1);
-                add(jScrollPane);
-            } else if (option == 1) {
-                String s[] = new String[myPlanInfo.getMyStudyPlans().get(0).getTotalNumber()];
-                for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + "天");
-                }
-                makePlanListPart2 = new ListInScrollTemplate(s);
-                makePlanListPart2.setEnabled(true);
-                makePlanListPart2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                makePlanListPart2.addListSelectionListener(new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        if (makePlanListPart2.getValueIsAdjusting()) {
-                            quantity = makePlanListPart2.getSelectedValue().toString().trim();
-                        }
-                    }
-                });
-                JScrollPane jScrollPane = new JScrollPane(makePlanListPart2);
-                add(jScrollPane);
-            }
-        }
     }
 }
