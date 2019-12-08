@@ -107,6 +107,9 @@ public class MemorizeController {
         ArrayList<Word> words = wct.getBookContent(book);
         String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
         int now_num = this.getWordNumInMemorize(user);
+        if(now_num >= words.size()){
+            return true;
+        }
         int len = words.size() - now_num > 100 ? 100: words.size() - now_num;
         String[][] val = new String[len][4];
 
