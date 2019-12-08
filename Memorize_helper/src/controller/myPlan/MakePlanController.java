@@ -5,6 +5,7 @@
  */
 package controller.myPlan;
 
+import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
@@ -31,9 +32,16 @@ public class MakePlanController implements ActionListener{
         if (createPlanPanel.getQuantity() != null) {
             System.out.println(createPlanPanel.getQuantity());
             System.out.println(createPlanPanel.getSelectedPlan().getStudyPlanName());
-//            new MainView(user);
+            
+            if (createPlanPanel.getQuantity().contains("天")) {
+                Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]);
+                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]));
+            }
+            else{
+                System.out.println(Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
+                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
+            }
+            new MainView(user);
         }
-        
     }
-    
 }
