@@ -231,7 +231,7 @@ public class PlanController {
         bd.append(" ").append(total_day).append(",");
         bd.append(" ").append(start_time).append(",");
         bd.append(" ").append(everyday_num).append(",");
-        bd.append(" \"0\")");
+        bd.append(" \'0\')");
 
         boolean res = db.SQL(bd.toString());
         if (res) {

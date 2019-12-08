@@ -127,7 +127,7 @@ public class UserController {
             return false;
         }
         user.setCurrentStudyPlan(pct.getPlan(res));
-        mct.initMemorize(user);
+        mct.putMemorize(user);
         pct.updateTodayPlanInfo(user);
 
         return true;
@@ -149,7 +149,7 @@ public class UserController {
             return false;
         }
         user.setCurrentStudyPlan(pct.getPlan(res));
-        mct.initMemorize(user);
+        mct.putMemorize(user);
         pct.updateTodayPlanInfo(user);
 
         return true;

@@ -79,7 +79,7 @@ public class MemorizeController {
         ArrayList<Word> words = wct.getBookContent(book);
         String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
 
-        int len = words.size();
+        int len = words.size() > 100 ? 100: words.size();
         String[][] val = new String[len][4];
 
         for (int i = 0; i < len; i++) {
@@ -90,7 +90,34 @@ public class MemorizeController {
         result = db.add("memorize", col, val);
         return result;
     }
+    /**
+     * @param user who want enlarge plan memorize table
+     * @return if init success
+     */
+    public boolean putMemorize(User user) {
+        boolean result = true;
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getCurrentStudyPlan();
+        String uid = String.valueOf(user.getID());
+        WordController wct = new WordController();
+        if (plan == null) {
+            return false;
+        }
+        String book = plan.getStudyPlanName();
+        ArrayList<Word> words = wct.getBookContent(book);
+        String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
+        int now_num = this.getWordNumInMemorize(user);
+        int len = words.size() - now_num > 100 ? 100: words.size() - now_num;
+        String[][] val = new String[len][4];
 
+        for (int i = 0; i < len; i++) {
+            Word wd = words.get(i + now_num);
+            String[] temp = {uid, String.valueOf(wd.getID()), book, "0"};
+            val[i] = temp;
+        }
+        result = db.add("memorize", col, val);
+        return result;
+    }
     /**
      * @param userid the user's ID
      * @param wordid the word's ID
@@ -304,6 +331,13 @@ public class MemorizeController {
         return words;
     }
     
+    /**
+     * @return how many plan words added into the memorize table
+     */
+    public int getWordNumInMemorize(User user){
+         Database db = Database.getInstance();
+         return db.count("MEMORIZE", "ID", user.getCurrentStudyPlan().getID());
+    }
     public int countMemorizedWord(User user){
         ArrayList<Word> wd = this.getMemorizedWord(user);
         return wd.size();
