@@ -23,15 +23,33 @@ public class MakePlanController implements ActionListener{
     private User user;
     private CreatePlanPanel createPlanPanel;
     private JFrame selectedPlanFrame;
+    private MyPlanPanel myPlanPanel;
     
+    //login first time
     public MakePlanController(User user, CreatePlanPanel createPlanPanel, JFrame selectedPlanFrame){
         this.user = user;
         this.createPlanPanel = createPlanPanel;
         this.selectedPlanFrame = selectedPlanFrame;
     }
+    
+    //change after login
+    public MakePlanController(User user,  MyPlanPanel myPlanPanel){
+        this.user = user;
+        this.myPlanPanel = myPlanPanel;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //change after login
+        if (myPlanPanel.getBookName() != null) {
+            new UserController().changeStudyPlan(user, myPlanPanel.getBookName());
+            myPlanPanel.getMyPlanFrame().dispose();
+            new MainView(user);
+            
+            return;
+        }
+        
+        //login first time
         if (createPlanPanel.getQuantity() != null) {
             System.out.println(createPlanPanel.getQuantity());
             System.out.println(createPlanPanel.getSelectedPlan().getStudyPlanName());

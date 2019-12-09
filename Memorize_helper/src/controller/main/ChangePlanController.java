@@ -23,7 +23,7 @@ public class ChangePlanController extends MainViewControllerTemplate {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("修改计划JFrame");
-        new MyPlanPanel(user, new MyPlanInfo(true));
+        new MyPlanPanel(user, new MyPlanInfo(user));
         mainView.dispose();
     }
 }

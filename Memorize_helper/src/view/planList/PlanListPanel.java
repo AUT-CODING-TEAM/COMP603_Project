@@ -75,7 +75,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 try {
-                    new MyPlanPanel(user, new MyPlanInfo(true));
+                    new MyPlanPanel(user, new MyPlanInfo(user));
                 } catch (Exception exception) {
                     if (e.getID() == WindowEvent.WINDOW_CLOSING) {
                         JOptionPane.showMessageDialog(null, "please choose a vocabulary book first", "error ", JOptionPane.ERROR_MESSAGE);

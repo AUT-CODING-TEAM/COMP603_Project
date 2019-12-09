@@ -119,16 +119,9 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
         addMyBookPanel();
 
-        btn_myPP_handleByBookSituation = new JButton();
-        if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName())) {
-            btn_myPP_handleByBookSituation.setEnabled(false);
-            btn_myPP_handleByBookSituation.setText("继续学习该计划");
-        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 0) {
-            btn_myPP_handleByBookSituation.setText("学习该计划");
-        } else if (myPlanInfo.getMyStudyPlans().get(0).getFinished() == 1) {
-            btn_myPP_handleByBookSituation.setText("复习该计划");
-        }
-//        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
+        btn_myPP_handleByBookSituation = new JButton("继续学习该计划");
+        btn_myPP_handleByBookSituation.setEnabled(false);
+        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
         add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
         myPlanFrame.add(this);
