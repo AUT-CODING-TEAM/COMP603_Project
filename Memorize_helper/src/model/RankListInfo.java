@@ -32,7 +32,6 @@ public class RankListInfo {
     }
     
     public RankListInfo(){
-        users = new ArrayList<>();
         users = new UserController().getMemorizeRank();
     }
 
