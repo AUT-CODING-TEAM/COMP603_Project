@@ -36,7 +36,7 @@ public class RankListInfo {
     }
 
     public String[] getRankListInfo(int col) {
-        String[] s = new String[users.size()];
+        String[] s = new String[users.size() + 1];
         if (col == 0) {
             s[0] = String.format("%18s", "排名");
         } else if (col == 1) {
@@ -49,9 +49,9 @@ public class RankListInfo {
             if (col == 0) {
                 s[i] = String.format("%19d", i);
             } else if (col == 1) {
-                s[i] = String.format("%22s", users.get(i).getUsername());
+                s[i] = String.format("%22s", users.get(i - 1).getUsername());
             } else if (col == 2) {
-                s[i] = String.format("%20d", users.get(i).getFinishedNumberInTotal());
+                s[i] = String.format("%20d", users.get(i - 1).getFinishedNumberInTotal());
             }
         }
 
