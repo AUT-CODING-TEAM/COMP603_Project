@@ -46,7 +46,11 @@ public class WordController {
         ArrayList<String> table = this.getAllBook();
         ArrayList<Word> result = new ArrayList<Word>();
         for (String book : table) {
-            result.add(this.getBookWordByName(book, word));
+            Word wd = this.getBookWordByName(book, word);
+            if (wd != null) {
+                result.add(wd);
+            }
+
         }
         return result;
     }
