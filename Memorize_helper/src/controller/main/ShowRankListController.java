@@ -23,7 +23,7 @@ public class ShowRankListController extends MainViewControllerTemplate{
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("查看排行榜JFrame");
-        new RankListPanel(mainView, new RankListInfo(true));
+        new RankListPanel(mainView, new RankListInfo());
         mainView.setVisible(false);
     }
     

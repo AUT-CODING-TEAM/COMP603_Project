@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.interfaces.UserController;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,11 @@ public class RankListInfo {
         for (int i = 1; i <= listNumber; i++) {
             users.add(new User(developMode).setUsername("testUser" + i).setFinishedNumberInTotal(100 - i));
         }
+    }
+    
+    public RankListInfo(){
+        users = new ArrayList<>();
+        users = new UserController().getMemorizeRank();
     }
 
     public String[] getRankListInfo(int col) {
