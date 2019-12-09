@@ -112,30 +112,30 @@ public class UserController {
         }
         return false;
     }
-    
+
     /**
      * @return the rank list of memorize number
      */
-    public final ArrayList<User> getMemorizeRank(){
+    public final ArrayList<User> getMemorizeRank() {
         MemorizeController mct = new MemorizeController();
         ArrayList<User> arr = new ArrayList<User>();
-        Map<String,Integer> datas = mct.getAllUserMemorizedNum();
-        for(Entry<String, Integer> dt : datas.entrySet()){
-            if(arr.size() == 0){
-                arr.add(new User(dt.getKey(),dt.getValue()));
-            }else{
-                for(int i=0; i< arr.size(); i++){
-                    if(dt.getValue() >= arr.get(i).getFinishedNumberInTotal()){
-                         arr.add(i,new User(dt.getKey(),dt.getValue()));
-                         break;
-                    }
+        Map<String, Integer> datas = mct.getAllUserMemorizedNum();
+        for (Entry<String, Integer> dt : datas.entrySet()) {
+            boolean smallest = true;
+            for (int i = 0; i < arr.size(); i++) {
+                if (dt.getValue() >= arr.get(i).getFinishedNumberInTotal()) {
+                    arr.add(i, new User(dt.getKey(), dt.getValue()));
+                    smallest = false;
+                    break;
                 }
-                //if is smallest, add to end
-                arr.add(new User(dt.getKey(),dt.getValue()));
             }
+            //if is smallest or arr is empty, add to end
+            if(smallest)
+                arr.add(new User(dt.getKey(), dt.getValue()));
         }
         return arr;
     }
+
     /**
      * @param user who want to activate a new plan
      * @param book which book param.user want to choose
