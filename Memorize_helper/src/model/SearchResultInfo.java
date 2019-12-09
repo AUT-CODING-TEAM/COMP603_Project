@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.interfaces.WordController;
 import java.util.ArrayList;
 
 /**
@@ -17,13 +18,23 @@ public class SearchResultInfo {
     private int resultNumber;//develop use only
     private ArrayList<String> results;
 
-    public SearchResultInfo(String inputKeyWord) {// develop use only
+    public SearchResultInfo(String inputKeyWord, boolean developMode) {// develop use only
         this.inputKeyWord = inputKeyWord;
         resultNumber = 50;
         results = new ArrayList<>();
 
         for (int i = 0; i <= resultNumber; i++) {
             results.add(inputKeyWord + i);
+        }
+    }
+    
+    public SearchResultInfo(String inputKeyWord) {// develop use only
+        this.inputKeyWord = inputKeyWord;
+        results = new ArrayList<>();
+        ArrayList<Word> resultsInDB = new WordController().search(inputKeyWord);
+
+        for (int i = 0; i < resultsInDB.size(); i++) {
+            results.add(resultsInDB.get(i).getWord());
         }
     }
 
