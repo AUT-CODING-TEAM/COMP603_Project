@@ -112,6 +112,7 @@ public class UserController {
         }
         return false;
     }
+    
     /**
      * @return the rank list of memorize number
      */
@@ -123,9 +124,17 @@ public class UserController {
             if(arr.size() == 0){
                 arr.add(new User(dt.getKey(),dt.getValue()));
             }else{
-                
+                for(int i=0; i< arr.size(); i++){
+                    if(dt.getValue() >= arr.get(i).getFinishedNumberInTotal()){
+                         arr.add(i,new User(dt.getKey(),dt.getValue()));
+                         break;
+                    }
+                }
+                //if is smallest, add to end
+                arr.add(new User(dt.getKey(),dt.getValue()));
             }
         }
+        return arr;
     }
     /**
      * @param user who want to activate a new plan
