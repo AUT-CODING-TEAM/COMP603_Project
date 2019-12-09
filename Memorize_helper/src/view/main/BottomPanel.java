@@ -43,8 +43,8 @@ public class BottomPanel extends MainViewViewTemplate {
     @Override
     public void addComponents() {
         JLabel lbl_bP_todayPlan = new JLabel();
-        int todayLearnedNumber = user.getTodayLearnedNumber();
         int todayTargetNumber = user.getTodayTargetNumber();
+        int todayLearnedNumber = todayTargetNumber - user.getTodayLearnedNumber();
         int todayReviewNumber = user.getTodayReviewNumber();
         String todayPlan = "今日需新学" + todayLearnedNumber + "/" + todayTargetNumber + " " + "  今日需复习" + todayReviewNumber;
         lbl_bP_todayPlan.setText(todayPlan);
