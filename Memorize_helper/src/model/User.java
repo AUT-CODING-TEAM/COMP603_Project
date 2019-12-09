@@ -40,7 +40,12 @@ public class User {
         this.password = pass;
         this.id = id;
     }
-
+    
+    public User(String name, int total_num){
+        this.username = name;
+        this.finishedNumberInTotal = total_num;
+    }
+    
     public String getSeqPassword() {
         return this.password;
     }

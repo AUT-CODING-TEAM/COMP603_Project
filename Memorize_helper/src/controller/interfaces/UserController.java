@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
@@ -111,7 +112,21 @@ public class UserController {
         }
         return false;
     }
-
+    /**
+     * @return the rank list of memorize number
+     */
+    public final ArrayList<User> getMemorizeRank(){
+        MemorizeController mct = new MemorizeController();
+        ArrayList<User> arr = new ArrayList<User>();
+        Map<String,Integer> datas = mct.getAllUserMemorizedNum();
+        for(Entry<String, Integer> dt : datas.entrySet()){
+            if(arr.size() == 0){
+                arr.add(new User(dt.getKey(),dt.getValue()));
+            }else{
+                
+            }
+        }
+    }
     /**
      * @param user who want to activate a new plan
      * @param book which book param.user want to choose

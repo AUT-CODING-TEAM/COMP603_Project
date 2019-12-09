@@ -26,6 +26,7 @@ public class Database {
     private String password;
     private static final String CONFIG = "vocabulary_config";
     private Statement controller;
+    public PreparedStatement p_controller;
 
     /**
      * @param args the command line arguments
@@ -456,6 +457,14 @@ public class Database {
             System.err.println("SQLException from method get: " + e.getMessage());
         }
         return false;
+    }
+
+    public void prepare(String sql) {
+        try {
+            this.p_controller = this.conn.prepareStatement(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean set(String table_name, String[] key, String[] condition,

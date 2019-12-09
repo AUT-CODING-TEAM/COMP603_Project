@@ -9,6 +9,8 @@ import database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Memorize;
@@ -79,7 +81,7 @@ public class MemorizeController {
         ArrayList<Word> words = wct.getBookContent(book);
         String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
 
-        int len = words.size() > 100 ? 100: words.size();
+        int len = words.size() > 100 ? 100 : words.size();
         String[][] val = new String[len][4];
 
         for (int i = 0; i < len; i++) {
@@ -90,6 +92,7 @@ public class MemorizeController {
         result = db.add("memorize", col, val);
         return result;
     }
+
     /**
      * @param user who want enlarge plan memorize table
      * @return if init success
@@ -107,10 +110,10 @@ public class MemorizeController {
         ArrayList<Word> words = wct.getBookContent(book);
         String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
         int now_num = this.getWordNumInMemorize(user);
-        if(now_num >= words.size()){
+        if (now_num >= words.size()) {
             return true;
         }
-        int len = words.size() - now_num > 100 ? 100: words.size() - now_num;
+        int len = words.size() - now_num > 100 ? 100 : words.size() - now_num;
         String[][] val = new String[len][4];
 
         for (int i = 0; i < len; i++) {
@@ -121,6 +124,7 @@ public class MemorizeController {
         result = db.add("memorize", col, val);
         return result;
     }
+
     /**
      * @param userid the user's ID
      * @param wordid the word's ID
@@ -297,12 +301,32 @@ public class MemorizeController {
         Memorize memo = this.getMemorize(user, wd);
         return this.wrong(memo);
     }
+    /**
+     * @return the map whose key is username and value is the total memorized
+     *          words number of this user
+     */
+    public Map<String, Integer> getAllUserMemorizedNum() {
+        Database db = Database.getInstance();
+        Map<String,Integer> users = new HashMap<String,Integer>();
+        ResultSet res = db.get("USERS", "", "");
+        try {
+            while (res.next()) {
+                int id = res.getInt("ID");
+                String name = res.getString("USERNAME");
+                int num = this.countMemorizedWord(id);
+                users.put(name, num);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MemorizeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return users;
+    }
 
     /**
-     * @param user get this user's all memorized word
-     * @return all memorized word
+     * @param user get this user's memorized word in activated plan
+     * @return memorized word
      */
-    public ArrayList<Word> getMemorizedWord(User user) {
+    public ArrayList<Word> getMemorizedWordInPlan(User user) {
         Database db = Database.getInstance();
         StudyPlan plan = user.getCurrentStudyPlan();
         WordController wct = new WordController();
@@ -333,16 +357,45 @@ public class MemorizeController {
         }
         return words;
     }
-    
+
     /**
      * @return how many plan words added into the memorize table
      */
-    public int getWordNumInMemorize(User user){
-         Database db = Database.getInstance();
-         return db.count("MEMORIZE", "ID", user.getCurrentStudyPlan().getID());
+    public int getWordNumInMemorize(User user) {
+        Database db = Database.getInstance();
+        return db.count("MEMORIZE", "ID", user.getCurrentStudyPlan().getID());
     }
-    public int countMemorizedWord(User user){
-        ArrayList<Word> wd = this.getMemorizedWord(user);
+
+    /**
+     * @param user user
+     * @return the number of words user memorized in activated plan
+     */
+    public int countMemorizedWordInPlan(User user) {
+        ArrayList<Word> wd = this.getMemorizedWordInPlan(user);
         return wd.size();
+    }
+    
+    /**
+     * @param id the user id
+     * @return user's total memorized words number
+     */
+    public int countMemorizedWord(int id) {
+        int num = 0;
+        try {
+            Database db = Database.getInstance();
+            StringBuilder sbd = new StringBuilder("select count(*) as \"NUMBER\" from MEMORIZE");
+            sbd.append("where \"USER_ID\" = ? and \"AGING\" >= ?");
+            db.prepare(sbd.toString());
+            db.p_controller.setString(1, String.valueOf(id));
+            db.p_controller.setInt(2, 1);
+            ResultSet res = db.p_controller.executeQuery();
+            if (res.next()) {
+                num = res.getInt("NUMBER");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MemorizeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return num;
     }
 }
