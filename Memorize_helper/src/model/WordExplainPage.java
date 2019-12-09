@@ -5,6 +5,8 @@
  */
 package model;
 
+import controller.interfaces.WordController;
+
 /**
  *
  * @author ThinkPad
@@ -19,6 +21,12 @@ public class WordExplainPage {
         this.word = "book";
         this.phoneticSymbol = "/bʊk/";
         this.Chinese = "n.书，书籍；v.预定";
+    }
+    
+    public WordExplainPage(String word){//develop use only
+        this.word = word;
+        this.phoneticSymbol = "/" + new WordController().getAllWordByName(word).get(0).getPhonetic() + "/";
+        this.Chinese = new WordController().getAllWordByName(word).get(0).getChinese();
     }
 
     public String getWord() {

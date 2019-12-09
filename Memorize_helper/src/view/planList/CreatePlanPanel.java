@@ -112,7 +112,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         btn_confirm = new JButton();
         btn_confirm.setText("学习该计划");
 
-        btn_confirm.addActionListener(new MakePlanController(user, this));
+        btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
         add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         selectedPlanFrame.add(this);
