@@ -344,7 +344,7 @@ public class PlanController {
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
                 MemorizeController mct = new MemorizeController();
-                if (mct.countMemorizedWord(user) == p.getTotalNumber()) {
+                if (mct.countMemorizedWordInPlan(user) == p.getTotalNumber()) {
                     Database db = Database.getInstance();
                     db.set("PLAN", "ID", p.getID(), "FINISH", "1");
                     p.setFinished(1);
