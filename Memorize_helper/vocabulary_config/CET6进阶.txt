@@ -15,8 +15,7 @@ sew	səu	vt.缝制vi.缝纫
 shade	ʃeid	n.荫；遮光物vi.荫蔽
 shave	ʃeiv	vt.剃，刮vi.修面
 shear	ʃiə	vt.剪；剥夺vi.剪
-shed	ʃed	vt.流出；散发；脱落
-shed	ʃed	n.棚，小屋；贷棚
+shed	ʃed	n.棚，小屋；贷棚vt.流出；散发；脱落
 sheet	ʃi:t	n.被单；纸张；薄板
 shelf	ʃelf	n.搁板，架子
 shelter	ʃeltə	n.隐蔽处；掩蔽，庇护
@@ -66,8 +65,7 @@ smart	sma:t	a.巧妙的；洒脱的
 soak	səuk	vt.浸，泡vi.浸泡
 sɔil	sɔil	vt.弄脏vi.变脏
 solar	səulə	a.太阳的，日光的
-sole	səul	n.脚底，鞋底，袜底
-sole	səul	a.单独的，唯一的
+sole	səul	a.单独的，唯一的n.脚底，鞋底，袜底
 solemn	sɔləm	a.庄严的；隆重的
 solid	sɔlid	a.固体的n.固体
 soluble	sɔljubl	a.可溶的；可以解决的
@@ -108,8 +106,7 @@ spur	spə:	n.刺激物vt.刺激
 square	skweə	n.正方形；广场
 squeeze	skwi:z	vt.&vi.榨，挤；压榨
 stability	stə'biliti	n.稳定，稳定性，巩固
-stable	steibl	a.稳定的，不变的
-stable	steibl	n.厩，马厩，牛棚
+stable	steibl	a.稳定的，不变的n.厩，马厩，牛棚
 stack	stæk	n.堆，垛vt.堆积
 staff	sta:f	n.工作人员；参谋
 stage	steidʒ	n.舞台；戏剧；阶段
@@ -152,8 +149,7 @@ stretch	stretʃ	vt.伸展vi.伸n.伸展
 string	striŋ	n.线，细绳；一串
 strip	strip	vt.剥；夺去n.条带
 stripe	straip	n.条纹，条子
-stroke	strəuk	n.打，击；鸣声；中风
-stroke	strəuk	vt.&n.抚，摩，捋
+stroke	strəuk	n.打，击；鸣声；中风vt.抚，摩，捋
 structural	strΛktʃərəl	a.结构的，构造的
 stuff	stΛf	n.材料vt.装，填，塞
 submarine	sΛbməri:n	a.水下的n.潜水艇
@@ -189,8 +185,7 @@ suspend	səs'pend	vt.吊，悬；推迟
 suspicion	səs'piʃən	n.怀疑，疑心，猜疑
 suspicious	səs'piʃəs	adj.怀疑的；可疑的
 sustain	səs'tein	vt.支撑；供养；忍受
-swallow	swɔləu	n.燕子
-swallow	swɔləu	vt.&vi.吞下，咽下
+swallow	swɔləu	n.燕子vt.&vi.吞下，咽下
 sway	swei	vi.摇动vt.摇；摇动
 swear	sweə	vt.宣(誓)vi.诅咒
 sweater	swetə	n.厚运动衫，毛线衫
@@ -212,7 +207,6 @@ talent	tælənt	n.天才；才能；人才
 talk	tɔ:k	vi.讲话vt.谈论
 tame	teim	a.驯服的；顺从的
 tank	tæŋk	n.坦克；大容器，槽
-tap	tæp	vt.&vi.&n.轻叩
 tap	tæp	n.塞子；龙头vt.开发
 taste	teist	n.味觉，品味
 technical	teknikəl	a.技术的，工艺的
@@ -224,12 +218,10 @@ temple	templ	n.圣堂，神殿，庙宇
 temporary	tempərəri	a.暂时的，临时的
 tempt	tempt	vt.引诱，诱惑；吸引
 temptation	temp'teiʃən	n.诱惑，引诱
-tend	tend	vt.照管，照料，护理
-tend	tend	vi.走向，趋向；倾向
+tend	tend	vt.照管，照料，护理vi.走向，趋向；倾向
 tendency	tendənsi	n.趋向，趋势，倾向
 tender	tendə	a.嫩的；脆弱的
-tense	tens	n.时态，时
-tense	tens	a.拉紧的，绷紧的
+tense	tens	n.时态，时a.拉紧的，绷紧的
 tension	tenʃən	n.紧张,不安,拉紧,张力
 terminal	tə:minl	a.末端的n.末端
 terrible	terəbl	a.可怕的；极度的
@@ -259,9 +251,8 @@ tip	tip	vt.轻击vi.给小费
 tire	taiə	vi.疲劳，累；厌倦
 tissue	tisju:	n.薄绢；薄纸；组织
 toast	təust	n.烤面包vt.烘，烤
-toast	təust	n.祝酒；祝酒词
 toe	təu	n.脚趾，足尖
-tɔilet	tɔilit	n.厕所，盥洗室，浴室
+toilet	tɔilit	n.厕所，盥洗室，浴室
 tolerance	tɔlərəns	n.忍受，容忍；公差
 tolerate	tɔləreit	vt.忍受，容忍，宽恕
 tone	təun	n.音；腔调；声调
@@ -359,8 +350,7 @@ usage	ju:zidʒ	n.使用，对待；惯用法
 utility	ju:'tiliti	n.效用，有用，实用
 utilize	ju:tilaiz	vt.利用
 utmost	Λtməust	a.最远的n.极限
-utter	Λtə	a.完全的，彻底的
-utter	Λtə	vt.发出，说，讲
+utter	Λtə	a.完全的，彻底的vt.发出，说，讲
 vacant	veikənt	a.空的；未被占用的
 vacuum	vækjuəm	n.真空；真空吸尘器
 vague	veig	a.模糊的，含糊的
@@ -387,7 +377,6 @@ veteran	vetərən	n.老兵，老手
 via	vaiə	prep.经过；通过
 vibrate	vai'breit	vt.使颤动vi.颤动
 vice	vais	n.罪恶；恶习；缺点
-vice	vais	n.(老)虎钳
 vigorous	vigərəs	a.朝气蓬勃的
 vinegar	vinigə	n.醋
 violent	vaiələnt	a.猛烈的；狂暴的

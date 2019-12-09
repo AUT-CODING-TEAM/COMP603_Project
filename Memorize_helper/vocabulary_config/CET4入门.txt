@@ -172,7 +172,6 @@ beach	bi:tʃ	n.海滩，湖滩，河滩
 beam	bi:m	n.梁；横梁；束，柱
 bean	bi:n	n.豆，蚕豆
 bear	beə	n.熊；粗鲁的人
-bear	beə	vt.容忍；负担；生育
 beard	biəd	n.胡须，络腮胡子
 beast	bi:st	n.兽，野兽；牲畜
 beat	bi:t	vt.&vi.打，敲；打败
@@ -267,8 +266,7 @@ bound	baund	a.一定的；有义务的
 boundary	baundəri	n.分界线，办界
 bow	bau	n.弓；蝴蝶结；鞠躬
 bowl	bəul	n.碗，钵；碗状物
-box	bɔks	n.箱，盒；包箱
-box	bɔks	vi.拳击，打拳
+box	bɔks	n.箱，盒；包箱vi.拳击，打拳
 boy	bɔi	n.男孩，少年；家伙
 brain	brein	n.脑，脑髓；脑力
 brake	breik	n.闸，刹车vi.制动
@@ -338,8 +336,7 @@ camera	kæmərə	n.照相机，摄影机
 camp	kæmp	n.野营，营地，兵营
 campaign	kæm'pein	n.战役；运动
 campus	kæmpəs	n.校园，学校场地
-can	kæn	aux.v.能，会，可能
-can	kæn	n.罐头，听头；容器
+can	kæn	aux.v.能，会，可能n.罐头，听头；容器
 Canadian	kə'neidjən	a.加拿大的
 canal	kə'næl	n.运河；沟渠；管
 cancel	kænsəl	vt.取消，撤消；删去
@@ -367,7 +364,6 @@ carrier	kæriə	n.运输工具；运载工具
 carry	kæri	vt.携带；运载；传送
 cart	ka:t	n.二轮运货马车
 case	keis	n.情况；事实；病例
-case	keis	n.箱(子)，盒(子)，套
 cash	kæʃ	n.现金，现款
 cassette	ka:'set	n.盒式录音带；盒子
 cast	ka:st	vt.投，扔，抛；浇铸
@@ -608,8 +604,7 @@ contain	kən'tein	vt.包含，容纳；等于
 container	kən'teinə	n.容器；集装箱
 contemporary	kən'tempərəri	a.当代的，同时代的
 contempt	kən'tempt	n.轻蔑；藐视；受辱
-content	kɔntent,kən'tent	n.内容，目录；容量
-content	kɔntent,kən'tent	a.满意的，满足的
+content	kɔntent,kən'tent	n.内容，目录；容量a.满意的，满足的
 contest	kən'test,'kɔntest	vt.争夺，争取；辩驳
 continent	kɔntinənt	n.大陆；陆地；洲
 continual	kən'tinjuəl	a.不断的；连续的
@@ -1069,13 +1064,12 @@ essential	i'senʃəl	a.必要的，本质的
 establish	is'tæbliʃ	vt.建立，设立；确立
 establishment	is'tæbliʃmənt	n.建立，设立，确立
 estimate	estimit,'estimeit	vt.估计，评价n.估计
-əurope	juərəp	n.欧洲
-əuropean	juərə'pi:ən	a.欧洲的n.欧洲人
+europe	juərəp	n.欧洲
+european	juərə'pi:ən	a.欧洲的n.欧洲人
 evaluate	i'væljueit	vt.评价，估…的价
 evaporate	i'væpəreit	vt.使蒸发vi.蒸发
 eve	i:v	n.前夜，前夕，前一刻
-even	i:vən	ad.甚至；甚至更，还
-even	i:vən	a.均匀的；平的
+even	i:vən	ad.甚至；甚至更，还a.均匀的；平的
 evening	i:vniŋ	n.傍晚，黄昏，晚上
 event	i'vent	n.事件，大事；事变
 eventually	i'ventjuəli	ad.终于；最后
@@ -1167,7 +1161,6 @@ fail	feil	vi.失败；失灵；不能
 failure	feiljə	n.失败；失败的人
 faint	feint	a.微弱的；虚弱的
 fair	feə	a.公平的；相当的
-fair	feə	n.定期集市；博览会
 fairly	feəli	ad.相当；公平地
 faith	feiθ	n.信任，信心；信仰
 faithful	feiθful	a.忠诚的；如实的
@@ -1178,8 +1171,7 @@ familiar	fə'miljə	a.熟悉的；冒昧的
 family	fæmili	n.家，家庭；家族
 famine	fæmin	n.饥荒；严重的缺乏
 famous	feiməs	a.著名的，出名的
-fan	fæn	n.(运动等)狂热爱好者
-fan	fæn	n.扇子，风扇vt.扇
+fan	fæn	n.扇子，风扇；(运动等)狂热爱好者vt.扇
 fancy	fænsi	n.想象力；设想；爱好
 far	fa:	a.远的ad.远，遥远
 fare	feə	n.车费，船费，票价
