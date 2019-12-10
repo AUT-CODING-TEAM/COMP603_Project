@@ -54,14 +54,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        selectedPlanFrame = new JFrame("Schedule My Plan");
+        selectedPlanFrame = new JFrame("Schedule the Plan");
         setSize(selectedPlanFrame, 720, 720);
         selectedPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectedPlanFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "please make a plan first", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "please schedule the plan first", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
                     new CreatePlanPanel(user, selectedPlan);
                 }
                 else{

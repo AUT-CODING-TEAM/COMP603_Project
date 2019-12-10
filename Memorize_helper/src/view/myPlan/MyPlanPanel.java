@@ -72,7 +72,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         JLabel lbl_myPP_myPlan = new JLabel("My Plan", SwingConstants.CENTER);
         add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_myPP_chooseBook = new JLabel("Select Vocabulary List");
+        JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");
         add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         addMyBookPanel();
@@ -139,7 +139,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
             myBookPanel.add(jPanel);
         }
 
-        JButton btn_myBP_addBook = new JButton("Add Plan");
+        JButton btn_myBP_addBook = new JButton("Add a Plan");
         btn_myBP_addBook.addActionListener(new ShowPlanListController(myPlanFrame, user));
         myBookPanel.add(btn_myBP_addBook);
 

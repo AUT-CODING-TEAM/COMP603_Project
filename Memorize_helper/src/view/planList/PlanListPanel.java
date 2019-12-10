@@ -38,14 +38,14 @@ public class PlanListPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        JFrame planListFrame = new JFrame("Select Vocabulary List");
+        JFrame planListFrame = new JFrame("Add a Plan");
         setSize(planListFrame, 720, 720);
         planListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 if (user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "Please choose a vocabulary book first!", "information ", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list first!", "information ", JOptionPane.INFORMATION_MESSAGE);
                     new PlanListPanel(user, new PlanListInfo(user));
                 } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));
