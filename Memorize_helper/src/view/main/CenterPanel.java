@@ -36,27 +36,27 @@ public class CenterPanel extends MainViewViewTemplate {
         //right fill label
         add(new JLabel(), new GridBagTool().setGridx(3).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
 
-        JLabel lbl_cP_remainingDayPart1 = new JLabel("remaining", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart1 = new JLabel("Remaining", SwingConstants.CENTER);
         add(lbl_cP_remainingDayPart1, new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.15));
 
-        JLabel lbl_cP_todayTargetNumberPart1 = new JLabel("今日单词", SwingConstants.CENTER);
+        JLabel lbl_cP_todayTargetNumberPart1 = new JLabel("Today's", SwingConstants.CENTER);
         add(lbl_cP_todayTargetNumberPart1, new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.15));
 
         addRemainingDayRest();
 
         addTodayTargetNumberRest();
 
-        JLabel lbl_cP_studyPlan = new JLabel("当前计划：" + user.getCurrentStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
+        JLabel lbl_cP_studyPlan = new JLabel("My Plan: " + user.getCurrentStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JButton btn_cP_changePlan = new JButton("修改计划");
+        JButton btn_cP_changePlan = new JButton("Change Vocabulary List");
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JLabel lbl_cP_finishedNumber = new JLabel("已学完" + user.getFinishedNumberInPlan() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("Learned: " + user.getFinishedNumberInPlan() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JButton btn_cP_vocabulary = new JButton("单词列表");
+        JButton btn_cP_vocabulary = new JButton("Word List");
         btn_cP_vocabulary.addActionListener(new ShowVocabularyListController(mainView, user));
         add(btn_cP_vocabulary, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
@@ -70,7 +70,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
 
-        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1? "day" : "days", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1? "Day" : "Days", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
@@ -83,7 +83,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_todayTargetNumberPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_todayTargetNumberPart2);
 
-        JLabel lbl_cP_todayTargetNumberPart3 = new JLabel("个", SwingConstants.CENTER);
+        JLabel lbl_cP_todayTargetNumberPart3 = new JLabel("", SwingConstants.CENTER);
         jPanel.add(lbl_cP_todayTargetNumberPart3);
 
         add(jPanel, new GridBagTool().setGridx(2).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
@@ -92,7 +92,6 @@ public class CenterPanel extends MainViewViewTemplate {
     private void addProgressBar() {
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
         int progress = user.getFinishedNumberInPlan() * 100 / user.getCurrentStudyPlan().getTotalNumber();
-        System.out.println("progress = " + progress);
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);
         psBar_cP_progress.setBackground(Color.decode("#F8F6F1"));

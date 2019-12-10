@@ -39,7 +39,7 @@ public class MemoryPanel extends GroundPanelTemplate {
     }
     
     public void addComponents() {
-        JFrame memoryFrame = new JFrame("学习");
+        JFrame memoryFrame = new JFrame("Learning");
         setSize(memoryFrame, 720, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
@@ -62,7 +62,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         
         addChoicesPanel();
         
-        JButton btn_mP_hint = new JButton("提示");
+        JButton btn_mP_hint = new JButton("Prompt");
         btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage().setWord(memoryPage.getWord()), memoryFrame));
         add(btn_mP_hint, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
         
@@ -75,10 +75,10 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel progressPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         progressPanel.setLayout(new BorderLayout());
         
-        JLabel lbl_mP_newLearnNumber = new JLabel("       需新学 " + memoryPage.getTargetNumber() + "       ", SwingConstants.CENTER);
+        JLabel lbl_mP_newLearnNumber = new JLabel("       New:  " + memoryPage.getTargetNumber() + "       ", SwingConstants.CENTER);
         progressPanel.add(lbl_mP_newLearnNumber, BorderLayout.NORTH);
         
-        JLabel lbl_mP_turnNumber = new JLabel("       需复习 " + memoryPage.getTurnNumer() + "       ", SwingConstants.CENTER);
+        JLabel lbl_mP_turnNumber = new JLabel("       Review: " + memoryPage.getTurnNumer() + "       ", SwingConstants.CENTER);
         progressPanel.add(lbl_mP_turnNumber, BorderLayout.SOUTH);
         
         add(progressPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTHWEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));

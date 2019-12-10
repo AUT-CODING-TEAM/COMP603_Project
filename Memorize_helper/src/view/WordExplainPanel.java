@@ -37,7 +37,7 @@ public class WordExplainPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        JFrame wordExplainFrame = new JFrame("单词释义");
+        JFrame wordExplainFrame = new JFrame("Word Definition");
         setSize(wordExplainFrame, 720, 360);
         wordExplainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         wordExplainFrame.addWindowListener(new WindowAdapter() {

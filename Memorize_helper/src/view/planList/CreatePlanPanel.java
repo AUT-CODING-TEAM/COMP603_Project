@@ -54,14 +54,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        selectedPlanFrame = new JFrame("制定计划");
+        selectedPlanFrame = new JFrame("Schedule My Plan");
         setSize(selectedPlanFrame, 720, 720);
         selectedPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectedPlanFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "please make a plan first", "error ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "please make a plan first", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
                     new CreatePlanPanel(user, selectedPlan);
                 }
                 else{
@@ -82,7 +82,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         addMakePlanPanel();
 
         btn_confirm = new JButton();
-        btn_confirm.setText("学习该计划");
+        btn_confirm.setText("OK");
 
         btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
         add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
@@ -100,7 +100,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         selectedBookName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         topJPanel.add(selectedBookName);
 
-        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + "词", SwingConstants.CENTER);
+        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + "words", SwingConstants.CENTER);
         selectedBookTotalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
         topJPanel.add(selectedBookTotalNumber);
 
@@ -111,8 +111,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
         MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
 
-        optionTabs.addTab("按每天背单词数学习", makePlanTabPanelPart1);
-        optionTabs.addTab("按完成天数学习", makePlanTabPanelPart2);
+        optionTabs.addTab("based on DAILY TASK", makePlanTabPanelPart1);
+        optionTabs.addTab("based on LEARNING DURATION", makePlanTabPanelPart2);
 
         add(optionTabs, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.7));
     }
@@ -137,14 +137,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 if (selectedPlan.getTotalNumber() % 5 == 0) {
                     s = new String[selectedPlan.getTotalNumber() / 5];
                     for (int i = 0; i < s.length; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
                     }
                 } else {
                     s = new String[selectedPlan.getTotalNumber() / 5 + 1];
                     for (int i = 0; i < s.length - 1; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
                     }
-                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + "词"));
+                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + "words"));
                 }
                 makePlanListPart1 = new ListInScrollTemplate(s);
                 makePlanListPart1.setEnabled(true);

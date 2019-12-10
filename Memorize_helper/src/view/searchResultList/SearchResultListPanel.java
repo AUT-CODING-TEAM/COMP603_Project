@@ -40,7 +40,7 @@ public class SearchResultListPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        searchResultListFrame = new JFrame("搜索");
+        searchResultListFrame = new JFrame("Look Up");
         setSize(searchResultListFrame, 720, 720);
         searchResultListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         searchResultListFrame.addWindowListener(new WindowAdapter() {
@@ -73,7 +73,7 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         searchPanel.setLayout(new GridLayout(3, 1));
         
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
-        JLabel lbl_sRLP_searchTip = new JLabel("查词");
+        JLabel lbl_sRLP_searchTip = new JLabel("Look Up");
         jPanel.add(lbl_sRLP_searchTip);
 
         tf_sRLP_keyword = new JTextField(inputKeyWord, 15);

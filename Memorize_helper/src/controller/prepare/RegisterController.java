@@ -38,16 +38,16 @@ public class RegisterController implements ActionListener {
 
         int registerCheck = registerCheck(username, password, pwdConfirm);
         if (registerCheck == 1) {
-            JOptionPane.showMessageDialog(null, "注册成功！", "提示",
-                    JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Successfully Signed Up!", "informaiton",
+                    JOptionPane.INFORMATION_MESSAGE);
             new LoginDialog();
             registerDialog.dispose();
         } else if (registerCheck == 0) {
-            JOptionPane.showMessageDialog(null, "注册失败！", "错误 ",
+            JOptionPane.showMessageDialog(null, "Fail to Sign Up!", "error",
                     JOptionPane.ERROR_MESSAGE);
         } else if(registerCheck == -1){
-            JOptionPane.showMessageDialog(null, "两次密码不一致，或密码为空",
-                    "错误 ", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Incomatible or Illegal Password",
+                    "error ", JOptionPane.ERROR_MESSAGE);
         }
 
     }

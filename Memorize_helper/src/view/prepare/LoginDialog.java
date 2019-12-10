@@ -36,24 +36,24 @@ public class LoginDialog extends JDialog {
 
     private void setProperty() {
         setSize();
-        setTitle("登录");
+        setTitle("Sign In");
         setLayout(new GridLayout(3, 2));
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void addComponents() {
-        JLabel lbl_lgD_usernameTip = new JLabel("用户名：", SwingConstants.CENTER);
+        JLabel lbl_lgD_usernameTip = new JLabel("Username:", SwingConstants.CENTER);
         add(lbl_lgD_usernameTip);
         JTextField tf_lgD_username = new JTextField();
         add(tf_lgD_username);
         
-        JLabel lbl_lgD_passwordTip = new JLabel("密码：", SwingConstants.CENTER);
+        JLabel lbl_lgD_passwordTip = new JLabel("Password:", SwingConstants.CENTER);
         add(lbl_lgD_passwordTip);
         JPasswordField tf_lgD_password = new JPasswordField();
         add(tf_lgD_password);
         
-        JButton btn_lgD_register = new JButton("先去注册");
+        JButton btn_lgD_register = new JButton("Sign Up First");
         btn_lgD_register.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +63,7 @@ public class LoginDialog extends JDialog {
         });
         add(btn_lgD_register);
         
-        JButton btn_lgD_ok = new JButton("确定");
+        JButton btn_lgD_ok = new JButton("Sign In");
         btn_lgD_ok.addActionListener(new LoginController(this, tf_lgD_username, tf_lgD_password));
         add(btn_lgD_ok);
     }

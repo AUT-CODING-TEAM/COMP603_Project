@@ -27,11 +27,11 @@ public class RankListInfo {
     public String[] getRankListInfo(int col) {
         String[] s = new String[users.size() + 1];
         if (col == 0) {
-            s[0] = String.format("%18s", "排名");
+            s[0] = String.format("%18s", "Rank");
         } else if (col == 1) {
-            s[0] = String.format("%18s", "用户名");
+            s[0] = String.format("%18s", "Username");
         } else if (col == 2) {
-            s[0] = String.format("%18s", "总词数");
+            s[0] = String.format("%18s", "Learned Words");
         }
 
         for (int i = 1; i < s.length; i++) {

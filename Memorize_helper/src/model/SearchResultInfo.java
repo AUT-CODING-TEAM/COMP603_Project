@@ -17,7 +17,7 @@ public class SearchResultInfo {
     private String inputKeyWord;
     private ArrayList<String> results;
     
-    public SearchResultInfo(String inputKeyWord) {// develop use only
+    public SearchResultInfo(String inputKeyWord) {
         this.inputKeyWord = inputKeyWord;
         results = new ArrayList<>();
         ArrayList<Word> resultsInDB = new WordController().search(inputKeyWord);

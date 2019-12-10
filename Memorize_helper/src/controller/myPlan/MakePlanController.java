@@ -50,17 +50,12 @@ public class MakePlanController implements ActionListener{
         
         //login first time
         if (createPlanPanel.getQuantity() != null) {
-            System.out.println(createPlanPanel.getQuantity());
-            System.out.println(createPlanPanel.getSelectedPlan().getStudyPlanName());
-            
             //"days" contains "day"
             if (createPlanPanel.getQuantity().contains("day")) {
-                Integer.parseInt(createPlanPanel.getQuantity().split("day")[0]);
                 new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("day")[0]));
             }
             else{
-                System.out.println(Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
-                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
+                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("word")[0]));
             }
             selectedPlanFrame.dispose();
             new MainView(user);

@@ -38,7 +38,7 @@ public class PlanListPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        JFrame planListFrame = new JFrame("添加词书");
+        JFrame planListFrame = new JFrame("Select Vocabulary List");
         setSize(planListFrame, 720, 720);
         planListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -48,7 +48,7 @@ public class PlanListPanel extends GroundPanelTemplate {
                     new MyPlanPanel(user, new MyPlanInfo(user));
                 } catch (Exception exception) {
                     if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-                        JOptionPane.showMessageDialog(null, "please choose a vocabulary book first", "error ", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Please choose a vocabulary book first!", "information ", JOptionPane.INFORMATION_MESSAGE);
                         new PlanListPanel(user, new PlanListInfo(user));
                     }
                 }
@@ -64,7 +64,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_pLP_rankList = new JLabel("添加词书", SwingConstants.CENTER);
+        JLabel lbl_pLP_rankList = new JLabel("Select Vocabulary List", SwingConstants.CENTER);
         add(lbl_pLP_rankList, new GridBagTool().setFill(GridBagConstraints.VERTICAL).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         JPanel planListPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
@@ -84,7 +84,7 @@ public class PlanListPanel extends GroundPanelTemplate {
             lbl_pLP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
             jPanel.addStudyPlanName(lbl_pLP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
 
-            JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
+            JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
             lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
@@ -97,7 +97,7 @@ public class PlanListPanel extends GroundPanelTemplate {
                 jPanel.addMouseListener(addPlanController);
             } else {
                 jPanel.setBackground(new Color(91, 110, 125));
-                jPanel.setBorder(new TitledBorder("已添加"));
+                jPanel.setBorder(new TitledBorder("Added"));
             }
 
             planListPanel.add(jPanel);

@@ -52,7 +52,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        myPlanFrame = new JFrame("我的计划");
+        myPlanFrame = new JFrame("My Plan");
         setSize(myPlanFrame, 720, 360);
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         myPlanFrame.addWindowListener(new WindowAdapter() {
@@ -69,15 +69,15 @@ public class MyPlanPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_myPP_myPlan = new JLabel("我的计划", SwingConstants.CENTER);
+        JLabel lbl_myPP_myPlan = new JLabel("My Plan", SwingConstants.CENTER);
         add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_myPP_chooseBook = new JLabel("选择学习词书");
+        JLabel lbl_myPP_chooseBook = new JLabel("Select Vocabulary List");
         add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         addMyBookPanel();
 
-        btn_myPP_handleByBookSituation = new JButton("继续学习该计划");
+        btn_myPP_handleByBookSituation = new JButton("Switch");
         btn_myPP_handleByBookSituation.setEnabled(false);
         btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
         add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
@@ -97,7 +97,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
             lbl_myPP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
             jPanel.addStudyPlanName(lbl_myPP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
 
-            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
+            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
             lbl_myPP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
@@ -110,14 +110,9 @@ public class MyPlanPanel extends GroundPanelTemplate {
                     bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
                     if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
                         btn_myPP_handleByBookSituation.setEnabled(true);
-                        btn_myPP_handleByBookSituation.setText("学习该计划");
-                    } else if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 1) {
-                        btn_myPP_handleByBookSituation.setEnabled(true);
-                        btn_myPP_handleByBookSituation.setText("复习该计划");
                     }
                     if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
                         btn_myPP_handleByBookSituation.setEnabled(false);
-                        btn_myPP_handleByBookSituation.setText("继续学习该计划");
                     }
                 }
 
@@ -138,13 +133,13 @@ public class MyPlanPanel extends GroundPanelTemplate {
                 }
             });
             if (myPlanInfo.getMyStudyPlans().get(i).getFinished() == 1) {
-                jPanel.setBorder(new TitledBorder("已学完"));
+                jPanel.setBorder(new TitledBorder("Completed"));
             }
 
             myBookPanel.add(jPanel);
         }
 
-        JButton btn_myBP_addBook = new JButton("添加词书");
+        JButton btn_myBP_addBook = new JButton("Add Plan");
         btn_myBP_addBook.addActionListener(new ShowPlanListController(myPlanFrame, user));
         myBookPanel.add(btn_myBP_addBook);
 

@@ -36,7 +36,7 @@ public class VocabularyListPanel extends GroundPanelTemplate {
     }
     
     public void addComponents() {
-        vocabularyListFrame = new JFrame("单词列表");
+        vocabularyListFrame = new JFrame("Word List");
         setSize(vocabularyListFrame, 720, 720);
         vocabularyListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vocabularyListFrame.addWindowListener(new WindowAdapter() {
@@ -55,14 +55,14 @@ public class VocabularyListPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         
-        JLabel lbl_vLP_vocabularyList = new JLabel("单词列表", SwingConstants.CENTER);
+        JLabel lbl_vLP_vocabularyList = new JLabel("Word List", SwingConstants.CENTER);
         add(lbl_vLP_vocabularyList, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
         
         JTabbedPane topTabs = new JTabbedPane();
-        topTabs.addTab("已学单词", new VocabularyListTabPanel(VocabularyListInfo.STUDIED));
-        topTabs.addTab("未学单词", new VocabularyListTabPanel(VocabularyListInfo.UNSTUDIED));
-        topTabs.addTab("已斩单词", new VocabularyListTabPanel(VocabularyListInfo.CUT));
-        topTabs.addTab("收藏单词", new VocabularyListTabPanel(VocabularyListInfo.COLLECT));
+        topTabs.addTab("Learned", new VocabularyListTabPanel(VocabularyListInfo.STUDIED));
+        topTabs.addTab("Unlearned", new VocabularyListTabPanel(VocabularyListInfo.UNSTUDIED));
+        topTabs.addTab("Executed", new VocabularyListTabPanel(VocabularyListInfo.CUT));
+        topTabs.addTab("Favorites", new VocabularyListTabPanel(VocabularyListInfo.COLLECT));
         add(topTabs, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.8));
         
         vocabularyListFrame.add(this);
@@ -85,11 +85,11 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             setProperty();
             addComponents();
             
-            lbl_vLTP_vocabularyTotalNumber.setText("单词总数:" + String.valueOf(vocabularyListInfo.getVocabularyListInfo(0).length));
+            lbl_vLTP_vocabularyTotalNumber.setText("Total Number of Words: " + String.valueOf(vocabularyListInfo.getVocabularyListInfo(0).length));
             list_vLTP_vocabularyListPart1.setListData(vocabularyListInfo.getVocabularyListInfo(0));
             list_vLTP_vocabularyListPart2.setListData(vocabularyListInfo.getVocabularyListInfo(1));
             if (option == 3) {
-                JButton btn_vLTP_learnCollect = new JButton("学习");
+                JButton btn_vLTP_learnCollect = new JButton("Start Learning My Favorites");
                 btn_vLTP_learnCollect.addActionListener(new StartLearnController(mainView, user, vocabularyListFrame));
                 jPanel.add(btn_vLTP_learnCollect, BorderLayout.EAST);
             }

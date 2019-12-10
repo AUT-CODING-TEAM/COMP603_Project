@@ -35,12 +35,12 @@ public class BottomPanel extends MainViewViewTemplate {
         int todayTargetNumber = user.getTodayTargetNumber();
         int todayLearnedNumber = todayTargetNumber - user.getTodayLearnedNumber();
         int todayReviewNumber = user.getTodayReviewNumber();
-        String todayPlan = "今日需新学" + todayLearnedNumber + "/" + todayTargetNumber + " " + "  今日需复习" + todayReviewNumber;
+        String todayPlan = "New Words for Today: " + todayLearnedNumber + "/" + todayTargetNumber + " " + "  Review for Today: " + todayReviewNumber;
         lbl_bP_todayPlan.setText(todayPlan);
         lbl_bP_todayPlan.setHorizontalAlignment(SwingConstants.CENTER);
         add(lbl_bP_todayPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
-        JButton btn_bP_startLearn = new JButton("    开始背单词吧    ");
+        JButton btn_bP_startLearn = new JButton("    Start Learning    ");
         btn_bP_startLearn.addActionListener(new StartLearnController(mainView, user));
         add(btn_bP_startLearn, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
     }
