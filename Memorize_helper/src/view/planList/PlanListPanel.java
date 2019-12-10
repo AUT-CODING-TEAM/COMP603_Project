@@ -7,31 +7,13 @@ package view.planList;
 
 import view.OnePlanPanel;
 import controller.planList.AddPlanController;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import model.MyPlanInfo;
-import model.PlanListInfo;
-import model.RankListInfo;
-import model.User;
-import view.GridBagTool;
-import view.GroundPanelTemplate;
-import view.ListInScrollTemplate;
-import view.main.MainView;
+import model.*;
+import view.*;
 import view.myPlan.MyPlanPanel;
 
 /**
@@ -55,23 +37,11 @@ public class PlanListPanel extends GroundPanelTemplate {
         setLayout(new GridBagLayout());
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void addComponents() {
         JFrame planListFrame = new JFrame("添加词书");
-        setSize(planListFrame);
+        setSize(planListFrame, 720, 720);
         planListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //better jump to changePlanPanel
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 try {
@@ -107,7 +77,6 @@ public class PlanListPanel extends GroundPanelTemplate {
         AddPlanController addPlanController = new AddPlanController(user, planListFrame);
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
-//            JPanel jPanel = new JPanel(new GridBagLayout());
             OnePlanPanel jPanel = new OnePlanPanel();
             jPanel.setStudyPlan(planListInfo.getStudyPlans().get(i));
 
@@ -140,5 +109,4 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.add(this);
         planListFrame.setVisible(true);
     }
-
 }

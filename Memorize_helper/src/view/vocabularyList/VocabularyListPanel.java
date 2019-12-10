@@ -10,8 +10,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import model.*;
 import view.*;
 
@@ -33,24 +31,13 @@ public class VocabularyListPanel extends GroundPanelTemplate {
         addComponents();
     }
     
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-    
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
     
     public void addComponents() {
         vocabularyListFrame = new JFrame("单词列表");
-        setSize(vocabularyListFrame);
+        setSize(vocabularyListFrame, 720, 720);
         vocabularyListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vocabularyListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -104,7 +91,6 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             if (option == 3) {
                 JButton btn_vLTP_learnCollect = new JButton("学习");
                 btn_vLTP_learnCollect.addActionListener(new StartLearnController(mainView, user, vocabularyListFrame));
-//                add(btn_vLTP_learnCollect, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
                 jPanel.add(btn_vLTP_learnCollect, BorderLayout.EAST);
             }
         }
@@ -120,7 +106,6 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.05).setWeighty(0.1));
             
             lbl_vLTP_vocabularyTotalNumber = new JLabel();
-//            add(lbl_vLTP_vocabularyTotalNumber, new GridBagTool().setFill(GridBagConstraints.VERTICAL).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
 
             jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
             jPanel.setLayout(new BorderLayout());
@@ -134,27 +119,9 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             vocabularyListTabPanel.add(list_vLTP_vocabularyListPart1);
             
             list_vLTP_vocabularyListPart2 = new ListInScrollTemplate(vocabularyListInfo.getVocabularyListInfo(1));
-//            list_vLTP_vocabularyListPart2.setEnabled(true);
-//            list_vLTP_vocabularyListPart2.setBackground(new Color(51,51,51));
-//            list_vLTP_vocabularyListPart2.addListSelectionListener(new ListSelectionListener() {
-//                @Override
-//                public void valueChanged(ListSelectionEvent e) {
-//                    if (list_vLTP_vocabularyListPart2.getValueIsAdjusting()) {
-//                        JLabel selectedItem = (JLabel)e.getSource();
-//                        System.out.println(e.getSource());
-//                        if (selectedItem.getBackground().equals(new Color(51,51,51))) {
-//                            selectedItem.setBackground(new Color(248,246,241));
-//                        }
-//                        else if (selectedItem.getBackground().equals(new Color(248,246,241))) {
-//                            selectedItem.setBackground(new Color(51,51,51));
-//                        }
-//                    }
-//                }
-//            });
             vocabularyListTabPanel.add(list_vLTP_vocabularyListPart2);
             
             JScrollPane jScrollPane = new JScrollPane(vocabularyListTabPanel);
-//            add(jScrollPane, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(4).setGridheight(1).setWeightx(1).setWeighty(0.9));
             add(jScrollPane, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(3).setGridheight(1).setWeightx(1).setWeighty(0.9));
         }
     }

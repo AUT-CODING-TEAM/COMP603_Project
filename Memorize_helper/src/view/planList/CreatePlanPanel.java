@@ -6,37 +6,15 @@
 package view.planList;
 
 import controller.myPlan.MakePlanController;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import model.MyPlanInfo;
-import model.PlanListInfo;
-import model.StudyPlan;
-import model.User;
-import model.VocabularyListInfo;
-import view.GridBagTool;
-import view.GroundPanelTemplate;
-import view.ListInScrollTemplate;
+import model.*;
+import view.*;
 import view.myPlan.MyPlanPanel;
-import view.vocabularyList.VocabularyListPanel;
 
 /**
  *
@@ -71,24 +49,13 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         addComponents();
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
 
     public void addComponents() {
         selectedPlanFrame = new JFrame("制定计划");
-        setSize(selectedPlanFrame);
+        setSize(selectedPlanFrame, 720, 720);
         selectedPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectedPlanFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -195,9 +162,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    String dayWord = i == 0? "day": "days";
-                    s[i] = String.format("%50s", (i + 1) + dayWord);
-//                    s[i] = String.format("%50s", (i + 1) + "天");
+                    s[i] = String.format("%50s", (i + 1) + (i == 0? "day": "days"));
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);

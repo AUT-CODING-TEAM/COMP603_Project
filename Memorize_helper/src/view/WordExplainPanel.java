@@ -5,21 +5,15 @@
  */
 package view;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import model.Word;
 import model.WordExplainPage;
-import view.main.MainView;
 
 /**
  *
@@ -38,24 +32,13 @@ public class WordExplainPanel extends GroundPanelTemplate {
         addComponents();
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 360;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
 
     public void addComponents() {
         JFrame wordExplainFrame = new JFrame("单词释义");
-        setSize(wordExplainFrame);
+        setSize(wordExplainFrame, 720, 360);
         wordExplainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         wordExplainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

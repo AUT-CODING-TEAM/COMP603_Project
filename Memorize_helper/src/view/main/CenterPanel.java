@@ -5,7 +5,6 @@
  */
 package view.main;
 
-import controller.myPlan.ShowPlanListController;
 import controller.main.*;
 import java.awt.*;
 import javax.swing.*;
@@ -22,20 +21,8 @@ public class CenterPanel extends MainViewViewTemplate {
         super(mainView, user);
     }
 
-    private void setSize() {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = 1280;
-        int frameHeight = 480;
-        setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     @Override
     public void setProperty() {
-        //        setSize();
-//        setLayout(new BorderLayout());
 //        setBorder(new TitledBorder("CenterPanel"));
         setLayout(new GridBagLayout());
         setOpaque(true);

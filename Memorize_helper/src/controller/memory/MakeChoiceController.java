@@ -7,7 +7,7 @@ package controller.memory;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.*;
+import javax.swing.JLabel;
 
 /**
  *

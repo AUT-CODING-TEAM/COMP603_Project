@@ -8,11 +8,8 @@ package controller.planList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import model.MyPlanInfo;
 import model.User;
 import view.OnePlanPanel;
-import view.myPlan.MyPlanPanel;
 import view.planList.CreatePlanPanel;
 
 /**

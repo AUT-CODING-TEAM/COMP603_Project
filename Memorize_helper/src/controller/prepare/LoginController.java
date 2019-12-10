@@ -5,15 +5,15 @@
  */
 package controller.prepare;
 
+import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import model.*;
-import view.main.*;
-import view.prepare.*;
-import controller.interfaces.*;
-import controller.myPlan.ShowPlanListController;
+import model.PlanListInfo;
+import model.User;
+import view.main.MainView;
 import view.planList.PlanListPanel;
+import view.prepare.LoginDialog;
 /**
  *
  * @author ThinkPad
@@ -62,8 +62,6 @@ public class LoginController implements ActionListener {
             return 0;
         }
         
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
         this.user = user;
         return 1;
     }

@@ -10,7 +10,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import model.*;
 import view.*;
 import view.searchResultList.SearchResultListPanel;
@@ -27,19 +26,8 @@ public class TopPanel extends MainViewViewTemplate {
         super(mainView, user);
     }
 
-    private void setSize() {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = 1280;
-        int frameHeight = 120;
-        setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     @Override
     public void setProperty() {
-        //        setSize();
         setLayout(new GridBagLayout());
 //        setBorder(new TitledBorder("TopPanel"));
         setOpaque(true);

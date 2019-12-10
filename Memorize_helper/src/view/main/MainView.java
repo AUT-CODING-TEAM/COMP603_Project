@@ -41,7 +41,6 @@ public class MainView extends JFrame {
     private void setProperty() {
         setSize();
         setTitle("Memorize Helper");
-//        setLayout(new GridBagLayout());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

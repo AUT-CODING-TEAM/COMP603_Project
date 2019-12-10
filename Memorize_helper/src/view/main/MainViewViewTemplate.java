@@ -12,7 +12,7 @@ import model.*;
  *
  * @author ThinkPad
  */
-public class MainViewViewTemplate extends JPanel{
+public abstract class MainViewViewTemplate extends JPanel{
     protected JFrame mainView;
     protected User user;
     
@@ -23,10 +23,8 @@ public class MainViewViewTemplate extends JPanel{
         addComponents();
     }
 
-    public void setProperty() {
-    }
+    public abstract void setProperty();
 
-    public void addComponents() {
-        
-    }
+    public abstract void addComponents();
+    
 }

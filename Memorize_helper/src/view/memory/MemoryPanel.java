@@ -6,7 +6,6 @@
 package view.memory;
 
 import controller.WordDetailController;
-import controller.main.*;
 import controller.memory.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -35,24 +34,13 @@ public class MemoryPanel extends GroundPanelTemplate {
         
     }
     
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-    
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
     
     public void addComponents() {
         JFrame memoryFrame = new JFrame("学习");
-        setSize(memoryFrame);
+        setSize(memoryFrame, 720, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -134,7 +122,6 @@ public class MemoryPanel extends GroundPanelTemplate {
 }
 
 class ChoiceLabel extends JLabel {
-    
     public ChoiceLabel(String text) {
         super(text, SwingConstants.CENTER);
         setBorder(new TitledBorder(""));

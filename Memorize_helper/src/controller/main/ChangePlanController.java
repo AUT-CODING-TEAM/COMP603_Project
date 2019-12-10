@@ -6,9 +6,11 @@
 package controller.main;
 
 import java.awt.event.ActionEvent;
-import javax.swing.*;
-import model.*;
+import javax.swing.JFrame;
+import model.MyPlanInfo;
+import model.User;
 import view.myPlan.MyPlanPanel;
+
 
 /**
  *
@@ -22,7 +24,6 @@ public class ChangePlanController extends MainViewControllerTemplate {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("修改计划JFrame");
         new MyPlanPanel(user, new MyPlanInfo(user));
         mainView.dispose();
     }

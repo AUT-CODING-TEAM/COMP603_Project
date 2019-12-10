@@ -6,11 +6,11 @@
 package controller.prepare;
 
 import controller.interfaces.UserController;
-import database.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import view.prepare.*;
+import view.prepare.LoginDialog;
+import view.prepare.RegisterDialog;
 
 /**
  *
@@ -62,8 +62,6 @@ public class RegisterController implements ActionListener {
         if(!success){
             return 0;
         }
-        System.out.println("username = " + username);
-        System.out.println();
         return 1;
     }
 }

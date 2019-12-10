@@ -9,7 +9,6 @@ import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import model.User;
 import view.main.MainView;
 import view.myPlan.MyPlanPanel;

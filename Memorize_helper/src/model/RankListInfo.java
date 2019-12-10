@@ -18,18 +18,7 @@ public class RankListInfo {
     public static final int NAMES = 1;
     public static final int WORDS = 2;
 
-    private int listNumber;
     private ArrayList<User> users;
-
-    public RankListInfo(boolean developMode) {// develop use only
-        listNumber = 50;
-        users = new ArrayList<>();
-
-        users.add(new User(developMode).setUsername("admin").setFinishedNumberInTotal(-999));
-        for (int i = 1; i <= listNumber; i++) {
-            users.add(new User(developMode).setUsername("testUser" + i).setFinishedNumberInTotal(100 - i));
-        }
-    }
     
     public RankListInfo(){
         users = new UserController().getMemorizeRank();

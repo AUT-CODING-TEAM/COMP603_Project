@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import model.*;
 import view.*;
 import view.main.MainView;
@@ -36,24 +35,13 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         addComponents();
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
 
     public void addComponents() {
         searchResultListFrame = new JFrame("搜索");
-        setSize(searchResultListFrame);
+        setSize(searchResultListFrame, 720, 720);
         searchResultListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         searchResultListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -77,7 +65,6 @@ public class SearchResultListPanel extends GroundPanelTemplate {
 
         searchResultListFrame.add(this);
 
-        //visibility should be controlled?
         searchResultListFrame.setVisible(true);
     }
 
@@ -85,7 +72,6 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         JPanel searchPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         searchPanel.setLayout(new GridLayout(3, 1));
         
-        //hard to let lbl_sRLP_searchTip and tf_sRLP_keyword stay in the center directly
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         JLabel lbl_sRLP_searchTip = new JLabel("查词");
         jPanel.add(lbl_sRLP_searchTip);

@@ -7,8 +7,8 @@ package controller.main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import model.*;
+import javax.swing.JFrame;
+import model.User;
 
 /**
  *
