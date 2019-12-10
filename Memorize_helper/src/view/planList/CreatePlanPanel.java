@@ -27,6 +27,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import model.MyPlanInfo;
 import model.PlanListInfo;
 import model.StudyPlan;
 import model.User;
@@ -34,6 +35,7 @@ import model.VocabularyListInfo;
 import view.GridBagTool;
 import view.GroundPanelTemplate;
 import view.ListInScrollTemplate;
+import view.myPlan.MyPlanPanel;
 import view.vocabularyList.VocabularyListPanel;
 
 /**
@@ -94,6 +96,9 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
                     JOptionPane.showMessageDialog(null, "please make a plan first", "error ", JOptionPane.ERROR_MESSAGE);
                     new CreatePlanPanel(user, selectedPlan);
+                }
+                else{
+                    new MyPlanPanel(user, new MyPlanInfo(user));
                 }
             }
         });
@@ -190,7 +195,9 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + "天");
+                    String dayWord = i == 0? "day": "days";
+                    s[i] = String.format("%50s", (i + 1) + dayWord);
+//                    s[i] = String.format("%50s", (i + 1) + "天");
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);

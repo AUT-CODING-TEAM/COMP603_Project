@@ -54,9 +54,10 @@ public class MakePlanController implements ActionListener{
             System.out.println(createPlanPanel.getQuantity());
             System.out.println(createPlanPanel.getSelectedPlan().getStudyPlanName());
             
-            if (createPlanPanel.getQuantity().contains("天")) {
-                Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]);
-                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]));
+            //"days" contains "day"
+            if (createPlanPanel.getQuantity().contains("day")) {
+                Integer.parseInt(createPlanPanel.getQuantity().split("day")[0]);
+                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("day")[0]));
             }
             else{
                 System.out.println(Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));

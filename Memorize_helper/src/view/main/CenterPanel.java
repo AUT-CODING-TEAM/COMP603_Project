@@ -49,7 +49,7 @@ public class CenterPanel extends MainViewViewTemplate {
         //right fill label
         add(new JLabel(), new GridBagTool().setGridx(3).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
 
-        JLabel lbl_cP_remainingDayPart1 = new JLabel("剩余", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart1 = new JLabel("remaining", SwingConstants.CENTER);
         add(lbl_cP_remainingDayPart1, new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.15));
 
         JLabel lbl_cP_todayTargetNumberPart1 = new JLabel("今日单词", SwingConstants.CENTER);
@@ -83,7 +83,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
 
-        JLabel lbl_cP_remainingDayPart3 = new JLabel("天", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1? "day" : "days", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
