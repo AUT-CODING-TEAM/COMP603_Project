@@ -51,7 +51,7 @@ public class TopPanel extends MainViewViewTemplate {
     private void addProfilePanel() {
         JPanel profilePanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
 
-        JLabel lbl_tP_username = new JLabel("Kia ora," + user.getUsername());
+        JLabel lbl_tP_username = new JLabel("Kia ora, " + user.getUsername());
 //        lbl_tP_username.setBorder(new TitledBorder("lbl_tP_username"));
         profilePanel.add(lbl_tP_username);
 

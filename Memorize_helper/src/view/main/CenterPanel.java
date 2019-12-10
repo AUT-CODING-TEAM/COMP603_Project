@@ -46,10 +46,10 @@ public class CenterPanel extends MainViewViewTemplate {
 
         addTodayTargetNumberRest();
 
-        JLabel lbl_cP_studyPlan = new JLabel("My Plan: " + user.getCurrentStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
+        JLabel lbl_cP_studyPlan = new JLabel("Current Plan: " + user.getCurrentStudyPlan().getStudyPlanName(), SwingConstants.CENTER);
         add(lbl_cP_studyPlan, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JButton btn_cP_changePlan = new JButton("Change Vocabulary List");
+        JButton btn_cP_changePlan = new JButton("Switch Plan");
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
