@@ -44,13 +44,11 @@ public class PlanListPanel extends GroundPanelTemplate {
 
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                try {
+                if (user.getCurrentStudyPlan() == null) {
+                    JOptionPane.showMessageDialog(null, "Please choose a vocabulary book first!", "information ", JOptionPane.INFORMATION_MESSAGE);
+                    new PlanListPanel(user, new PlanListInfo(user));
+                } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));
-                } catch (Exception exception) {
-                    if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-                        JOptionPane.showMessageDialog(null, "Please choose a vocabulary book first!", "information ", JOptionPane.INFORMATION_MESSAGE);
-                        new PlanListPanel(user, new PlanListInfo(user));
-                    }
                 }
             }
         });
