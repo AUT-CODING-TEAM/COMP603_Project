@@ -61,7 +61,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "please schedule the plan first", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please schedule the plan!", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
                     new CreatePlanPanel(user, selectedPlan);
                 }
                 else{

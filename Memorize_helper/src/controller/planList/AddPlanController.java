@@ -28,7 +28,6 @@ public class AddPlanController implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         OnePlanPanel jPanel = (OnePlanPanel)e.getSource();
-        System.out.println(jPanel.getLbl_pLP_studyPlanName().getText());
         new CreatePlanPanel(user, jPanel.getStudyPlan());
         planListFrame.dispose();
     }

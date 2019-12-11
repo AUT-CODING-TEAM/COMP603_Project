@@ -45,7 +45,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 if (user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list first!", "information ", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list!", "information ", JOptionPane.INFORMATION_MESSAGE);
                     new PlanListPanel(user, new PlanListInfo(user));
                 } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));
