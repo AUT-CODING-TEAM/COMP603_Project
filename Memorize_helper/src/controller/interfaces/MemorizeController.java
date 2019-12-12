@@ -446,6 +446,12 @@ public class MemorizeController {
         return wordList;
     }
 
+    /**
+     * 
+     * @param user
+     * @return A words list that contains words user learnt in current plan.
+     * @throws SQLException 
+     */
     public ArrayList<Word> getLearntWords(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
         Database db = Database.getInstance();
@@ -484,6 +490,13 @@ public class MemorizeController {
         return wordList;
     }
     
+    
+    /**
+     * 
+     * @param user
+     * @return A list of words that contains all the words from current plan.
+     * @throws SQLException 
+     */
     public ArrayList<Word> getPlanWords(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
         Database db = Database.getInstance();
