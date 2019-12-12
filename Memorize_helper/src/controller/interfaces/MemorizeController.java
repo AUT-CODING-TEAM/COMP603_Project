@@ -302,13 +302,14 @@ public class MemorizeController {
         Memorize memo = this.getMemorize(user, wd);
         return this.wrong(memo);
     }
+
     /**
      * @return the map whose key is username and value is the total memorized
-     *          words number of this user
+     * words number of this user
      */
     public Map<String, Integer> getAllUserMemorizedNum() {
         Database db = Database.getInstance();
-        Map<String,Integer> users = new HashMap<String,Integer>();
+        Map<String, Integer> users = new HashMap<String, Integer>();
         ResultSet res = db.get("USERS", "", "");
         try {
             while (res.next()) {
@@ -375,7 +376,7 @@ public class MemorizeController {
         ArrayList<Word> wd = this.getMemorizedWordInPlan(user);
         return wd.size();
     }
-    
+
     /**
      * @param id the user id
      * @return user's total memorized words number
@@ -399,20 +400,26 @@ public class MemorizeController {
         }
         return num;
     }
-    
-    public ArrayList<Word> getWordList(User user) throws SQLException{
+
+    /**
+     *
+     * @param user Current user instance.
+     * @return A list of word that need to memorize
+     * @throws SQLException
+     */
+    public ArrayList<Word> getWordList(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
-        
+
         Database db = Database.getInstance();
 
         StringBuilder sb = new StringBuilder();
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
-        String userId = user.getID()+"";
+        String userId = user.getID() + "";
         int number = user.getTodayTargetNumber();
 //        String studyPlan = "CET4入门";
 //        String userId = "1";
 //        int number = 30;
-        
+
         sb.append("select ");
         sb.append(studyPlan).append(".* ");
         sb.append("from ");
@@ -421,24 +428,65 @@ public class MemorizeController {
         sb.append("MEMORIZE.WRONG = 0 and MEMORIZE.CORRECT = 0 and ");
         sb.append("MEMORIZE.WORD_SOURCE = \'").append(studyPlan).append("\' and ");
         sb.append(studyPlan).append(".ID = int(MEMORIZE.WORD_ID) fetch first ").append(number).append(" rows only");
-        
+
         String sql = sb.toString();
         ResultSet rs = db.SQLqr(sql);
-        
-        while(rs.next()){
+
+        while (rs.next()) {
             Word word = new Word(
-                    rs.getInt("ID"), 
-                    rs.getString("WORD"), 
-                    rs.getString("CHINESE"), 
+                    rs.getInt("ID"),
+                    rs.getString("WORD"),
+                    rs.getString("CHINESE"),
                     rs.getString("PHONETIC"),
                     studyPlan
             );
             wordList.add(word);
         }
-          
+
+        return wordList;
+    }
+
+    public ArrayList<Word> getLearntWords(User user) throws SQLException {
+        ArrayList<Word> wordList = new ArrayList<>();
+        Database db = Database.getInstance();
+
+        String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
+        String userId = user.getID() + "";
+//        String studyPlan = "CET4入门";
+//        String userId = "1";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select ")
+                .append(studyPlan)
+                .append(".* from MEMORIZE,")
+                .append(studyPlan)
+                .append(" where MEMORIZE.WORD_SOURCE = ? and MEMORIZE.USER_ID = ? and MEMORIZE.LAST_MEM_TIME != \'0\' and ")
+                .append(studyPlan)
+                .append(".ID = int(MEMORIZE.WORD_ID)");
+
+        ResultSet rs = db.prepare(
+                sb.toString(), 
+                studyPlan, 
+                userId
+        );
+
+        while (rs.next()) {
+            Word word = new Word(
+                    rs.getInt("ID"),
+                    rs.getString("WORD"),
+                    rs.getString("CHINESE"),
+                    rs.getString("PHONETIC"),
+                    studyPlan
+            );
+            wordList.add(word);
+        }
+
         return wordList;
     }
     
-
+    public static void main(String[] args) throws SQLException {
+        MemorizeController mc = new MemorizeController();
+//        mc.getLearntWords();
+    }
 
 }
