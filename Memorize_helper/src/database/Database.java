@@ -459,12 +459,32 @@ public class Database {
         return false;
     }
 
-    public void prepare(String sql) {
+    public ResultSet prepare(String sql, Object... os) {
+        ResultSet res = null;
         try {
             this.p_controller = this.conn.prepareStatement(sql);
+            int i = 1;
+            for (Object o : os) {
+                String type = o.getClass().getName();
+                if (type.equals("java.lang.Integer")) {
+                    this.p_controller.setInt(i, (Integer) o);
+                } else if (type.equals("java.lang.String")) {
+                    this.p_controller.setString(i, (String)o);
+                } else if( type.equals("java.lang.Double")){
+                    this.p_controller.setDouble(i, (Double)o);
+                }
+                i++;
+            }
+            if(sql.matches("select(.*)") || sql.matches("SELECT(.*)")){
+                res = this.p_controller.executeQuery();
+            }else{
+                this.p_controller.executeUpdate();
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return res;
     }
 
     public boolean set(String table_name, String[] key, String[] condition,
@@ -679,27 +699,12 @@ public class Database {
         }
     }
 
+
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
-        t.reset();
-        t.init();
-//        String[] col = {
-//            "username",
-//            "password",
-//            "study_plan"
-//        };
-//        String[][] values = {
-//            {
-//                "yyz",
-//                "yyz_pw",
-//                "1"
-//            },
-//            {
-//                "hpc",
-//                "hpc_pw",
-//                "2"
-//            }
-//        };
-//        t.add("users", col, values);
+        ResultSet r = t.prepare("select * from MEMORIZE where WORD_SOURCE = ? and AGING = ? and WRONG = ?", "CET4进阶",0,0);
+        while(r.next()){
+            System.out.println(r.getString("WORD_ID"));
+        }
     }
 }
