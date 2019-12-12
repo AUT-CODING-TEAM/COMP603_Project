@@ -29,14 +29,14 @@ public class RegisterDialog extends JDialog {
         Dimension screenSize = toolkit.getScreenSize();
         int screenWidth = (int) screenSize.getWidth();
         int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = 350;
+        int frameWidth = 400;
         int frameHeight = 240;
         setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
     }
 
     private void setProperty() {
         setSize();
-        setTitle("注册");
+        setTitle("Sign Up");
         setLayout(new GridLayout(4, 2));
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,22 +44,22 @@ public class RegisterDialog extends JDialog {
 
     private void addComponents() {
         
-        JLabel lbl_rgD_usernameTip = new JLabel("用户名：", SwingConstants.CENTER);
+        JLabel lbl_rgD_usernameTip = new JLabel("Username:", SwingConstants.CENTER);
         add(lbl_rgD_usernameTip);
         JTextField tf_rgD_username = new JTextField();
         add(tf_rgD_username);
 
-        JLabel lbl_rgD_passwordTip = new JLabel("密码：", SwingConstants.CENTER);
+        JLabel lbl_rgD_passwordTip = new JLabel("Password:", SwingConstants.CENTER);
         add(lbl_rgD_passwordTip);
         JPasswordField tf_rgD_password = new JPasswordField();
         add(tf_rgD_password);
         
-        JLabel lbl_rgD_pwdConfirmTip = new JLabel("确认密码：", SwingConstants.CENTER);
+        JLabel lbl_rgD_pwdConfirmTip = new JLabel("Confirm Password:", SwingConstants.CENTER);
         add(lbl_rgD_pwdConfirmTip);
         JPasswordField tf_rgD_pwdConfirm = new JPasswordField();
         add(tf_rgD_pwdConfirm);
         
-        JButton btn_rgD_login = new JButton("直接登录");
+        JButton btn_rgD_login = new JButton("Already have an account?");
         btn_rgD_login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,7 +69,7 @@ public class RegisterDialog extends JDialog {
         });
         add(btn_rgD_login);
 
-        JButton btn_rgD_ok = new JButton("确定");
+        JButton btn_rgD_ok = new JButton("Sign Up");
         btn_rgD_ok.addActionListener(new RegisterController(this, tf_rgD_username, tf_rgD_password, tf_rgD_pwdConfirm));
         add(btn_rgD_ok);
     }

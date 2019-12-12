@@ -10,7 +10,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import model.*;
 import view.*;
 import view.searchResultList.SearchResultListPanel;
@@ -27,19 +26,8 @@ public class TopPanel extends MainViewViewTemplate {
         super(mainView, user);
     }
 
-    private void setSize() {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = 1280;
-        int frameHeight = 120;
-        setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     @Override
     public void setProperty() {
-        //        setSize();
         setLayout(new GridBagLayout());
 //        setBorder(new TitledBorder("TopPanel"));
         setOpaque(true);
@@ -63,11 +51,11 @@ public class TopPanel extends MainViewViewTemplate {
     private void addProfilePanel() {
         JPanel profilePanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
 
-        JLabel lbl_tP_username = new JLabel("你好，" + user.getUsername());
+        JLabel lbl_tP_username = new JLabel("Kia ora, " + user.getUsername());
 //        lbl_tP_username.setBorder(new TitledBorder("lbl_tP_username"));
         profilePanel.add(lbl_tP_username);
 
-        JButton btn_tP_rankList = new JButton("排行榜");
+        JButton btn_tP_rankList = new JButton("Rankings");
         btn_tP_rankList.addActionListener(new ShowRankListController(mainView, user));
         profilePanel.add(btn_tP_rankList);
 
@@ -79,7 +67,7 @@ public class TopPanel extends MainViewViewTemplate {
         searchPanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
 //        searchPanel.setBorder(new TitledBorder("searchPanel"));
 
-        JLabel lbl_tP_searchTip = new JLabel("查词");
+        JLabel lbl_tP_searchTip = new JLabel("Look Up");
         searchPanel.add(lbl_tP_searchTip);
 
         JTextField tf_tP_keyword = new JTextField(15);

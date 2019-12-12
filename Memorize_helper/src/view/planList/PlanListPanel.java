@@ -7,31 +7,13 @@ package view.planList;
 
 import view.OnePlanPanel;
 import controller.planList.AddPlanController;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import model.MyPlanInfo;
-import model.PlanListInfo;
-import model.RankListInfo;
-import model.User;
-import view.GridBagTool;
-import view.GroundPanelTemplate;
-import view.ListInScrollTemplate;
-import view.main.MainView;
+import model.*;
+import view.*;
 import view.myPlan.MyPlanPanel;
 
 /**
@@ -55,32 +37,18 @@ public class PlanListPanel extends GroundPanelTemplate {
         setLayout(new GridBagLayout());
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void addComponents() {
-        JFrame planListFrame = new JFrame("添加词书");
-        setSize(planListFrame);
+        JFrame planListFrame = new JFrame("Add a Plan");
+        setSize(planListFrame, 720, 720);
         planListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //better jump to changePlanPanel
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                try {
-                    new MyPlanPanel(user, new MyPlanInfo(true));
-                } catch (Exception exception) {
-                    if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-                        JOptionPane.showMessageDialog(null, "please choose a vocabulary book first", "error ", JOptionPane.ERROR_MESSAGE);
-                        new PlanListPanel(user, new PlanListInfo(user));
-                    }
+                if (user.getCurrentStudyPlan() == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list!", "information ", JOptionPane.INFORMATION_MESSAGE);
+                    new PlanListPanel(user, new PlanListInfo(user));
+                } else {
+                    new MyPlanPanel(user, new MyPlanInfo(user));
                 }
             }
         });
@@ -94,7 +62,7 @@ public class PlanListPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_pLP_rankList = new JLabel("添加词书", SwingConstants.CENTER);
+        JLabel lbl_pLP_rankList = new JLabel("Select Vocabulary List", SwingConstants.CENTER);
         add(lbl_pLP_rankList, new GridBagTool().setFill(GridBagConstraints.VERTICAL).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         JPanel planListPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
@@ -107,7 +75,6 @@ public class PlanListPanel extends GroundPanelTemplate {
         AddPlanController addPlanController = new AddPlanController(user, planListFrame);
 
         for (int i = 0; i < planListInfo.getStudyPlans().size(); i++) {
-//            JPanel jPanel = new JPanel(new GridBagLayout());
             OnePlanPanel jPanel = new OnePlanPanel();
             jPanel.setStudyPlan(planListInfo.getStudyPlans().get(i));
 
@@ -115,7 +82,7 @@ public class PlanListPanel extends GroundPanelTemplate {
             lbl_pLP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
             jPanel.addStudyPlanName(lbl_pLP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
 
-            JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "词", SwingConstants.CENTER);
+            JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
             lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
             jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
@@ -128,7 +95,7 @@ public class PlanListPanel extends GroundPanelTemplate {
                 jPanel.addMouseListener(addPlanController);
             } else {
                 jPanel.setBackground(new Color(91, 110, 125));
-                jPanel.setBorder(new TitledBorder("已添加"));
+                jPanel.setBorder(new TitledBorder("Added"));
             }
 
             planListPanel.add(jPanel);
@@ -140,5 +107,4 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.add(this);
         planListFrame.setVisible(true);
     }
-
 }

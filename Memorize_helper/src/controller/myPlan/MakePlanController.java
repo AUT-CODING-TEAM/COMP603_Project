@@ -9,7 +9,6 @@ import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import model.User;
 import view.main.MainView;
 import view.myPlan.MyPlanPanel;
@@ -23,26 +22,40 @@ public class MakePlanController implements ActionListener{
     private User user;
     private CreatePlanPanel createPlanPanel;
     private JFrame selectedPlanFrame;
+    private MyPlanPanel myPlanPanel;
     
+    //login first time
     public MakePlanController(User user, CreatePlanPanel createPlanPanel, JFrame selectedPlanFrame){
         this.user = user;
         this.createPlanPanel = createPlanPanel;
         this.selectedPlanFrame = selectedPlanFrame;
     }
+    
+    //change after login
+    public MakePlanController(User user,  MyPlanPanel myPlanPanel){
+        this.user = user;
+        this.myPlanPanel = myPlanPanel;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (createPlanPanel.getQuantity() != null) {
-            System.out.println(createPlanPanel.getQuantity());
-            System.out.println(createPlanPanel.getSelectedPlan().getStudyPlanName());
+        //change after login
+        if (myPlanPanel != null && myPlanPanel.getBookName() != null) {
+            new UserController().changeStudyPlan(user, myPlanPanel.getBookName());
+            myPlanPanel.getMyPlanFrame().dispose();
+            new MainView(user);
             
-            if (createPlanPanel.getQuantity().contains("天")) {
-                Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]);
-                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("天")[0]));
+            return;
+        }
+        
+        //login first time
+        if (createPlanPanel.getQuantity() != null) {
+            //"days" contains "day"
+            if (createPlanPanel.getQuantity().contains("day")) {
+                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("day")[0]));
             }
             else{
-                System.out.println(Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
-                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("词")[0]));
+                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split("word")[0]));
             }
             selectedPlanFrame.dispose();
             new MainView(user);

@@ -6,6 +6,9 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -27,5 +30,13 @@ public class GroundPanelTemplate extends JPanel{
             setBackground(new Color(238,236,232));
         }
         
+    }
+    
+    protected void setSize(JFrame jFrame, int frameWidth, int frameHeight) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int screenWidth = (int) screenSize.getWidth();
+        int screenHeight = (int) screenSize.getHeight();
+        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
     }
 }

@@ -6,12 +6,9 @@
 package controller.main;
 
 import view.searchResultList.SearchResultListPanel;
-import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.Document;
 import model.SearchResultInfo;
-import model.User;
-import view.main.MainView;
 
 /**
  *
@@ -20,17 +17,14 @@ import view.main.MainView;
 public class SearchController implements DocumentListener {
 
     private SearchResultListPanel searchResultListPanel;
-    private User user;
     private String inputKeyWord;
 
     public SearchController(SearchResultListPanel searchResultListPanel) {
         this.searchResultListPanel = searchResultListPanel;
-        this.user = user;
     }
 
     private void response() {
         try {
-//            Document doc = tf_sRLP_keyword.getDocument();
             Document doc = searchResultListPanel.getTf_sRLP_keyword().getDocument();
             this.inputKeyWord = doc.getText(0, doc.getLength());
         } catch (Exception e) {

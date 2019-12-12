@@ -8,6 +8,7 @@ package view.main;
 import database.Database;
 import view.prepare.*;
 import java.awt.*;
+import java.util.Locale;
 import javax.swing.*;
 import model.*;
 import view.*;
@@ -32,7 +33,6 @@ public class MainView extends JFrame {
         Dimension screenSize = toolkit.getScreenSize();
         int screenWidth = (int) screenSize.getWidth();
         int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
         int frameWidth = 720;
         int frameHeight = 720;
         setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
@@ -40,8 +40,7 @@ public class MainView extends JFrame {
 
     private void setProperty() {
         setSize();
-        setTitle("Memorize Helper");
-//        setLayout(new GridBagLayout());
+        setTitle("Vocabulearner");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -74,6 +73,7 @@ public class MainView extends JFrame {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
         //init the database
         Database db = Database.getInstance();
         db.init();

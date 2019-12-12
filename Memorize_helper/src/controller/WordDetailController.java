@@ -12,10 +12,8 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.User;
-import model.Word;
 import model.WordExplainPage;
 import view.WordExplainPanel;
-import view.main.MainView;
 
 /**
  *
@@ -48,14 +46,9 @@ public class WordDetailController implements ListSelectionListener, ActionListen
         if (list_sP_searchResultList != null) {
             if (list_sP_searchResultList.getValueIsAdjusting()) {
                 wordExplainPage = new WordExplainPage(list_sP_searchResultList.getSelectedValue().toString().trim());
-//                wordExplainPage.setWord(list_sP_searchResultList.getSelectedValue().toString().trim());
-                System.out.println(wordExplainPage.getWord() + "详细页面JFrame");
 
                 new WordExplainPanel(wordExplainPage, searchResultListFrame);
                 searchResultListFrame.setVisible(false);
-
-                //there is no mainView exists from search
-                //new MainView(user);
             }
         }
 

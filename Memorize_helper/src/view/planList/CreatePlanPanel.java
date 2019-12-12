@@ -6,35 +6,15 @@
 package view.planList;
 
 import controller.myPlan.MakePlanController;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import model.PlanListInfo;
-import model.StudyPlan;
-import model.User;
-import model.VocabularyListInfo;
-import view.GridBagTool;
-import view.GroundPanelTemplate;
-import view.ListInScrollTemplate;
-import view.vocabularyList.VocabularyListPanel;
+import model.*;
+import view.*;
+import view.myPlan.MyPlanPanel;
 
 /**
  *
@@ -69,31 +49,23 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         addComponents();
     }
 
-    private void setSize(JFrame jFrame) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-//        int frameWidth = 1280;
-        int frameWidth = 720;
-        int frameHeight = 720;
-        jFrame.setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, frameWidth, frameHeight);
-    }
-
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
 
     public void addComponents() {
-        selectedPlanFrame = new JFrame("制定计划");
-        setSize(selectedPlanFrame);
+        selectedPlanFrame = new JFrame("Schedule the Plan");
+        setSize(selectedPlanFrame, 720, 720);
         selectedPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectedPlanFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "please make a plan first", "error ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please schedule the plan!", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
                     new CreatePlanPanel(user, selectedPlan);
+                }
+                else{
+                    new MyPlanPanel(user, new MyPlanInfo(user));
                 }
             }
         });
@@ -110,7 +82,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         addMakePlanPanel();
 
         btn_confirm = new JButton();
-        btn_confirm.setText("学习该计划");
+        btn_confirm.setText("OK");
 
         btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
         add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
@@ -128,7 +100,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         selectedBookName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         topJPanel.add(selectedBookName);
 
-        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + "词", SwingConstants.CENTER);
+        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + "words", SwingConstants.CENTER);
         selectedBookTotalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
         topJPanel.add(selectedBookTotalNumber);
 
@@ -139,8 +111,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
         MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
 
-        optionTabs.addTab("按每天背单词数学习", makePlanTabPanelPart1);
-        optionTabs.addTab("按完成天数学习", makePlanTabPanelPart2);
+        optionTabs.addTab("based on DAILY TASK", makePlanTabPanelPart1);
+        optionTabs.addTab("based on LEARNING DURATION", makePlanTabPanelPart2);
 
         add(optionTabs, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.7));
     }
@@ -165,14 +137,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 if (selectedPlan.getTotalNumber() % 5 == 0) {
                     s = new String[selectedPlan.getTotalNumber() / 5];
                     for (int i = 0; i < s.length; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
                     }
                 } else {
                     s = new String[selectedPlan.getTotalNumber() / 5 + 1];
                     for (int i = 0; i < s.length - 1; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "词"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
                     }
-                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + "词"));
+                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + "words"));
                 }
                 makePlanListPart1 = new ListInScrollTemplate(s);
                 makePlanListPart1.setEnabled(true);
@@ -190,7 +162,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + "天");
+                    s[i] = String.format("%50s", (i + 1) + (i == 0? "day": "days"));
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);

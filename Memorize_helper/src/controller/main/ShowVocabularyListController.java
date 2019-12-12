@@ -6,10 +6,8 @@
 package controller.main;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
-import model.*;
-import view.rankList.RankListPanel;
+import javax.swing.JFrame;
+import model.User;
 import view.vocabularyList.VocabularyListPanel;
 
 /**
@@ -23,7 +21,6 @@ public class ShowVocabularyListController  extends MainViewControllerTemplate{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("单词列表JFrame");
         new VocabularyListPanel(mainView, user);
         mainView.setVisible(false);
     }

@@ -6,9 +6,10 @@
 package controller.main;
 
 import java.awt.event.ActionEvent;
-import javax.swing.*;
-import model.*;
-import view.rankList.*;
+import javax.swing.JFrame;
+import model.RankListInfo;
+import model.User;
+import view.rankList.RankListPanel;
 
 /**
  *
@@ -22,7 +23,6 @@ public class ShowRankListController extends MainViewControllerTemplate{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("查看排行榜JFrame");
         new RankListPanel(mainView, new RankListInfo());
         mainView.setVisible(false);
     }

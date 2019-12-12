@@ -30,7 +30,6 @@ public class StartLearnController extends MainViewControllerTemplate{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("开始背单词JFrame");
         new MemoryPanel(new MemoryPage(), user);
         mainView.dispose();
         

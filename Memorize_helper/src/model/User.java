@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author ThinkPad
@@ -23,17 +21,6 @@ public class User {
     private StudyPlan currentStudyPlan;
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
-
-    public User(boolean developMode) {//develop use only
-        this.username = "小明";
-        this.todayLearnedNumber = 13;
-        this.todayTargetNumber = 15;
-        this.todayReviewNumber = 2;
-        this.remainingDay = 3;
-        this.currentStudyPlan = new StudyPlan(developMode);
-        this.finishedNumberInPlan = 2;
-        this.finishedNumberInTotal = 500;
-    }
 
     public User(String name, String pass, int id) {
         this.username = name;

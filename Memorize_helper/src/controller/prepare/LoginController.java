@@ -5,15 +5,15 @@
  */
 package controller.prepare;
 
+import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import model.*;
-import view.main.*;
-import view.prepare.*;
-import controller.interfaces.*;
-import controller.myPlan.ShowPlanListController;
+import model.PlanListInfo;
+import model.User;
+import view.main.MainView;
 import view.planList.PlanListPanel;
+import view.prepare.LoginDialog;
 /**
  *
  * @author ThinkPad
@@ -46,7 +46,7 @@ public class LoginController implements ActionListener {
             }
             loginDialog.dispose();
         } else if (loginCheck == 0) {
-            JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误 ", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Incorrect Username or Password!", "error ", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -62,8 +62,6 @@ public class LoginController implements ActionListener {
             return 0;
         }
         
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
         this.user = user;
         return 1;
     }
