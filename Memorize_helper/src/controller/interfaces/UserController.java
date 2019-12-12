@@ -22,6 +22,7 @@ import model.*;
 /**
  *
  * @author Yun_c
+ * @author Pingchuan
  */
 public class UserController {
 

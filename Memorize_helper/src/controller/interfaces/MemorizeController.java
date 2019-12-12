@@ -21,6 +21,7 @@ import model.Word;
 /**
  *
  * @author Yun_c
+ * @author Pingchuan
  */
 public class MemorizeController {
 
@@ -398,4 +399,46 @@ public class MemorizeController {
         }
         return num;
     }
+    
+    public ArrayList<Word> getWordList(User user) throws SQLException{
+        ArrayList<Word> wordList = new ArrayList<>();
+        
+        Database db = Database.getInstance();
+
+        StringBuilder sb = new StringBuilder();
+        String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
+        String userId = user.getID()+"";
+        int number = user.getTodayTargetNumber();
+//        String studyPlan = "CET4入门";
+//        String userId = "1";
+//        int number = 30;
+        
+        sb.append("select ");
+        sb.append(studyPlan).append(".* ");
+        sb.append("from ");
+        sb.append(studyPlan).append(", MEMORIZE ");
+        sb.append("where MEMORIZE.USER_ID = \'").append(userId).append("\' and ");
+        sb.append("MEMORIZE.WRONG = 0 and MEMORIZE.CORRECT = 0 and ");
+        sb.append("MEMORIZE.WORD_SOURCE = \'").append(studyPlan).append("\' and ");
+        sb.append(studyPlan).append(".ID = int(MEMORIZE.WORD_ID) fetch first ").append(number).append(" rows only");
+        
+        String sql = sb.toString();
+        ResultSet rs = db.SQLqr(sql);
+        
+        while(rs.next()){
+            Word word = new Word(
+                    rs.getInt("ID"), 
+                    rs.getString("WORD"), 
+                    rs.getString("CHINESE"), 
+                    rs.getString("PHONETIC"),
+                    studyPlan
+            );
+            wordList.add(word);
+        }
+          
+        return wordList;
+    }
+    
+
+
 }
