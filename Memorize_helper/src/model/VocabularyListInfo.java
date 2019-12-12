@@ -5,6 +5,8 @@
  */
 package model;
 
+import controller.interfaces.MemorizeController;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +22,34 @@ public class VocabularyListInfo {
 
     private ArrayList<String> words;
     private ArrayList<String> chinese;
+
+    public VocabularyListInfo(int option, User user) {
+        this.words = new ArrayList<>();
+        this.chinese = new ArrayList<>();
+        ArrayList<Word> wordListInDB = null;
+
+        try{
+            if (option == 0) {
+                wordListInDB = new MemorizeController().getLearntWords(user);
+            } else if (option == 1) {
+                wordListInDB = new MemorizeController().getPlanWords(user);
+            } else if (option == 2) {
+                wordListInDB = new MemorizeController().get(user);//develop use only
+            } else if (option == 3) {
+                wordListInDB = new MemorizeController().get(user);//develop use only
+            }
+        }
+        catch(SQLException e){
+            
+        }
+        
+        for (int i = 0; i < wordListInDB.size(); i++) {
+            String word = wordListInDB.get(i).getWord();
+            String chinese = wordListInDB.get(i).getChinese();
+            this.words.add(word);
+            this.chinese.add(chinese);
+        }
+    }
 
     public VocabularyListInfo(int option) {// develop use only
         int listNumber = 50;
@@ -58,7 +88,7 @@ public class VocabularyListInfo {
                 s[i] = String.format("%s", chinese.get(i));
             }
         }
-        
+
         return s;
     }
 }

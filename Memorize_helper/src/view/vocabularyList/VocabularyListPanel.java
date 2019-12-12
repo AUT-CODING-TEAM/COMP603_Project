@@ -80,7 +80,7 @@ public class VocabularyListPanel extends GroundPanelTemplate {
         public VocabularyListTabPanel(int option) {
             super(GroundPanelTemplate.FORE);
             
-            vocabularyListInfo = new VocabularyListInfo(option);
+            vocabularyListInfo = new VocabularyListInfo(option, user);
             
             setProperty();
             addComponents();

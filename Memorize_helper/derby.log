@@ -1,8 +1,16 @@
+<<<<<<< Updated upstream
 ----------------------------------------------------------------
 Thu Dec 12 18:26:58 CST 2019:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-016e-f9a5-bc3d-00000eb3e5d0 
 on database directory /Users/pingchuan.huang/Documents/Coding/COMP603_PDC/COMP603_Project/Memorize_helper/Memorize_helper with class loader sun.misc.Launcher$AppClassLoader@55f96302 
 Loaded from file:/Users/pingchuan.huang/Documents/Coding/COMP603_PDC/COMP603_Project/Memorize_helper/lib/derby.jar
+=======
+----------------------------------------------------------------
+Thu Dec 12 18:43:22 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-016e-f9b4-bc8b-00000e806048 
+on database directory D:\Users\ThinkPad\Documents\NetBeansProjects\COMP603_Project\Memorize_helper\Memorize_helper with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
+Loaded from file:/D:/Users/ThinkPad/Documents/NetBeansProjects/COMP603_Project/Memorize_helper/lib/derby.jar
+>>>>>>> Stashed changes
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_231-b11
 user.dir=/Users/pingchuan.huang/Documents/Coding/COMP603_PDC/COMP603_Project/Memorize_helper
