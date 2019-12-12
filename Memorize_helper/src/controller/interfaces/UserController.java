@@ -254,7 +254,12 @@ public class UserController {
     private boolean correct(User user, Word wd) {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
-        return mct.correct(user, wd);
+        PlanController pct = new PlanController();
+        boolean res = mct.correct(user, wd);
+        if(res){
+            pct.updateTodayPlanInfo(user);
+        }
+        return res;
     }
 
     /**
