@@ -447,10 +447,10 @@ public class MemorizeController {
     }
 
     /**
-     * 
+     *
      * @param user
      * @return A words list that contains words user learnt in current plan.
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<Word> getLearntWords(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
@@ -471,8 +471,8 @@ public class MemorizeController {
                 .append(".ID = int(MEMORIZE.WORD_ID)");
 
         ResultSet rs = db.prepare(
-                sb.toString(), 
-                studyPlan, 
+                sb.toString(),
+                studyPlan,
                 userId
         );
 
@@ -489,23 +489,22 @@ public class MemorizeController {
 
         return wordList;
     }
-    
-    
+
     /**
-     * 
+     *
      * @param user
      * @return A list of words that contains all the words from current plan.
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<Word> getPlanWords(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
         Database db = Database.getInstance();
-        
+
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
 //        String studyPlan = "CET4入门";
-        
+
         ResultSet rs = db.getFullTable(studyPlan);
-        
+
         while (rs.next()) {
             Word word = new Word(
                     rs.getInt("ID"),
@@ -516,14 +515,56 @@ public class MemorizeController {
             );
             wordList.add(word);
         }
-        
+
         return wordList;
     }
-    
+
+    /**
+     * This method returns a list of words for review, the number of words is depends on the user review plan.
+     * @return A list of words that need to be review.
+     * @throws SQLException 
+     */
+    public ArrayList<Word> getReviewWordLists(User user) throws SQLException {
+        ArrayList<Word> wordList = new ArrayList<>();
+        Database db = Database.getInstance();
+        StringBuilder sb = new StringBuilder();
+
+        String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
+        String userId = user.getID() + "";
+        int number = user.getTodayReviewNumber();
+//        String studyPlan = "CET4入门";
+//        String userId = "1";
+//        int number = 30;
+
+        sb.append("select MEMORIZE.LAST_MEM_TIME, ")
+                .append(studyPlan)
+                .append(".* from MEMORIZE,")
+                .append(studyPlan)
+                .append(" where MEMORIZE.WORD_SOURCE = ? and MEMORIZE.USER_ID = ? and MEMORIZE.LAST_MEM_TIME != \'0\' and ")
+                .append(studyPlan)
+                .append(".ID = int(MEMORIZE.WORD_ID) order by MEMORIZE.LAST_MEM_TIME DESC fetch first ? rows only");
+
+        ResultSet rs = db.prepare(sb.toString(), studyPlan, userId, number);
+
+        while (rs.next()) {
+            Word word = new Word(
+                    rs.getInt("ID"),
+                    rs.getString("WORD"),
+                    rs.getString("CHINESE"),
+                    rs.getString("PHONETIC"),
+                    studyPlan
+            );
+            wordList.add(word);
+        }
+
+        return wordList;
+    }
+
     public static void main(String[] args) throws SQLException {
         MemorizeController mc = new MemorizeController();
 //        mc.getLearntWords();
 //        mc.getPlanWords();
+//        mc.getReviewWordLists();
     }
 
 }
