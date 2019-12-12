@@ -60,8 +60,7 @@ public class VocabularyListPanel extends GroundPanelTemplate {
         
         JTabbedPane topTabs = new JTabbedPane();
         topTabs.addTab("Learned", new VocabularyListTabPanel(VocabularyListInfo.STUDIED));
-        topTabs.addTab("Unlearned", new VocabularyListTabPanel(VocabularyListInfo.UNSTUDIED));
-        topTabs.addTab("Executed", new VocabularyListTabPanel(VocabularyListInfo.CUT));
+        topTabs.addTab("All Words", new VocabularyListTabPanel(VocabularyListInfo.ALL_WORDS));
         topTabs.addTab("Favorites", new VocabularyListTabPanel(VocabularyListInfo.COLLECT));
         add(topTabs, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.8));
         
@@ -72,8 +71,7 @@ public class VocabularyListPanel extends GroundPanelTemplate {
     class VocabularyListTabPanel extends GroundPanelTemplate {
         
         private JLabel lbl_vLTP_vocabularyTotalNumber;
-        private JList list_vLTP_vocabularyListPart1;
-        private JList list_vLTP_vocabularyListPart2;
+        private JList list_vLTP_vocabularyList;
         private VocabularyListInfo vocabularyListInfo;
         private JPanel jPanel;
         
@@ -85,10 +83,9 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             setProperty();
             addComponents();
             
-            lbl_vLTP_vocabularyTotalNumber.setText("Total Number of Words: " + String.valueOf(vocabularyListInfo.getVocabularyListInfo(0).length));
-            list_vLTP_vocabularyListPart1.setListData(vocabularyListInfo.getVocabularyListInfo(0));
-            list_vLTP_vocabularyListPart2.setListData(vocabularyListInfo.getVocabularyListInfo(1));
-            if (option == 3) {
+            lbl_vLTP_vocabularyTotalNumber.setText("Total Number of Words: " + String.valueOf(vocabularyListInfo.getVocabularyListInfo().length));
+            list_vLTP_vocabularyList.setListData(vocabularyListInfo.getVocabularyListInfo());
+            if (option == 2) {
                 JButton btn_vLTP_learnCollect = new JButton("Start Learning My Favorites");
                 btn_vLTP_learnCollect.addActionListener(new StartLearnController(mainView, user, vocabularyListFrame));
                 jPanel.add(btn_vLTP_learnCollect, BorderLayout.EAST);
@@ -113,15 +110,12 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             add(jPanel, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
             
             JPanel vocabularyListTabPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
-            vocabularyListTabPanel.setLayout(new GridLayout(1, 2));
             
-            list_vLTP_vocabularyListPart1 = new ListInScrollTemplate(vocabularyListInfo.getVocabularyListInfo(0));
-            vocabularyListTabPanel.add(list_vLTP_vocabularyListPart1);
-            
-            list_vLTP_vocabularyListPart2 = new ListInScrollTemplate(vocabularyListInfo.getVocabularyListInfo(1));
-            vocabularyListTabPanel.add(list_vLTP_vocabularyListPart2);
+            list_vLTP_vocabularyList = new ListInScrollTemplate(vocabularyListInfo.getVocabularyListInfo());
+            vocabularyListTabPanel.add(list_vLTP_vocabularyList);
             
             JScrollPane jScrollPane = new JScrollPane(vocabularyListTabPanel);
+            jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             add(jScrollPane, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(3).setGridheight(1).setWeightx(1).setWeighty(0.9));
         }
     }
