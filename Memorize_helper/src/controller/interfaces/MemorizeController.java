@@ -10,7 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Memorize;
@@ -24,6 +27,8 @@ import model.Word;
  * @author Pingchuan
  */
 public class MemorizeController {
+
+    public static final int FAKE_OPTION_NUM = 3;
 
     /**
      * @param user who memorized the word
@@ -520,9 +525,11 @@ public class MemorizeController {
     }
 
     /**
-     * This method returns a list of words for review, the number of words is depends on the user review plan.
+     * This method returns a list of words for review, the number of words is
+     * depends on the user review plan.
+     *
      * @return A list of words that need to be review.
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<Word> getReviewWordLists(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
@@ -560,11 +567,46 @@ public class MemorizeController {
         return wordList;
     }
 
+    public Set<Word> getOptions(String studyPlan, Word word) throws SQLException {
+        Set<Word> wordSet = new HashSet<>();
+        WordController wordController = new WordController();
+        Database db = Database.getInstance();
+        StringBuilder sb = new StringBuilder();
+        Random rd = new Random();
+
+        int bookSize = wordController.getWordNumber(studyPlan);
+
+        String sql = sb.append("select * from ").append(studyPlan).append(" where ID = ?").toString();
+        ResultSet rs;
+
+        wordSet.add(word);
+        while (wordSet.size() < 4) {
+            int id = rd.nextInt(bookSize) + 1;
+            rs = db.prepare(sql, id);
+            if (rs.next()) {
+                wordSet.add(
+                        new Word(
+                                rs.getInt("ID"),
+                                rs.getString("WORD"),
+                                rs.getString("CHINESE"),
+                                rs.getString("PHONETIC"),
+                                studyPlan
+                        )
+                );
+            }
+
+        }
+        return wordSet;
+    }
+
     public static void main(String[] args) throws SQLException {
         MemorizeController mc = new MemorizeController();
+        WordController wc = new WordController();
 //        mc.getLearntWords();
 //        mc.getPlanWords();
 //        mc.getReviewWordLists();
+        Word word1 = wc.getBookWordByID("CET4入门", 2);
+        mc.getOptions("CET4入门", word1);
     }
 
 }
