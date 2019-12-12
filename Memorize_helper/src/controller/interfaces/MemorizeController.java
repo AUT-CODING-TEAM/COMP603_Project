@@ -484,9 +484,33 @@ public class MemorizeController {
         return wordList;
     }
     
+    public ArrayList<Word> getPlanWords(User user) throws SQLException {
+        ArrayList<Word> wordList = new ArrayList<>();
+        Database db = Database.getInstance();
+        
+        String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
+//        String studyPlan = "CET4入门";
+        
+        ResultSet rs = db.getFullTable(studyPlan);
+        
+        while (rs.next()) {
+            Word word = new Word(
+                    rs.getInt("ID"),
+                    rs.getString("WORD"),
+                    rs.getString("CHINESE"),
+                    rs.getString("PHONETIC"),
+                    studyPlan
+            );
+            wordList.add(word);
+        }
+        
+        return wordList;
+    }
+    
     public static void main(String[] args) throws SQLException {
         MemorizeController mc = new MemorizeController();
 //        mc.getLearntWords();
+//        mc.getPlanWords();
     }
 
 }

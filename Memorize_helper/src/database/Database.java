@@ -395,7 +395,11 @@ public class Database {
         return null;
     }
     
-    
+    public ResultSet getFullTable(String table_name){
+        StringBuilder sb = new StringBuilder();
+        sb.append("select * from ").append(table_name.toUpperCase());
+        return this.SQLqr(sb.toString());
+    }
 
     public ResultSet search(String table_name, String key, String condition) {
         StringBuilder strbd = new StringBuilder("select * from ");
