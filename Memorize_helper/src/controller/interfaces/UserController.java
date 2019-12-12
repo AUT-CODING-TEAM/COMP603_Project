@@ -22,6 +22,7 @@ import model.*;
 /**
  *
  * @author Yun_c
+ * @author Pingchuan
  */
 public class UserController {
 
@@ -228,23 +229,21 @@ public class UserController {
         return result;
     }
 
+    
     /**
-     * @param user who learn the word
-     * @param wd which word be learnt
-     * @param chosen which chinese meanning user choose
-     * @return if param.chosen is the correct meaning of param.wd
+     * 
+     * @param user current user.
+     * @param oriWord the word user is learning.
+     * @param choice the word of option user choosed.
+     * @return 
      */
-    public boolean learn(User user, Word wd, String chosen) {
-        String chinese = wd.getChinese();
-        boolean result;
-        if (chinese.equals(chosen)) {
-            this.correct(user, wd);
-            result = true;
-        } else {
-            this.wrong(user, wd);
-            result = false;
+    public boolean checkAns(User user, Word oriWord, Word choice){
+        if(oriWord.equals(choice)){
+            this.correct(user, oriWord);
+            return true;
         }
-        return result;
+        this.wrong(user, oriWord);
+        return false;
     }
 
     /**
@@ -313,7 +312,7 @@ public class UserController {
         System.out.println(uct.checkPassword(user, "456789"));
         uct.activateStudyPlanByNum(user, "CET4", 15);
         Word wd = wct.getBookWordByName("cet4", "able");
-        uct.learn(user, wd, "不知道");
+//        uct.checkAns(user, wd, wd2);
 
     }
 }

@@ -813,7 +813,7 @@ concrete	kɔnkri:t	n.混凝土；具体物
 grateful	greitful	a.感激的；令人愉快的
 universal	ju:ni'və:səl	a.宇宙的；普遍的
 recommend	rekə'mend	vt.推荐，介绍；劝告
-econɔmic	i:kə'nɔmik	a.经济的，经济学的
+economic	i:kə'nɔmik	a.经济的，经济学的
 desirable	di'zaiərəbl	adj.值得相望的可取的值得有的令人满意的有吸引力的n.有吸引力的人
 refrigerator	ri'fridʒəreitə	n.冰箱，冷藏库
 relative	relətiv	a.有关系的；相对的

@@ -5,6 +5,8 @@
  */
 package model;
 
+import controller.interfaces.MemorizeController;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -14,51 +16,41 @@ import java.util.ArrayList;
 public class VocabularyListInfo {
 
     public static final int STUDIED = 0;
-    public static final int UNSTUDIED = 1;
-    public static final int CUT = 2;
-    public static final int COLLECT = 3;
+    public static final int ALL_WORDS = 1;
+    public static final int COLLECT = 2;
 
     private ArrayList<String> words;
     private ArrayList<String> chinese;
 
-    public VocabularyListInfo(int option) {// develop use only
-        int listNumber = 50;
+    public VocabularyListInfo(int option, User user) {
         this.words = new ArrayList<>();
         this.chinese = new ArrayList<>();
+        ArrayList<Word> wordListInDB = null;
 
-        for (int i = 0; i < listNumber; i++) {
-            String word = "pencil" + i;
-            String chinese = "n.铅笔" + i;
-
+        try{
             if (option == 0) {
-                word += "0";
-                chinese += "0";
+                wordListInDB = new MemorizeController().getLearntWords(user);
             } else if (option == 1) {
-                word += "1";
-                chinese += "1";
+                wordListInDB = new MemorizeController().getPlanWords(user);
             } else if (option == 2) {
-                word += "2";
-                chinese += "2";
-            } else if (option == 3) {
-                word += "3";
-                chinese += "3";
+                wordListInDB = new MemorizeController().getLearntWords(user);//develop use only
             }
-            this.words.add(word);
-            this.chinese.add(chinese);
         }
-    }
-
-    public String[] getVocabularyListInfo(int col) {
-        String[] s = new String[words.size()];
-
-        for (int i = 0; i < s.length; i++) {
-            if (col == 0) {
-                s[i] = String.format("%15s", words.get(i));
-            } else if (col == 1) {
-                s[i] = String.format("%s", chinese.get(i));
-            }
+        catch(SQLException e){
+            e.printStackTrace();
         }
         
+        for (int i = 0; i < wordListInDB.size(); i++) {
+            this.words.add(wordListInDB.get(i).getWord());
+            this.chinese.add(wordListInDB.get(i).getChinese());
+        }
+    }
+    
+    public String[] getVocabularyListInfo(){
+        String[] s = new String[words.size()];
+        for (int i = 0; i < s.length; i++) {
+            s[i] = String.format("%15s %25s", words.get(i), chinese.get(i));
+        }
         return s;
     }
 }
