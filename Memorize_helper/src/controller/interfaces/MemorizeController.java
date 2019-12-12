@@ -420,7 +420,7 @@ public class MemorizeController {
         StringBuilder sb = new StringBuilder();
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
         String userId = user.getID() + "";
-        int number = user.getTodayTargetNumber();
+        int number = user.getTodayTargetNumber() - user.getTodayLearnedNumber();
 //        String studyPlan = "CET4入门";
 //        String userId = "1";
 //        int number = 30;
@@ -538,18 +538,24 @@ public class MemorizeController {
 
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
         String userId = user.getID() + "";
-        int number = user.getTodayReviewNumber();
+        int number = 0;
+        if(user.getTodayReviewNumber()>0){
+            number = user.getTodayReviewNumber();
+        } else {
+            number = user.getTodayTargetNumber();
+        }
+
 //        String studyPlan = "CET4入门";
 //        String userId = "1";
 //        int number = 30;
 
-        sb.append("select MEMORIZE.LAST_MEM_TIME, ")
+        sb.append("select MEMORIZE.LAST_MEM_TIME, MEMORIZE.AGING, ")
                 .append(studyPlan)
                 .append(".* from MEMORIZE,")
                 .append(studyPlan)
                 .append(" where MEMORIZE.WORD_SOURCE = ? and MEMORIZE.USER_ID = ? and MEMORIZE.LAST_MEM_TIME != \'0\' and ")
                 .append(studyPlan)
-                .append(".ID = int(MEMORIZE.WORD_ID) order by MEMORIZE.LAST_MEM_TIME DESC fetch first ? rows only");
+                .append(".ID = int(MEMORIZE.WORD_ID) order by MEMORIZE.AGING ASC, MEMORIZE.LAST_MEM_TIME DESC fetch first ? rows only");
 
         ResultSet rs = db.prepare(sb.toString(), studyPlan, userId, number);
 
@@ -605,8 +611,8 @@ public class MemorizeController {
 //        mc.getLearntWords();
 //        mc.getPlanWords();
 //        mc.getReviewWordLists();
-        Word word1 = wc.getBookWordByID("CET4入门", 2);
-        mc.getOptions("CET4入门", word1);
+//        Word word1 = wc.getBookWordByID("CET4入门", 2);
+//        mc.getOptions("CET4入门", word1);
     }
 
 }
