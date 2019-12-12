@@ -64,4 +64,27 @@ public class Word {
         bd.append("phonetic:\t").append(this.phonetic).append("\n");
         return bd.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Word) {
+            Word w = (Word) obj;
+            return this.id == w.id
+                    && this.source.equals(w.getSource());
+        }
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(id)
+                .append(word)
+                .append(chinese)
+                .append(phonetic)
+                .append(source); 
+        return sb.toString().hashCode();
+    }
+
 }
