@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Dec 12 20:24:12 CST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-016e-fa11-0e07-00000e806060 
+Thu Dec 12 20:52:24 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-016e-fa2a-df17-00000e80f0f0 
 on database directory D:\Users\ThinkPad\Documents\NetBeansProjects\COMP603_Project\Memorize_helper\Memorize_helper with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
 Loaded from file:/D:/Users/ThinkPad/Documents/NetBeansProjects/COMP603_Project/Memorize_helper/lib/derby.jar
 java.vendor=Oracle Corporation

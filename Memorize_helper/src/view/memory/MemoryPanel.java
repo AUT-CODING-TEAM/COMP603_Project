@@ -62,9 +62,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         
         addChoicesPanel();
         
-        JButton btn_mP_hint = new JButton("Prompt");
-        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage().setWord(memoryPage.getWord()), memoryFrame));
-        add(btn_mP_hint, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
+        addButtonsPanel(memoryFrame);
         
         memoryFrame.add(this);
         memoryFrame.setVisible(true);
@@ -118,6 +116,21 @@ public class MemoryPanel extends GroundPanelTemplate {
         choicesPanel.add(lbl_mP_rightBottomChoice);
 
         add(choicesPanel, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(2).setGridheight(2).setWeightx(0.9).setWeighty(0.35));
+    }
+    
+    private void addButtonsPanel(JFrame memoryFrame){
+        JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
+        
+        JButton btn_mP_hint = new JButton("Prompt");
+        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage().setWord(memoryPage.getWord()), memoryFrame));
+        buttonsPanel.add(btn_mP_hint);
+        
+        JButton btn_mP_favorite = new JButton("Favorite");
+        btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWord()));
+        buttonsPanel.add(btn_mP_favorite);
+        
+        add(buttonsPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTHWEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
+       
     }
 }
 
