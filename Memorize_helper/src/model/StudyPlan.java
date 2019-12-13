@@ -48,7 +48,9 @@ public class StudyPlan {
         this.remainDay = this.totalDay - keep;
         this.finished = fns;
     }
-
+    public String getName(){
+        return this.studyPlanName;
+    }
     public void setTodayMemorized(int num) {
         this.todayMemorizedNumber = num;
     }

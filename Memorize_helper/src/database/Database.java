@@ -478,6 +478,8 @@ public class Database {
                     this.p_controller.setString(i, (String)o);
                 } else if( type.equals("java.lang.Double")){
                     this.p_controller.setDouble(i, (Double)o);
+                }else if(type.equals("java.lang.Long")){
+                     this.p_controller.setLong(i, (Long)o);
                 }
                 i++;
             }
@@ -708,9 +710,7 @@ public class Database {
 
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
-        ResultSet r = t.prepare("select * from MEMORIZE where WORD_SOURCE = ? and AGING = ? and WRONG = ?", "CET4进阶",0,0);
-        while(r.next()){
-            System.out.println(r.getString("WORD_ID"));
-        }
+        t.reset();
+        t.init();
     }
 }

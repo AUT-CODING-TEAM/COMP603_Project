@@ -101,12 +101,12 @@ public class UserController {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         String seq_pass = sha256.SHA256(password);
-        String[] keys = {"username", "password"};
-        String[] vals = {username, seq_pass};
-        ResultSet res = db.get("users", keys, vals);
+        ResultSet res = db.get("users", "username", username);
         try {
             if (res.next()) {
-                return true;
+                String pass = res.getString("PASSWORD");
+                boolean eq = pass.equals(seq_pass);
+                return eq;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -271,40 +271,6 @@ public class UserController {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
         return mct.wrong(user, wd);
-    }
-
-    /**
-     * help build sha256 string
-     */
-    class SHA256Util {
-
-        public String SHA256(String str) {
-            MessageDigest messageDigest;
-            String encodeStr = "";
-            try {
-                messageDigest = MessageDigest.getInstance("SHA-256");
-                messageDigest.update(str.getBytes("UTF-8"));
-                encodeStr = byte2Hex(messageDigest.digest());
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            return encodeStr;
-        }
-
-        private String byte2Hex(byte[] bytes) {
-            StringBuffer stringBuffer = new StringBuffer();
-            String temp = null;
-            for (int i = 0; i < bytes.length; i++) {
-                temp = Integer.toHexString(bytes[i] & 0xFF);
-                if (temp.length() == 1) {
-                    stringBuffer.append("0");
-                }
-                stringBuffer.append(temp);
-            }
-            return stringBuffer.toString();
-        }
     }
 
     public static void main(String[] args) {

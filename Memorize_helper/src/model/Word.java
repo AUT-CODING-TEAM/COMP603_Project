@@ -67,12 +67,18 @@ public class Word {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Word) {
-            Word w = (Word) obj;
-            return this.id == w.id
-                    && this.source.equals(w.getSource());
+
+        if (this == obj) {
+            return true;
         }
-        return false;
+
+        if (!(obj instanceof Word)) {
+            return false;
+        }
+        
+        Word w = (Word) obj;
+        return this.id == w.id
+                && this.source.equals(w.getSource());
 
     }
 
@@ -83,7 +89,7 @@ public class Word {
                 .append(word)
                 .append(chinese)
                 .append(phonetic)
-                .append(source); 
+                .append(source);
         return sb.toString().hashCode();
     }
 
