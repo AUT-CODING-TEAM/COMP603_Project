@@ -6,11 +6,15 @@
 package view.memory;
 
 import controller.WordDetailController;
+import controller.interfaces.CollectionController;
 import controller.memory.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import model.*;
@@ -130,8 +134,21 @@ public class MemoryPanel extends GroundPanelTemplate {
         btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this, memoryRecorder));
         buttonsPanel.add(btn_mP_hint);
 
-        JButton btn_mP_favorite = new JButton("Favorite");
-        btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
+        JButton btn_mP_favorite = null;
+        try {
+            if (!new CollectionController().hasCollected(user, memoryPage.getWordObj())) {
+                btn_mP_favorite = new JButton("Add to Favorite");
+                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), false));
+            }
+            else{
+                btn_mP_favorite = new JButton("Remove from Favorite");
+                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), true));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
         buttonsPanel.add(btn_mP_favorite);
 
         add(buttonsPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTHWEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import model.User;
 import model.Word;
@@ -22,20 +23,29 @@ import model.Word;
 public class AddFavoriteController implements ActionListener{
     private User user;
     private Word word;
+    private boolean favorited;
 
-    public AddFavoriteController(User user, Word word) {
+    public AddFavoriteController(User user, Word word, boolean favorited) {
         this.user = user;
         this.word = word;
+        this.favorited = favorited;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null, "Successfully Added to Favorites!", "information ", JOptionPane.INFORMATION_MESSAGE);
+//        JOptionPane.showMessageDialog(null, "Successfully Added to Favorites!", "information ", JOptionPane.INFORMATION_MESSAGE);
         try {
-            new CollectionController().collectWord(user, word);
+            CollectionController cc = new CollectionController();
+            cc.collectWord(user, word);
+            JButton favorite = (JButton)e.getSource();
+            if (!cc.hasCollected(user, word)) {
+                favorite.setText("Add to Favorite");
+            }
+            else{
+                favorite.setText("Remove from Favorite");
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(AddFavoriteController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-        System.out.println(word);
     }
 }
