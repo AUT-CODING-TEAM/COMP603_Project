@@ -388,7 +388,8 @@ public class PlanController {
         bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
         bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
         bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
-        bd.append(" and \"AGING\"  = 1");
+        bd.append(" and \"AGING\" = 1 and \"USER_ID\" = \'").append(user.getID());
+        bd.append("\'");
         ResultSet res = db.SQLqr(bd.toString());
         try {
             if (res.next()) {
@@ -422,7 +423,8 @@ public class PlanController {
         bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
         bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
         bd.append(" and CAST(\"LAST_MEM_TIME\" as bigint) <= ").append(day_end);
-        bd.append(" and \"AGING\" > 2");
+        bd.append(" and \"AGING\" >= 2 and \"USER_ID\" = \'").append(user.getID());
+        bd.append("\'");
         ResultSet res = db.SQLqr(bd.toString());
         try {
             if (res.next()) {
@@ -433,7 +435,5 @@ public class PlanController {
         }
         return review_num;
     }
-    
-    
-    
+
 }
