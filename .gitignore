@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 /Memorize_helper/nbproject/private/
 /Memorize_helper/build/
 /Memorize_helper/Memorize_helper/
 .DS_Store
 */.DS_Store
 /Memorize_helper/derby.log
+=======
+/Memorize_helper/nbproject/private/
+/Memorize_helper/build/
+/Memorize_helper/Memorize_helper/
+.DS_Store
+*/.DS_Store
+/Memorize_helper/derby.log
+>>>>>>> master
 /Memorize_helper/dist/
