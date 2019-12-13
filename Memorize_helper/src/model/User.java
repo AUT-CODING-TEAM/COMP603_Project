@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.TimeZone;
+
 /**
  *
  * @author ThinkPad
@@ -69,14 +71,24 @@ public class User {
     }
 
     public int getTodayReviewNumber() {
+//        Long time = System.currentTimeMillis();
+//        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+//                - TimeZone.getDefault().getRawOffset();
+//        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+//        long beginDay = this.getCurrentStudyPlan().getStartTime();
+        
         if (this.currentStudyPlan == null) {
             return 0;
         }
-        int reviewNumber = this.currentStudyPlan.getTodayTargetNumber() - this.currentStudyPlan.getTodayReviewedNumber();
-        if (reviewNumber < 0) {
-            reviewNumber = 0;
-        }
-        return reviewNumber;
+//        if (beginDay>=day_start && beginDay<=day_end){
+//            
+//        }
+//        
+//        int reviewNumber = this.currentStudyPlan.getTodayTargetNumber() - this.currentStudyPlan.getTodayReviewedNumber();
+//        if (reviewNumber < 0) {
+//            reviewNumber = 0;
+//        }
+        return this.currentStudyPlan.getNeedReviewNumber();
     }
 
     public int getTodayReviewedNumber() {

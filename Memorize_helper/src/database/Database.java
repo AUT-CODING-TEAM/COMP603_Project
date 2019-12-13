@@ -146,8 +146,8 @@ public class Database {
                         + "(\n"
                         + "	ID int generated always as identity,\n"
                         + "	USER_ID varchar(10) not null,\n"
-                        + "	WORD_ID int not null,\n"
-                        + "	WORD_SOURCE int not null\n"
+                        + "	WORD_ID varchar(10) not null,\n"
+                        + "	WORD_SOURCE varchar(10) not null\n"
                         + ")";
                 String str2 = "create unique index COLLECTION_ID_uindex\n"
                         + "	on COLLECTION (ID)";
