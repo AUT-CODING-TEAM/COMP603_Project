@@ -554,7 +554,7 @@ public class MemorizeController {
                 .append(studyPlan)
                 .append(" where MEMORIZE.WORD_SOURCE = ? and MEMORIZE.USER_ID = ? and MEMORIZE.LAST_MEM_TIME != \'0\' and ")
                 .append(studyPlan)
-                .append(".ID = int(MEMORIZE.WORD_ID) order by MEMORIZE.AGING ASC, MEMORIZE.LAST_MEM_TIME DESC fetch first ? rows only");
+                .append(".ID = int(MEMORIZE.WORD_ID) order by MEMORIZE.AGING, MEMORIZE.LAST_MEM_TIME ASC fetch first ? rows only");
 
         ResultSet rs = db.prepare(sb.toString(), studyPlan, userId, number);
 
