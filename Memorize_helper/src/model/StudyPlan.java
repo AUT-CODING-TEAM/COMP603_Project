@@ -17,13 +17,16 @@ public class StudyPlan {
     private int totalDay;
     private int remainDay;
     private long startTime;
+    
     private int todayTargetNumber;
     private int todayMemorizedNumber;
     private int todayReviewedNumber;
+    private int totalMemorizedNumber;
+    
     private int added;//is added by the user or not
     private int finished;//is finished or not
     private String planFinishedDay;//if not finished
-    private int totalMemorizedNumber;
+
 
 
     public StudyPlan(String studyPlanName, int totalNumber, int added) {
@@ -98,7 +101,9 @@ public class StudyPlan {
         this.totalNumber = totalNumber;
         return this;
     }
-
+    public void setReaminDay(int d){
+        this.remainDay = d;
+    }
     public int getID() {
         return ID;
     }

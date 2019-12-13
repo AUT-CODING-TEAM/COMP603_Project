@@ -246,11 +246,12 @@ public class PlanController {
         }
         return pid;
     }
-    
-    public void setPlan(User user, int pid){
-         Database db = Database.getInstance();
-         db.set("USERS", "ID", user.getID(), "STUDY_PLAN", String.valueOf(pid));
+
+    public void setPlan(User user, int pid) {
+        Database db = Database.getInstance();
+        db.set("USERS", "ID", user.getID(), "STUDY_PLAN", String.valueOf(pid));
     }
+
     /**
      * @param plan get this plan's total word number
      * @return total word number
@@ -341,10 +342,19 @@ public class PlanController {
         if (user != null) {
             StudyPlan p = user.getCurrentStudyPlan();
             if (p != null) {
+                MemorizeController mct = new MemorizeController();
+                long day_start = System.currentTimeMillis() / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                        - TimeZone.getDefault().getRawOffset();
+                long plan_start_time = p.getStartTime() / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                        - TimeZone.getDefault().getRawOffset();
+                int remain_day = (int) (day_start - plan_start_time / (1000 * 3600 * 24));
+                
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
-                MemorizeController mct = new MemorizeController();
-                if (mct.countMemorizedWordInPlan(user) == p.getTotalNumber()) {
+                p.setTotalMemorizedNumber(mct.countMemorizedWordInPlan(user));
+                p.setReaminDay(remain_day);
+
+                if (p.getTotalMemorizedNumber() == p.getTotalNumber()) {
                     Database db = Database.getInstance();
                     db.set("PLAN", "ID", p.getID(), "FINISH", "1");
                     p.setFinished(1);
