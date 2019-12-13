@@ -23,6 +23,8 @@ public class StudyPlan {
     private int added;//is added by the user or not
     private int finished;//is finished or not
     private String planFinishedDay;//if not finished
+    private int totalMemorizedNumber;
+
 
     public StudyPlan(String studyPlanName, int totalNumber, int added) {
         this.studyPlanName = studyPlanName;
@@ -125,4 +127,11 @@ public class StudyPlan {
         return todayReviewedNumber;
     }
 
+    public void setTotalMemorizedNumber(int totalMemorizedNumber){
+        this.todayMemorizedNumber = totalMemorizedNumber;
+    }
+    
+    public int getTotalMemorizedNumber(){
+        return this.totalMemorizedNumber;
+    }
 }

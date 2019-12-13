@@ -421,7 +421,7 @@ public class MemorizeController {
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
         String userId = user.getID() + "";
         int number = user.getTodayTargetNumber() - user.getTodayLearnedNumber();
-        if(number<0){
+        if(number<1){
             number = user.getTodayTargetNumber();
         }
 //        String studyPlan = "CET4入门";
@@ -542,7 +542,7 @@ public class MemorizeController {
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
         String userId = user.getID() + "";
         int number = user.getTodayReviewNumber();
-        if(user.getTodayReviewNumber()<0){
+        if(user.getTodayReviewNumber()<1){
             number = user.getTodayTargetNumber();
         }
   
