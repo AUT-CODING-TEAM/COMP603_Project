@@ -11,9 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import model.User;
-import model.WordExplainPage;
+import model.*;
 import view.WordExplainPanel;
+import view.memory.MemoryPanel;
 
 /**
  *
@@ -24,8 +24,9 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     private User user;
     private JList list_sP_searchResultList;
     private JFrame searchResultListFrame;
-    private JFrame memoryFrame;
+    private MemoryPanel memoryPanel;
     private WordExplainPage wordExplainPage;
+    private MemoryRecorder memoryRecorder;
 
     //from SearchResultListPanel
     public WordDetailController(User user, JList list_sP_searchResultList, JFrame searchResultListFrame) {
@@ -35,12 +36,14 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     }
 
     // from MemoryPanel
-    public WordDetailController(User user, WordExplainPage wordExplainPage, JFrame memoryFrame) {
+    public WordDetailController(User user, WordExplainPage wordExplainPage, MemoryPanel memoryPanel, MemoryRecorder memoryRecorder) {
         this.user = user;
         this.wordExplainPage = wordExplainPage;
-        this.memoryFrame = memoryFrame;
+        this.memoryPanel = memoryPanel;
+        this.memoryRecorder = memoryRecorder;
     }
 
+    //from SearchResultListPanel
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (list_sP_searchResultList != null) {
@@ -54,11 +57,13 @@ public class WordDetailController implements ListSelectionListener, ActionListen
 
     }
 
+    // from MemoryPanel
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (memoryFrame != null) {
-            new WordExplainPanel(wordExplainPage, memoryFrame);
-            memoryFrame.setVisible(false);
+        if (memoryPanel != null) {
+            memoryRecorder.getWordsToReview().add(memoryPanel.getMemoryPage().getWordObj());
+            new WordExplainPanel(wordExplainPage, memoryPanel.getMemoryFrame(), memoryRecorder, user);
+            memoryPanel.getMemoryFrame().dispose();
         }
     }
 }

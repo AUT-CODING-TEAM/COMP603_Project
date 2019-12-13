@@ -17,12 +17,6 @@ public class WordExplainPage {
     private String phoneticSymbol;
     private String Chinese;
     
-    public WordExplainPage(){//develop use only
-        this.word = "book";
-        this.phoneticSymbol = "/bʊk/";
-        this.Chinese = "n.书，书籍；v.预定";
-    }
-    
     public WordExplainPage(String word){
         this.word = word;
         this.phoneticSymbol = "/" + new WordController().getAllWordByName(word).get(0).getPhonetic() + "/";

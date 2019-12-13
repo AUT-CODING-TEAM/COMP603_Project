@@ -20,7 +20,7 @@ import model.Word;
 public class WordController {
 
     private static final String[] NOT_WORD_TABLE = {
-        "USERS", "MEMORIZE", "PLAN"
+        "USERS", "MEMORIZE", "PLAN", "COLLECTION"
     };
 
     /**

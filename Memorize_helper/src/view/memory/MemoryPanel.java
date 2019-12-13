@@ -37,13 +37,21 @@ public class MemoryPanel extends GroundPanelTemplate {
         addComponents();
     }
 
+    public MemoryPage getMemoryPage() {
+        return memoryPage;
+    }
+
+    public JFrame getMemoryFrame() {
+        return memoryFrame;
+    }
+
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
 
     public void addComponents() {
         memoryFrame = new JFrame("Learning");
-        setSize(memoryFrame, 1080, 720);
+        setSize(memoryFrame, 1200, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -94,7 +102,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         lbl_mP_word.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         vocabularyPanel.add(lbl_mP_word, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTH).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
-        JLabel lbl_mP_phoneticSymbol = new JLabel(memoryPage.getPhoneticSymbol(), SwingConstants.CENTER);
+        JLabel lbl_mP_phoneticSymbol = new JLabel("/" + memoryPage.getPhoneticSymbol() + "/", SwingConstants.CENTER);
         lbl_mP_phoneticSymbol.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         vocabularyPanel.add(lbl_mP_phoneticSymbol, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTH).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
@@ -119,7 +127,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
         JButton btn_mP_hint = new JButton("Prompt");
-        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage().setWord(memoryPage.getWord()), memoryFrame));
+        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this, memoryRecorder));
         buttonsPanel.add(btn_mP_hint);
 
         JButton btn_mP_favorite = new JButton("Favorite");
