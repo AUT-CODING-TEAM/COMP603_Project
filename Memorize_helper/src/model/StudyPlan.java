@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, YYZ, Pingchuan
  */
 public class StudyPlan {
 
@@ -17,12 +17,17 @@ public class StudyPlan {
     private int totalDay;
     private int remainDay;
     private long startTime;
+    
     private int todayTargetNumber;
     private int todayMemorizedNumber;
     private int todayReviewedNumber;
+    private int totalMemorizedNumber;
+    
     private int added;//is added by the user or not
     private int finished;//is finished or not
     private String planFinishedDay;//if not finished
+
+
 
     public StudyPlan(String studyPlanName, int totalNumber, int added) {
         this.studyPlanName = studyPlanName;
@@ -96,7 +101,9 @@ public class StudyPlan {
         this.totalNumber = totalNumber;
         return this;
     }
-
+    public void setReaminDay(int d){
+        this.remainDay = d;
+    }
     public int getID() {
         return ID;
     }
@@ -125,4 +132,11 @@ public class StudyPlan {
         return todayReviewedNumber;
     }
 
+    public void setTotalMemorizedNumber(int totalMemorizedNumber){
+        this.todayMemorizedNumber = totalMemorizedNumber;
+    }
+    
+    public int getTotalMemorizedNumber(){
+        return this.totalMemorizedNumber;
+    }
 }

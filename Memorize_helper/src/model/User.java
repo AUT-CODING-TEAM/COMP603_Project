@@ -15,7 +15,6 @@ public class User {
     private String password;
     private int id;
     private StudyPlan currentStudyPlan;
-    private int finishedNumberInPlan;
     private int finishedNumberInTotal;
 
     public User(String name, String pass, int id) {
@@ -23,12 +22,12 @@ public class User {
         this.password = pass;
         this.id = id;
     }
-    
-    public User(String name, int total_num){
+
+    public User(String name, int total_num) {
         this.username = name;
         this.finishedNumberInTotal = total_num;
     }
-    
+
     public String getSeqPassword() {
         return this.password;
     }
@@ -61,7 +60,6 @@ public class User {
         }
         return this.currentStudyPlan.getTodayMemorizedNumber();
     }
-   
 
     public int getTodayTargetNumber() {
         if (this.currentStudyPlan == null) {
@@ -80,8 +78,8 @@ public class User {
         }
         return reviewNumber;
     }
-    
-    public int getTodayReviewedNumber(){
+
+    public int getTodayReviewedNumber() {
         if (this.currentStudyPlan == null) {
             return 0;
         }
@@ -104,13 +102,6 @@ public class User {
         return this;
     }
 
-    public int getFinishedNumberInPlan() {
-        return finishedNumberInPlan;
-    }
     
-    public User setFinishedNumberInPlan(int finishedNumberInPlan) {
-        this.finishedNumberInPlan = finishedNumberInPlan;
-        return this;
-    }
 
 }

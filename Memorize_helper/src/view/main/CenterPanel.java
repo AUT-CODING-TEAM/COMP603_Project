@@ -31,6 +31,7 @@ public class CenterPanel extends MainViewViewTemplate {
 
     @Override
     public void addComponents() {
+        StudyPlan sp = user.getCurrentStudyPlan();
         //left fill label
         add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
         //right fill label
@@ -53,7 +54,7 @@ public class CenterPanel extends MainViewViewTemplate {
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JLabel lbl_cP_finishedNumber = new JLabel("Learned: " + user.getFinishedNumberInPlan() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("Learned: " + sp.getTodayMemorizedNumber() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_vocabulary = new JButton("Word List");
@@ -90,8 +91,9 @@ public class CenterPanel extends MainViewViewTemplate {
     }
 
     private void addProgressBar() {
+        StudyPlan sp = user.getCurrentStudyPlan();
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
-        int progress = user.getFinishedNumberInPlan() * 100 / user.getCurrentStudyPlan().getTotalNumber();
+        int progress = sp.getTotalMemorizedNumber() * 100 / user.getCurrentStudyPlan().getTotalNumber();
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);
         psBar_cP_progress.setBackground(Color.decode("#F8F6F1"));
