@@ -36,7 +36,7 @@ public class MakeChoiceController implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         ChoiceLabel selectedLabel = (ChoiceLabel)e.getSource();
         if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
-            JOptionPane.showMessageDialog(null, "Correct!", "information ", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Correct!", "information ", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
             JOptionPane.showMessageDialog(null, "Wrong! Right Answer: " + selectedLabel.getWordObj().getChinese(), "error ", JOptionPane.ERROR_MESSAGE);
