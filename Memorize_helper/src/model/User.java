@@ -14,10 +14,6 @@ public class User {
     private String username;
     private String password;
     private int id;
-    private int todayLearnedNumber;
-    private int todayTargetNumber;
-    private int todayReviewNumber;
-    private int remainingDay;
     private StudyPlan currentStudyPlan;
     private int finishedNumberInPlan;
     private int finishedNumberInTotal;
@@ -65,11 +61,7 @@ public class User {
         }
         return this.currentStudyPlan.getTodayMemorizedNumber();
     }
-    
-    public User setTodayLearnedNumber(int todayLearnedNumber) {
-        this.todayLearnedNumber = todayLearnedNumber;
-        return this;
-    }
+   
 
     public int getTodayTargetNumber() {
         if (this.currentStudyPlan == null) {
@@ -79,6 +71,17 @@ public class User {
     }
 
     public int getTodayReviewNumber() {
+        if (this.currentStudyPlan == null) {
+            return 0;
+        }
+        int reviewNumber = this.currentStudyPlan.getTodayTargetNumber() - this.currentStudyPlan.getTodayReviewedNumber();
+        if (reviewNumber < 0) {
+            reviewNumber = 0;
+        }
+        return reviewNumber;
+    }
+    
+    public int getTodayReviewedNumber(){
         if (this.currentStudyPlan == null) {
             return 0;
         }

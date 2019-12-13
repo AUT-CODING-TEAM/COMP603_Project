@@ -5,20 +5,54 @@
  */
 package controller.memory;
 
+import controller.interfaces.UserController;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import model.*;
+import view.main.MainView;
+import view.memory.ChoiceLabel;
+import view.memory.MemoryPanel;
 
 /**
  *
  * @author ThinkPad
  */
 public class MakeChoiceController implements MouseListener{
+    
+    private MemoryRecorder memoryRecorder;
+    private User user;
+    private JFrame memoryFrame;
+
+    public MakeChoiceController(MemoryRecorder memoryRecorder, User user, JFrame memoryFrame) {
+        this.memoryRecorder = memoryRecorder;
+        this.user = user;
+        this.memoryFrame = memoryFrame;
+    }
+    
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JLabel selectedLabel = (JLabel)e.getSource();
-        System.out.println(selectedLabel.getText());
+        ChoiceLabel selectedLabel = (ChoiceLabel)e.getSource();
+        if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
+            JOptionPane.showMessageDialog(null, "Correct!", "information ", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Wrong! Right Answer: " + selectedLabel.getWordObj().getChinese(), "error ", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        MemoryPage memoryPage = memoryRecorder.next();
+
+        if (memoryPage == null) {    
+            JOptionPane.showMessageDialog(null, "Finish!", "information ", JOptionPane.INFORMATION_MESSAGE);
+            new MainView(user);
+        }
+        else{
+            new MemoryPanel(memoryPage, user, memoryRecorder);
+        }
+        
+        memoryFrame.dispose();
     }
 
     @Override

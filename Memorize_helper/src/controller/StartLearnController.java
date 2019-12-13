@@ -15,13 +15,14 @@ import view.memory.*;
  *
  * @author ThinkPad
  */
-public class StartLearnController extends MainViewControllerTemplate{
+public class StartLearnController extends MainViewControllerTemplate {
     private JFrame vocabularyListFrame;
-
+    
+    //from mainView
     public StartLearnController(JFrame mainView, User user) {
         super(mainView, user);
     }
-    
+
     //from vocabularyListFrame
     public StartLearnController(JFrame mainView, User user, JFrame vocabularyListFrame) {
         super(mainView, user);
@@ -30,9 +31,10 @@ public class StartLearnController extends MainViewControllerTemplate{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new MemoryPanel(new MemoryPage(), user);
+        MemoryRecorder memoryRecorder = new MemoryRecorder(user);
+        new MemoryPanel(memoryRecorder.next(), user, memoryRecorder);
         mainView.dispose();
-        
+
         if (vocabularyListFrame != null) {
             vocabularyListFrame.dispose();
         }
