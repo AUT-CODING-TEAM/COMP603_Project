@@ -51,7 +51,7 @@ public class MemoryPanel extends GroundPanelTemplate {
 
     public void addComponents() {
         memoryFrame = new JFrame("Learning");
-        setSize(memoryFrame, 1080, 720);
+        setSize(memoryFrame, 1200, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

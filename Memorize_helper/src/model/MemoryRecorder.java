@@ -24,13 +24,21 @@ public class MemoryRecorder {
         process = 0;
         try {
             wordsToLearn = new MemorizeController().getWordList(user);
-            wordsToReview = new MemorizeController().getReviewWordLists(user);
+            wordsToReview = new ArrayList<>();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
     
     public MemoryPage next() {
+        if (process == wordsToLearn.size()) {
+            try {
+                wordsToReview = new MemorizeController().getReviewWordLists(user);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
         if (process == wordsToLearn.size() + wordsToReview.size()) {
             return null;
         }
@@ -40,7 +48,7 @@ public class MemoryRecorder {
         try {
             memoryPage = new MemoryPage()
                     .setLearnNumber(wordsToLearn.size() > process ? wordsToLearn.size() - process : 0)
-                    .setReviewNumber(wordsToLearn.size() > process ? wordsToReview.size() : wordsToReview.size() - (process - wordsToLearn.size()))
+                    .setReviewNumber(wordsToLearn.size() > process ? wordsToReview.size() + process: wordsToReview.size() - (process - wordsToLearn.size()))
                     .setWordObj(nextWord)
                     .setChoices(new MemorizeController().getOptions(user.getCurrentStudyPlan().getStudyPlanName(), nextWord));
 
