@@ -411,14 +411,17 @@ public class PlanController {
         if (plan == null) {
             return 0;
         }
-
         String table = plan.getStudyPlanName();
         Long time = System.currentTimeMillis();
         long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                 - TimeZone.getDefault().getRawOffset();
         long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
-        //get today memorized word
+        //get today reviewed word
         int review_num = 0;
+        
+        // LAST_MEM_TIME between day_start and day_end, that means newest operation 
+        // on the word is today. AGING >= 2, that means the words who is 
+        // reviewed. Above all, this can find out today's reviewed number
         StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
         bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
         bd.append("\' and CAST(\"LAST_MEM_TIME\" as bigint) >= ").append(day_start);
@@ -452,8 +455,9 @@ public class PlanController {
         long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                 - TimeZone.getDefault().getRawOffset();
         long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
-        //get today memorized word
-        int mem_num = 0;
+        int ndRevNum = 0;
+        // aging is 1, that means the words who is memorized today or other days 
+        // without review. 
         StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
         bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
         bd.append("\' and \"AGING\" = 1 and \"USER_ID\" = \'").append(user.getID());
@@ -461,11 +465,11 @@ public class PlanController {
         ResultSet res = db.SQLqr(bd.toString());
         try {
             if (res.next()) {
-                mem_num = res.getInt("NUMBER");
+                ndRevNum = res.getInt("NUMBER");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return mem_num;
+        return ndRevNum;
     }
 }
