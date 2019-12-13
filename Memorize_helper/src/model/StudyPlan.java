@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, YYZ, Pingchuan
  */
 public class StudyPlan {
 
