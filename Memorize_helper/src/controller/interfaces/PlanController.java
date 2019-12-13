@@ -347,12 +347,14 @@ public class PlanController {
                         - TimeZone.getDefault().getRawOffset();
                 long plan_start_time = p.getStartTime() / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                         - TimeZone.getDefault().getRawOffset();
-                int remain_day = (int) (day_start - plan_start_time / (1000 * 3600 * 24));
-                
+                long delta = (day_start - plan_start_time) / (1000 * 3600 * 24);
+
+               // int remain_day = (int) delta;
+
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
                 p.setTotalMemorizedNumber(mct.countMemorizedWordInPlan(user));
-                p.setReaminDay(remain_day);
+                //p.setReaminDay(remain_day);
 
                 if (p.getTotalMemorizedNumber() == p.getTotalNumber()) {
                     Database db = Database.getInstance();
