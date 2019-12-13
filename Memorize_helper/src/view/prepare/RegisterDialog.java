@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author ThinkPad
  */
-public class RegisterDialog extends JDialog {
+public class RegisterDialog extends JFrame {
 
     public RegisterDialog() {
         setProperty();

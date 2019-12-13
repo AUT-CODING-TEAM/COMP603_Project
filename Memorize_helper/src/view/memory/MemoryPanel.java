@@ -94,7 +94,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         lbl_mP_word.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         vocabularyPanel.add(lbl_mP_word, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTH).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
-        JLabel lbl_mP_phoneticSymbol = new JLabel(memoryPage.getPhoneticSymbol(), SwingConstants.CENTER);
+        JLabel lbl_mP_phoneticSymbol = new JLabel("/" + memoryPage.getPhoneticSymbol() + "/", SwingConstants.CENTER);
         lbl_mP_phoneticSymbol.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         vocabularyPanel.add(lbl_mP_phoneticSymbol, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTH).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 

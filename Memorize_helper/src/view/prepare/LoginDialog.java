@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author ThinkPad
  */
-public class LoginDialog extends JDialog {
+public class LoginDialog extends JFrame {
 
     public LoginDialog() {
         setProperty();

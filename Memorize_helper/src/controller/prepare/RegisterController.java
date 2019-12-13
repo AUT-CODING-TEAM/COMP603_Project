@@ -18,12 +18,12 @@ import view.prepare.RegisterDialog;
  */
 public class RegisterController implements ActionListener {
 
-    private JDialog registerDialog;
+    private JFrame registerDialog;
     private JTextField tf_rgD_username;
     private JPasswordField tf_rgD_password;
     private JPasswordField tf_rgD_pwdConfirm;
 
-    public RegisterController(RegisterDialog aThis, JTextField tf_rgD_username, JPasswordField tf_rgD_password, JPasswordField tf_rgD_pwdConfirm) {
+    public RegisterController(JFrame aThis, JTextField tf_rgD_username, JPasswordField tf_rgD_password, JPasswordField tf_rgD_pwdConfirm) {
         this.registerDialog = aThis;
         this.tf_rgD_username = tf_rgD_username;
         this.tf_rgD_password = tf_rgD_password;

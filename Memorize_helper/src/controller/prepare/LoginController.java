@@ -20,12 +20,12 @@ import view.prepare.LoginDialog;
  */
 public class LoginController implements ActionListener {
 
-    private JDialog loginDialog;
+    private JFrame loginDialog;
     private JTextField tf_lgD_username;
     private JPasswordField tf_lgD_password;
     private User user;
     
-    public LoginController(LoginDialog aThis, JTextField tf_lgD_username, JPasswordField tf_lgD_password) {
+    public LoginController(JFrame aThis, JTextField tf_lgD_username, JPasswordField tf_lgD_password) {
         this.loginDialog = aThis;
         this.tf_lgD_username = tf_lgD_username;
         this.tf_lgD_password = tf_lgD_password;
