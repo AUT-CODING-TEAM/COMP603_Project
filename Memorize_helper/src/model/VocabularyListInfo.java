@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.interfaces.CollectionController;
 import controller.interfaces.MemorizeController;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class VocabularyListInfo {
             } else if (option == 1) {
                 wordListInDB = new MemorizeController().getPlanWords(user);
             } else if (option == 2) {
-                wordListInDB = new MemorizeController().getLearntWords(user);//develop use only
+                wordListInDB = new CollectionController().getCollectedWords(user);
             }
         }
         catch(SQLException e){

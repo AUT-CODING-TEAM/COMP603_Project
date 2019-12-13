@@ -131,7 +131,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         buttonsPanel.add(btn_mP_hint);
 
         JButton btn_mP_favorite = new JButton("Favorite");
-        btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWord()));
+        btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
         buttonsPanel.add(btn_mP_favorite);
 
         add(buttonsPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTHWEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));

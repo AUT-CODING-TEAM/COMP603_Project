@@ -33,9 +33,14 @@ public class MemoryRecorder {
     }
     
     public MemoryPage next() {
-        if (wordsToLearn.size() > process) {
+        if (wordsToLearn.size() >= process) {
             try {
+                System.out.println("refresh wordsToReview");
                 wordsToReview = new MemorizeController().getReviewWordLists(user);
+                for (Word word : wordsToReview) {
+                    System.out.println(word.getWord());
+                }
+                System.out.println("");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

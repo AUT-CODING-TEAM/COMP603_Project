@@ -5,10 +5,15 @@
  */
 package controller.memory;
 
+import controller.interfaces.CollectionController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.User;
+import model.Word;
 
 /**
  *
@@ -16,9 +21,9 @@ import model.User;
  */
 public class AddFavoriteController implements ActionListener{
     private User user;
-    private String word;
+    private Word word;
 
-    public AddFavoriteController(User user, String word) {
+    public AddFavoriteController(User user, Word word) {
         this.user = user;
         this.word = word;
     }
@@ -26,6 +31,11 @@ public class AddFavoriteController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(null, "Successfully Added to Favorites!", "information ", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            new CollectionController().collectWord(user, word);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddFavoriteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println(word);
     }
 }
