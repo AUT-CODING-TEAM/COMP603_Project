@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Yun_c
+ * @author Yun_c, Pingchuan
  */
 public class Database {
 
@@ -69,6 +69,7 @@ public class Database {
                 return;
             }
             String[] type = {"TABLE"};
+
             ResultSet user_table = this.meta.getTables(null, null, "USERS", null);
             if (!user_table.next()) {
                 String str1 = "create table users\n"
@@ -92,6 +93,7 @@ public class Database {
                 this.controller.executeUpdate(str3);
                 this.controller.executeUpdate(str4);
             }
+
             ResultSet mem_table = this.meta.getTables(null, null, "MEMORIZE", null);
             if (!mem_table.next()) {
                 String str1 = "create table memorize\n"
@@ -114,6 +116,7 @@ public class Database {
                 this.controller.executeUpdate(str2);
                 this.controller.executeUpdate(str3);
             }
+
             ResultSet plan_table = this.meta.getTables(null, null, "PLAN", null);
             if (!plan_table.next()) {
                 String str1 = "create table plan\n"
@@ -131,6 +134,26 @@ public class Database {
                 String str3 = "alter table plan\n"
                         + "	add constraint plan_pk\n"
                         + "		primary key (ID)";
+
+                this.controller.executeUpdate(str1);
+                this.controller.executeUpdate(str2);
+                this.controller.executeUpdate(str3);
+            }
+
+            ResultSet collection_table = this.meta.getTables(null, null, "COLLECTION", null);
+            if (!collection_table.next()) {
+                String str1 = "create table COLLECTION\n"
+                        + "(\n"
+                        + "	ID int generated always as identity,\n"
+                        + "	USER_ID varchar(10) not null,\n"
+                        + "	WORD_ID int not null,\n"
+                        + "	WORD_SOURCE int not null\n"
+                        + ");";
+                String str2 = "create unique index COLLECTION_ID_uindex\n"
+                        + "	on COLLECTION (ID);";
+                String str3 = "alter table COLLECTION\n"
+                        + "	add constraint COLLECTION_pk\n"
+                        + "		primary key (ID);";
 
                 this.controller.executeUpdate(str1);
                 this.controller.executeUpdate(str2);
@@ -394,8 +417,8 @@ public class Database {
         }
         return null;
     }
-    
-    public ResultSet getFullTable(String table_name){
+
+    public ResultSet getFullTable(String table_name) {
         StringBuilder sb = new StringBuilder();
         sb.append("select * from ").append(table_name.toUpperCase());
         return this.SQLqr(sb.toString());
@@ -475,18 +498,18 @@ public class Database {
                 if (type.equals("java.lang.Integer")) {
                     this.p_controller.setInt(i, (Integer) o);
                 } else if (type.equals("java.lang.String")) {
-                    this.p_controller.setString(i, (String)o);
-                } else if( type.equals("java.lang.Double")){
-                    this.p_controller.setDouble(i, (Double)o);
+                    this.p_controller.setString(i, (String) o);
+                } else if (type.equals("java.lang.Double")) {
+                    this.p_controller.setDouble(i, (Double) o);
                 }
                 i++;
             }
-            if(sql.matches("select(.*)") || sql.matches("SELECT(.*)")){
+            if (sql.matches("select(.*)") || sql.matches("SELECT(.*)")) {
                 res = this.p_controller.executeQuery();
-            }else{
+            } else {
                 this.p_controller.executeUpdate();
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -705,11 +728,10 @@ public class Database {
         }
     }
 
-
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
-        ResultSet r = t.prepare("select * from MEMORIZE where WORD_SOURCE = ? and AGING = ? and WRONG = ?", "CET4进阶",0,0);
-        while(r.next()){
+        ResultSet r = t.prepare("select * from MEMORIZE where WORD_SOURCE = ? and AGING = ? and WRONG = ?", "CET4进阶", 0, 0);
+        while (r.next()) {
             System.out.println(r.getString("WORD_ID"));
         }
     }
