@@ -354,6 +354,7 @@ public class PlanController {
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
                 p.setTotalMemorizedNumber(mct.countMemorizedWordInPlan(user));
+                p.setNeedReviewNumber(this.getNeedReviewNum(user));
                 p.setReaminDay(remain_day);
 
                 if (p.getTotalMemorizedNumber() == p.getTotalNumber()) {
