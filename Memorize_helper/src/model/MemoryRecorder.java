@@ -59,9 +59,15 @@ public class MemoryRecorder {
         return wordsToReview;
     }
 
+    public void setWordsToReview(ArrayList<Word> wordsToReview) {
+        this.wordsToReview = wordsToReview;
+    }
+
     public int getProcess() {
         return process;
     }
-    
-    
+
+    public void setProcess(int process) {
+        this.process = process;
+    }
 }
