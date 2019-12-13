@@ -61,7 +61,7 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (memoryPanel != null) {
-            memoryRecorder.getWordsToReview().add(memoryPanel.getMemoryPage().getWordObj());
+            memoryRecorder.getWordsToReviewFromPromOrErr().add(memoryPanel.getMemoryPage().getWordObj());
             new WordExplainPanel(wordExplainPage, memoryPanel.getMemoryFrame(), memoryRecorder, user);
             memoryPanel.getMemoryFrame().dispose();
         }
