@@ -57,7 +57,7 @@ public class CollectionController {
         String userId = user.getID() + "";
         String wordId = word.getID() + "";
         String wordSource = word.getSource();
-        String sqlPrepared = "delect from COLLECTION where USER_ID = ? and WORD_ID = ? and WORD_SOURCE = ?";
+        String sqlPrepared = "delete from COLLECTION where USER_ID = ? and WORD_ID = ? and WORD_SOURCE = ?";
         db.prepare(sqlPrepared, userId, wordId, wordSource);
     }
 
