@@ -5,15 +5,12 @@
  */
 package view;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import model.WordExplainPage;
+import javax.swing.*;
+import model.*;
+import view.memory.MemoryPanel;
 
 /**
  *
@@ -23,11 +20,25 @@ public class WordExplainPanel extends GroundPanelTemplate {
 
     private WordExplainPage wordExplainPage;
     private JFrame sourceFrame;
+    private MemoryRecorder memoryRecorder;
+    private User user;
 
+    //from SearchResultListPanel
     public WordExplainPanel(WordExplainPage wordExplainPage, JFrame sourceFrame) {
         super(GroundPanelTemplate.BACK);
         this.wordExplainPage = wordExplainPage;
         this.sourceFrame = sourceFrame;
+        setProperty();
+        addComponents();
+    }
+
+    //from memoryPanel
+    public WordExplainPanel(WordExplainPage wordExplainPage, JFrame sourceFrame, MemoryRecorder memoryRecorder, User user) {
+        super(GroundPanelTemplate.BACK);
+        this.wordExplainPage = wordExplainPage;
+        this.sourceFrame = sourceFrame;
+        this.memoryRecorder = memoryRecorder;
+        this.user = user;
         setProperty();
         addComponents();
     }
@@ -44,7 +55,11 @@ public class WordExplainPanel extends GroundPanelTemplate {
             public void windowClosing(WindowEvent e) {
 //                super.windowClosing(e);
                 wordExplainFrame.dispose();
-                sourceFrame.setVisible(true);
+                if (memoryRecorder != null && user != null) {//from memoryPanel 
+                    new MemoryPanel(memoryRecorder.next(), user, memoryRecorder);//if prompt was clicked, there must be next one
+                } else {
+                    sourceFrame.setVisible(true);
+                }
             }
         });
 

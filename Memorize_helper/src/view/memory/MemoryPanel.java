@@ -37,6 +37,14 @@ public class MemoryPanel extends GroundPanelTemplate {
         addComponents();
     }
 
+    public MemoryPage getMemoryPage() {
+        return memoryPage;
+    }
+
+    public JFrame getMemoryFrame() {
+        return memoryFrame;
+    }
+
     public void setProperty() {
         setLayout(new GridBagLayout());
     }
@@ -119,7 +127,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
         JButton btn_mP_hint = new JButton("Prompt");
-        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage().setWord(memoryPage.getWord()), memoryFrame));
+        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this, memoryRecorder));
         buttonsPanel.add(btn_mP_hint);
 
         JButton btn_mP_favorite = new JButton("Favorite");

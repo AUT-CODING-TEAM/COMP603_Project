@@ -13,7 +13,6 @@ import model.PlanListInfo;
 import model.User;
 import view.main.MainView;
 import view.planList.PlanListPanel;
-import view.prepare.LoginDialog;
 /**
  *
  * @author ThinkPad
