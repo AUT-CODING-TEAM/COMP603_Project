@@ -392,10 +392,7 @@ public class MemorizeController {
             Database db = Database.getInstance();
             StringBuilder sbd = new StringBuilder("select count(*) as \"NUMBER\" from \"MEMORIZE\" ");
             sbd.append("where \"USER_ID\" = ? and \"AGING\" >= ?");
-            db.prepare(sbd.toString());
-            db.p_controller.setString(1, String.valueOf(id));
-            db.p_controller.setInt(2, 1);
-            ResultSet res = db.p_controller.executeQuery();
+            ResultSet res = db.prepare(sbd.toString(),String.valueOf(id), 1);
             if (res.next()) {
                 num = res.getInt("NUMBER");
             }
