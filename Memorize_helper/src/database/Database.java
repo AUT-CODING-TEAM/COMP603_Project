@@ -148,12 +148,12 @@ public class Database {
                         + "	USER_ID varchar(10) not null,\n"
                         + "	WORD_ID int not null,\n"
                         + "	WORD_SOURCE int not null\n"
-                        + ");";
+                        + ")";
                 String str2 = "create unique index COLLECTION_ID_uindex\n"
-                        + "	on COLLECTION (ID);";
+                        + "	on COLLECTION (ID)";
                 String str3 = "alter table COLLECTION\n"
                         + "	add constraint COLLECTION_pk\n"
-                        + "		primary key (ID);";
+                        + "		primary key (ID)";
 
                 this.controller.executeUpdate(str1);
                 this.controller.executeUpdate(str2);
