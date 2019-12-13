@@ -436,4 +436,36 @@ public class PlanController {
         return review_num;
     }
 
+    /**
+     * @prarm user the instance of User
+     * @return how many number of words this user have to review in total
+     */
+    public int getNeedReviewNum(User user) {
+        Database db = Database.getInstance();
+        StudyPlan plan = user.getCurrentStudyPlan();
+        if (plan == null) {
+            return 0;
+        }
+
+        String table = plan.getStudyPlanName();
+        Long time = System.currentTimeMillis();
+        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                - TimeZone.getDefault().getRawOffset();
+        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        //get today memorized word
+        int mem_num = 0;
+        StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
+        bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
+        bd.append("\' and \"AGING\" = 1 and \"USER_ID\" = \'").append(user.getID());
+        bd.append("\'");
+        ResultSet res = db.SQLqr(bd.toString());
+        try {
+            if (res.next()) {
+                mem_num = res.getInt("NUMBER");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mem_num;
+    }
 }

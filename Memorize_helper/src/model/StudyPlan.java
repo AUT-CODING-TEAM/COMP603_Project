@@ -17,17 +17,16 @@ public class StudyPlan {
     private int totalDay;
     private int remainDay;
     private long startTime;
-    
+
     private int todayTargetNumber;
     private int todayMemorizedNumber;
     private int todayReviewedNumber;
+    private int needReviewNumber;
     private int totalMemorizedNumber;
-    
+
     private int added;//is added by the user or not
     private int finished;//is finished or not
     private String planFinishedDay;//if not finished
-
-
 
     public StudyPlan(String studyPlanName, int totalNumber, int added) {
         this.studyPlanName = studyPlanName;
@@ -48,9 +47,15 @@ public class StudyPlan {
         this.remainDay = this.totalDay - keep;
         this.finished = fns;
     }
-    public String getName(){
+
+    public String getName() {
         return this.studyPlanName;
     }
+
+    public void setNeedReviewNumber(int num) {
+        this.needReviewNumber = num;
+    }
+
     public void setTodayMemorized(int num) {
         this.todayMemorizedNumber = num;
     }
@@ -61,6 +66,10 @@ public class StudyPlan {
 
     public String getPlanFinishedDay() {
         return planFinishedDay;
+    }
+
+    public int getNeedReviewNumber() {
+        return this.needReviewNumber;
     }
 
     public StudyPlan setPlanFinishedDay(String planFinishedDay) {
@@ -103,9 +112,11 @@ public class StudyPlan {
         this.totalNumber = totalNumber;
         return this;
     }
-    public void setReaminDay(int d){
+
+    public void setReaminDay(int d) {
         this.remainDay = d;
     }
+
     public int getID() {
         return ID;
     }
@@ -134,11 +145,11 @@ public class StudyPlan {
         return todayReviewedNumber;
     }
 
-    public void setTotalMemorizedNumber(int totalMemorizedNumber){
+    public void setTotalMemorizedNumber(int totalMemorizedNumber) {
         this.todayMemorizedNumber = totalMemorizedNumber;
     }
-    
-    public int getTotalMemorizedNumber(){
+
+    public int getTotalMemorizedNumber() {
         return this.totalMemorizedNumber;
     }
 }
