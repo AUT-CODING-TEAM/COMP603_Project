@@ -40,8 +40,14 @@ public class BottomPanel extends MainViewViewTemplate {
         lbl_bP_todayPlan.setHorizontalAlignment(SwingConstants.CENTER);
         add(lbl_bP_todayPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
+        JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.BACK);
         JButton btn_bP_startLearn = new JButton("    Start Learning    ");
-        btn_bP_startLearn.addActionListener(new StartLearnController(mainView, user));
-        add(btn_bP_startLearn, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
+        btn_bP_startLearn.addActionListener(new StartLearnController(mainView, user, "new"));
+        buttonsPanel.add(btn_bP_startLearn);
+        
+        JButton btn_bP_startReview = new JButton("    Start Reviewing    ");
+        btn_bP_startReview.addActionListener(new StartLearnController(mainView, user, "review"));
+        buttonsPanel.add(btn_bP_startReview);
+        add(buttonsPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
     }
 }

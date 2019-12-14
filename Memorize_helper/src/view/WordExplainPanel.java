@@ -33,11 +33,11 @@ public class WordExplainPanel extends GroundPanelTemplate {
     }
 
     //from memoryPanel
-    public WordExplainPanel(WordExplainPage wordExplainPage, JFrame sourceFrame, MemoryRecorder memoryRecorder, User user) {
+    public WordExplainPanel(WordExplainPage wordExplainPage, MemoryPanel memoryPanel, User user) {
         super(GroundPanelTemplate.BACK);
         this.wordExplainPage = wordExplainPage;
-        this.sourceFrame = sourceFrame;
-        this.memoryRecorder = memoryRecorder;
+        this.sourceFrame = memoryPanel.getMemoryFrame();
+        this.memoryRecorder = memoryPanel.getMemoryRecorder();
         this.user = user;
         setProperty();
         addComponents();
@@ -56,7 +56,7 @@ public class WordExplainPanel extends GroundPanelTemplate {
 //                super.windowClosing(e);
                 wordExplainFrame.dispose();
                 if (memoryRecorder != null && user != null) {//from memoryPanel 
-                    new MemoryPanel(memoryRecorder.next(), user, memoryRecorder);//if prompt was clicked, there must be next one
+                    new MemoryPanel(user, memoryRecorder.next(), memoryRecorder);//if prompt was clicked, there must be next one
                 } else {
                     sourceFrame.setVisible(true);
                 }

@@ -6,7 +6,6 @@
 package view.memory;
 
 import controller.memory.MakeChoiceController;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -17,19 +16,21 @@ import model.*;
  * @author ThinkPad
  */
 public class ChoiceLabel extends JLabel {
+    private MemoryPanel memoryPanel;
     private Word choice;
     private Word wordObj;
     private User user;
     private MemoryPage memoryPage;
 
-    ChoiceLabel(Word choice, User user, Word wordObj, MemoryPage memoryPage, MemoryRecorder memoryRecorder, JFrame memoryFrame) {
+    ChoiceLabel(Word choice, User user, MemoryPanel memoryPanel) {
         super(choice.getChinese(), SwingConstants.CENTER);
+        this.memoryPanel = memoryPanel;
         this.choice = choice;
         this.user = user;
-        this.wordObj = wordObj;
-        this.memoryPage = memoryPage;
+        this.memoryPage = memoryPanel.getMemoryPage();
+        this.wordObj = memoryPage.getWordObj();
         setBorder(new TitledBorder(""));
-        addMouseListener(new MakeChoiceController(memoryRecorder, user, memoryFrame));
+        addMouseListener(new MakeChoiceController(memoryPanel.getMemoryRecorder(), user, memoryPanel.getMemoryFrame()));
     }
 
     public MemoryPage getMemoryPage() {

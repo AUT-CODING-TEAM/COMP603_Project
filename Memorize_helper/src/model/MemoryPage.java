@@ -13,23 +13,24 @@ import java.util.Set;
  */
 public class MemoryPage {
 
-    private int learnNumber;
-    private int reviewNumber;
+    private int studyNumber;//maybe new learn, review or favorite
     private Word wordObj;
     private String word;
     private String phoneticSymbol;
     private Set<Word> choices;
+    private String source;//maybe new learn, review or favorite
 
     public MemoryPage() {
 
     }
 
-    public MemoryPage(boolean developMode) {//develop use only
-        this.learnNumber = 15;
-        this.reviewNumber = 60;
-//        this.word = "book";
-        this.phoneticSymbol = "/bʊk/";
-//        this.choices = new String[]{"n.老虎", "n.书，书籍；v.预定", "num.九；九个", "n.铅笔"};
+    public String getSource() {
+        return source;
+    }
+
+    public MemoryPage setSource(String source) {
+        this.source = source;
+        return this;
     }
 
     public Word getWordObj() {
@@ -43,21 +44,12 @@ public class MemoryPage {
         return this;
     }
 
-    public int getLearnNumber() {
-        return learnNumber;
+    public int getStudyNumber() {
+        return studyNumber;
     }
 
-    public MemoryPage setLearnNumber(int learnNumber) {
-        this.learnNumber = learnNumber;
-        return this;
-    }
-
-    public int getReviewNumber() {
-        return reviewNumber;
-    }
-
-    public MemoryPage setReviewNumber(int reviewNumber) {
-        this.reviewNumber = reviewNumber;
+    public MemoryPage setLearnNumber(int studyNumber) {
+        this.studyNumber = studyNumber;
         return this;
     }
 

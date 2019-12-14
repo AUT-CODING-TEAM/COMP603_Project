@@ -32,13 +32,17 @@ public class MemoryPanel extends GroundPanelTemplate {
     private MemoryRecorder memoryRecorder;
     private JFrame memoryFrame;
 
-    public MemoryPanel(MemoryPage memoryPage, User user, MemoryRecorder memoryRecorder) {
+    public MemoryPanel(User user, MemoryPage memoryPage, MemoryRecorder memoryRecorder) {
         super(GroundPanelTemplate.BACK);
-        this.memoryPage = memoryPage;
         this.user = user;
         this.memoryRecorder = memoryRecorder;
+        this.memoryPage = memoryPage;
         setProperty();
         addComponents();
+    }
+
+    public MemoryRecorder getMemoryRecorder() {
+        return memoryRecorder;
     }
 
     public MemoryPage getMemoryPage() {
@@ -54,8 +58,8 @@ public class MemoryPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        memoryFrame = new JFrame("Learning");
-        setSize(memoryFrame, 1200, 720);
+        memoryFrame = new JFrame("Studying");
+        setSize(memoryFrame, 1500, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -88,11 +92,8 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel progressPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         progressPanel.setLayout(new BorderLayout());
 
-        JLabel lbl_mP_newLearnNumber = new JLabel("       New:  " + memoryPage.getLearnNumber() + "       ", SwingConstants.CENTER);
-        progressPanel.add(lbl_mP_newLearnNumber, BorderLayout.NORTH);
-
-        JLabel lbl_mP_turnNumber = new JLabel("       Review: " + memoryPage.getReviewNumber() + "       ", SwingConstants.CENTER);
-        progressPanel.add(lbl_mP_turnNumber, BorderLayout.SOUTH);
+        JLabel lbl_mP_newLearnNumber = new JLabel("       " + memoryPage.getSource() + ":  " + memoryPage.getStudyNumber()+ "       ", SwingConstants.CENTER);
+        progressPanel.add(lbl_mP_newLearnNumber, BorderLayout.SOUTH);
 
         add(progressPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTHWEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
     }
@@ -120,7 +121,7 @@ public class MemoryPanel extends GroundPanelTemplate {
 
         Set<Word> choicesInDB = memoryPage.getChoices();
         for (Word choice : choicesInDB) {
-            ChoiceLabel lbl_mP_choice = new ChoiceLabel(choice, user, memoryPage.getWordObj(), memoryPage, memoryRecorder, memoryFrame);
+            ChoiceLabel lbl_mP_choice = new ChoiceLabel(choice, user, this);
             choicesPanel.add(lbl_mP_choice);
         }
 
@@ -131,23 +132,16 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
         JButton btn_mP_hint = new JButton("Prompt");
-        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this, memoryRecorder));
+        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this));
         buttonsPanel.add(btn_mP_hint);
 
         JButton btn_mP_favorite = null;
         try {
-            if (!new CollectionController().hasCollected(user, memoryPage.getWordObj())) {
-                btn_mP_favorite = new JButton("Add to Favorite");
-                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), false));
-            }
-            else{
-                btn_mP_favorite = new JButton("Remove from Favorite");
-                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), true));
-            }
+            btn_mP_favorite = new CollectionController().hasCollected(user, memoryPage.getWordObj())? new JButton("Remove from Favorite"): new JButton("Add to Favorite");
+            btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
         
         buttonsPanel.add(btn_mP_favorite);
 
