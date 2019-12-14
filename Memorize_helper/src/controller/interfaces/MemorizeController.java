@@ -340,7 +340,9 @@ public class MemorizeController {
      */
     public int getWordNumInMemorize(User user) {
         Database db = Database.getInstance();
-        return db.count("MEMORIZE", "ID", user.getCurrentStudyPlan().getID());
+        String[] key = {"USER_ID", "WORD_SOURCE"};
+        String[] val = {String.valueOf(user.getID()), user.getCurrentStudyPlan().getStudyPlanName()};
+        return db.count("MEMORIZE", key, val);
     }
 
     /**

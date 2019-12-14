@@ -45,6 +45,7 @@ public class MemorizeControllerTest {
         try {
             if (!res.next()) {
                 db.prepare("insert into USERS (USERNAME, PASSWORD, STUDY_PLAN) values (?, ?, ?)", "TEST", sha256.SHA256("TEST"), "0");
+                System.out.println("user create");
             }
             res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
@@ -67,6 +68,8 @@ public class MemorizeControllerTest {
                         + "START_TIME, TODAY_TARGET_NUMBER, FINISH) values "
                         + "(?, ?, ?, ?, ?, ?)", user_id, book, total_day, time,
                         everyday_num, 0);
+                System.out.println("plan create");
+
                 res = db.prepare("select * from PLAN where USER_ID = ?", String.valueOf(user_id));
                 res.next();
                 int id = res.getInt("ID");
@@ -83,8 +86,10 @@ public class MemorizeControllerTest {
                                 + " WORD_SOURCE, LAST_MEM_TIME) values (?, ?, "
                                 + "?, ?)", String.valueOf(user_id), words.getString("ID"),
                                 "CET4入门", "0");
+                        System.out.println("memorize insert" + i);
                     }
                 }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,8 +107,11 @@ public class MemorizeControllerTest {
             if (res.next()) {
                 int user_id = res.getInt("ID");
                 db.prepare("delete from USERS where USERNAME = ?", "TEST");
+                System.out.println("user delete");
                 db.prepare("delete from PLAN where USER_ID = ?", String.valueOf(user_id));
+                System.out.println("plan delete");
                 db.prepare("delete from MEMORIZE where USER_ID = ?", String.valueOf(user_id));
+                System.out.println("memorize delete");
             }
         } catch (SQLException ex) {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,7 +135,7 @@ public class MemorizeControllerTest {
         Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
         Memorize result = instance.getMemorize(user, wd);
-        assertTrue(result.getWordSource() == "CET4入门");
+        assertTrue(result.getWordSource().equals("CET4入门"));
         assertTrue(result.getAge() == 0);
         assertTrue(result.getCorrect() == 0);
         assertTrue(result.getWrong() == 0);
@@ -156,6 +164,9 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
         boolean result = instance.updateTime(user.getID(), wordid, source);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -170,6 +181,9 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
         boolean result = instance.updateTime(user.getUsername(), word, source);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -183,6 +197,9 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
         boolean result = instance.updateTime(user, wd);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -239,8 +256,9 @@ public class MemorizeControllerTest {
         memo = instance.getMemorize(user, wd);
         boolean expResult = true;
         boolean result = instance.correct(memo);
-       Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,WRONG = 0, AGING = 0 where USER_ID = ?",
-                String.valueOf(user.getID()));
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
 
     }
@@ -257,8 +275,9 @@ public class MemorizeControllerTest {
         memo = instance.getMemorize(user, wd);
         boolean expResult = true;
         boolean result = instance.wrong(memo);
-       Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,WRONG = 0, AGING = 0 where USER_ID = ?",
-                String.valueOf(user.getID()));
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -272,8 +291,9 @@ public class MemorizeControllerTest {
         Word wd = new Word(1, "lens", "", "", "CET4入门");
         boolean expResult = true;
         boolean result = instance.correct(user, wd);
-       Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,WRONG = 0, AGING = 0 where USER_ID = ?",
-                String.valueOf(user.getID()));
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -287,8 +307,9 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
         boolean result = instance.wrong(user, wd);
-       Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,WRONG = 0, AGING = 0 where USER_ID = ?",
-                String.valueOf(user.getID()));
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
     }
 
@@ -322,7 +343,9 @@ public class MemorizeControllerTest {
     public void testGetWordNumInMemorize() {
         System.out.println("getWordNumInMemorize");
         MemorizeController instance = new MemorizeController();
-        int expResult = 100;
+        
+        //beforeClass put 100, and testPutMemorize put another 100, total 200
+        int expResult = 200;
         int result = instance.getWordNumInMemorize(user);
         assertEquals(expResult, result);
     }
