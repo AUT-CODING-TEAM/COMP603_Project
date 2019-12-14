@@ -7,9 +7,13 @@ package view.main;
 
 import controller.main.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 import model.*;
 import view.*;
 import view.searchResultList.SearchResultListPanel;
@@ -72,7 +76,6 @@ public class TopPanel extends MainViewViewTemplate {
         searchPanel.add(lbl_tP_searchTip);
 
         tf_tP_keyword = new JTextField(15);
-
         tf_tP_keyword.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -99,3 +102,4 @@ public class TopPanel extends MainViewViewTemplate {
     }
 
 }
+
