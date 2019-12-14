@@ -293,7 +293,7 @@ public class PlanController {
     /**
      * @param id user's id
      * @param plan get word number according to this plan
-     * @return the number of word that param.id not memorized yet. If user is
+     * @return the number of word that not put into memorize tabel yet. If user is
      * never set a plan, return value is 0
      */
     public int getRemainWordNum(int id, StudyPlan plan) {

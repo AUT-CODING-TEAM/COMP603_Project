@@ -259,7 +259,7 @@ public class PlanControllerTest {
     public void testGetRemainWordNum() {
         System.out.println("getRemainWordNum");
         PlanController instance = new PlanController();
-        int expResult = 609;
+        int expResult = 509;
         int result = instance.getRemainWordNum(user.getID(), plan);
         assertEquals(expResult, result);
     }
