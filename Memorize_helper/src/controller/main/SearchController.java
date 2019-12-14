@@ -12,7 +12,7 @@ import model.SearchResultInfo;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class SearchController implements DocumentListener {
 

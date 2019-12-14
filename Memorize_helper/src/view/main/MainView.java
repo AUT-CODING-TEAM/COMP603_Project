@@ -17,7 +17,7 @@ import view.*;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class MainView extends JFrame {
 

@@ -22,7 +22,7 @@ import view.main.MainView;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class SearchResultListPanel extends GroundPanelTemplate {
 

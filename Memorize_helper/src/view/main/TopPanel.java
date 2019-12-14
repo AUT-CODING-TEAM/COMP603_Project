@@ -20,7 +20,7 @@ import view.searchResultList.SearchResultListPanel;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class TopPanel extends MainViewViewTemplate {
 
@@ -79,7 +79,8 @@ public class TopPanel extends MainViewViewTemplate {
         tf_tP_keyword.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                new SearchResultListPanel(tf_tP_keyword.getText(), user);
+                String str = tf_tP_keyword.getText();
+                new SearchResultListPanel(str, user);
                 mainView.dispose();
             }
 
