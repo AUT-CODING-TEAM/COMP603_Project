@@ -15,7 +15,7 @@ import model.Word;
 
 /**
  *
- * @author Yun_c
+ * @author Yun_c, Pingchuan
  */
 public class WordController {
 
