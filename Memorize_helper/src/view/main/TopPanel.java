@@ -95,9 +95,7 @@ public class TopPanel extends MainViewViewTemplate {
 
     public JTextField getTf_tP_keyword() {
         return tf_tP_keyword;
-       
+
     }
-    
-   
-    
+
 }

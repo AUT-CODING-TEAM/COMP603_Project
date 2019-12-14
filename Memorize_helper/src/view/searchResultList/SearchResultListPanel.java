@@ -76,9 +76,16 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         JLabel lbl_sRLP_searchTip = new JLabel("Look Up");
         jPanel.add(lbl_sRLP_searchTip);
 
-        tf_sRLP_keyword = new JTextField(inputKeyWord, 15);
+        tf_sRLP_keyword = new JTextField(20);
+        this.tf_sRLP_keyword.setText(inputKeyWord);
         tf_sRLP_keyword.getDocument().addDocumentListener(new SearchController(this));
         jPanel.add(tf_sRLP_keyword);
+        
+        this.searchResultListFrame.addWindowListener(new WindowAdapter() {
+            public void windowOpened(WindowEvent e) {
+                SearchResultListPanel.this.tf_sRLP_keyword.requestFocus();
+            }
+        });
 
         searchPanel.add(new JLabel());
         searchPanel.add(jPanel);
