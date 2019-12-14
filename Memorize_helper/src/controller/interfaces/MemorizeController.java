@@ -71,35 +71,6 @@ public class MemorizeController {
     }
 
     /**
-     * @param user who want initialize a new plan
-     * @return if init success
-     */
-    public boolean initMemorize(User user) {
-        boolean result = true;
-        Database db = Database.getInstance();
-        StudyPlan plan = user.getCurrentStudyPlan();
-        String uid = String.valueOf(user.getID());
-        WordController wct = new WordController();
-        if (plan == null) {
-            return false;
-        }
-        String book = plan.getStudyPlanName();
-        ArrayList<Word> words = wct.getBookContent(book);
-        String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
-
-        int len = words.size() > 100 ? 100 : words.size();
-        String[][] val = new String[len][4];
-
-        for (int i = 0; i < len; i++) {
-            Word wd = words.get(i);
-            String[] temp = {uid, String.valueOf(wd.getID()), book, "0"};
-            val[i] = temp;
-        }
-        result = db.add("memorize", col, val);
-        return result;
-    }
-
-    /**
      * @param user who want enlarge plan memorize table
      * @return if init success
      */
@@ -208,7 +179,6 @@ public class MemorizeController {
             String.valueOf(userid),
             String.valueOf(wordid),
             source
-        //String.valueOf(System.currentTimeMillis())
         };
         boolean res = db.set("memorize", col2, val2,
                 "aging", ag);
@@ -392,7 +362,7 @@ public class MemorizeController {
             Database db = Database.getInstance();
             StringBuilder sbd = new StringBuilder("select count(*) as \"NUMBER\" from \"MEMORIZE\" ");
             sbd.append("where \"USER_ID\" = ? and \"AGING\" >= ?");
-            ResultSet res = db.prepare(sbd.toString(),String.valueOf(id), 1);
+            ResultSet res = db.prepare(sbd.toString(), String.valueOf(id), 1);
             if (res.next()) {
                 num = res.getInt("NUMBER");
             }
@@ -406,7 +376,7 @@ public class MemorizeController {
     /**
      *
      * @param user Current user instance.
-     * @return A list of word that need to memorize
+     * @return A list of word that user need to memorize this time
      * @throws SQLException
      */
     public ArrayList<Word> getWordList(User user) throws SQLException {
@@ -418,7 +388,7 @@ public class MemorizeController {
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
         String userId = user.getID() + "";
         int number = user.getTodayTargetNumber() - user.getTodayLearnedNumber();
-        if(number<1){
+        if (number < 1) {
             number = user.getTodayTargetNumber();
         }
 //        String studyPlan = "CET4入门";
@@ -502,26 +472,24 @@ public class MemorizeController {
      * @throws SQLException
      */
     public ArrayList<Word> getPlanWords(User user) throws SQLException {
-        ArrayList<Word> wordList = new ArrayList<>();
-        Database db = Database.getInstance();
-
+        WordController wct = new WordController();
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
-//        String studyPlan = "CET4入门";
-
-        ResultSet rs = db.getFullTable(studyPlan);
-
-        while (rs.next()) {
-            Word word = new Word(
-                    rs.getInt("ID"),
-                    rs.getString("WORD"),
-                    rs.getString("CHINESE"),
-                    rs.getString("PHONETIC"),
-                    studyPlan
-            );
-            wordList.add(word);
-        }
-
-        return wordList;
+        return wct.getBookContent(studyPlan);
+//        ArrayList<Word> wordList = new ArrayList<>();
+//        Database db = Database.getInstance();
+//
+//        ResultSet rs = db.getFullTable(studyPlan);
+//        while (rs.next()) {
+//            Word word = new Word(
+//                    rs.getInt("ID"),
+//                    rs.getString("WORD"),
+//                    rs.getString("CHINESE"),
+//                    rs.getString("PHONETIC"),
+//                    studyPlan
+//            );
+//            wordList.add(word);
+//        }
+//        return wordList;
     }
 
     /**
@@ -539,15 +507,13 @@ public class MemorizeController {
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
         String userId = user.getID() + "";
         int number = user.getTodayReviewNumber();
-        if(user.getTodayReviewNumber()<1){
+        if (user.getTodayReviewNumber() < 1) {
             number = user.getTodayTargetNumber();
         }
-  
 
 //        String studyPlan = "CET4入门";
 //        String userId = "1";
 //        int number = 30;
-
         sb.append("select MEMORIZE.LAST_MEM_TIME, MEMORIZE.AGING, ")
                 .append(studyPlan)
                 .append(".* from MEMORIZE,")
