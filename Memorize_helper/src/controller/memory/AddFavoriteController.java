@@ -23,27 +23,20 @@ import model.Word;
 public class AddFavoriteController implements ActionListener{
     private User user;
     private Word word;
-    private boolean favorited;
 
-    public AddFavoriteController(User user, Word word, boolean favorited) {
+    public AddFavoriteController(User user, Word word) {
         this.user = user;
         this.word = word;
-        this.favorited = favorited;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 //        JOptionPane.showMessageDialog(null, "Successfully Added to Favorites!", "information ", JOptionPane.INFORMATION_MESSAGE);
         try {
-            CollectionController cc = new CollectionController();
-            cc.collectWord(user, word);
-            JButton favorite = (JButton)e.getSource();
-            if (!cc.hasCollected(user, word)) {
-                favorite.setText("Add to Favorite");
-            }
-            else{
-                favorite.setText("Remove from Favorite");
-            }
+            new CollectionController().collectWord(user, word);
+            JButton btn_favorite = (JButton)e.getSource();
+            String favoriteState = new CollectionController().hasCollected(user, word)? "Remove from Favorite": "Add to Favorite";
+            btn_favorite.setText(favoriteState);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

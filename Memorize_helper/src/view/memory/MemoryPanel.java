@@ -136,18 +136,11 @@ public class MemoryPanel extends GroundPanelTemplate {
 
         JButton btn_mP_favorite = null;
         try {
-            if (!new CollectionController().hasCollected(user, memoryPage.getWordObj())) {
-                btn_mP_favorite = new JButton("Add to Favorite");
-                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), false));
-            }
-            else{
-                btn_mP_favorite = new JButton("Remove from Favorite");
-                btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj(), true));
-            }
+            btn_mP_favorite = new CollectionController().hasCollected(user, memoryPage.getWordObj())? new JButton("Remove from Favorite"): new JButton("Add to Favorite");
+            btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
         
         buttonsPanel.add(btn_mP_favorite);
 
