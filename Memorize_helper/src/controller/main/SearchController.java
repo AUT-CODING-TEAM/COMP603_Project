@@ -28,8 +28,8 @@ public class SearchController implements DocumentListener {
         this.inputKeyWord = searchResultListPanel.getTf_sRLP_keyword().getText();
 
         if ("".equals(inputKeyWord)) {
-//            searchResultListPanel.backToMain();
-//            searchResultListPanel.getSearchResultListFrame().dispose();
+            searchResultListPanel.backToMain();
+            searchResultListPanel.getSearchResultListFrame().dispose();
         } else {
             searchResultListPanel.getList_sP_searchResultList().setListData(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
         }
