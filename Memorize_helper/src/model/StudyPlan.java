@@ -141,6 +141,11 @@ public class StudyPlan {
         return todayMemorizedNumber;
     }
 
+    public int testProgressBar() {
+        todayMemorizedNumber = 500;
+        return todayMemorizedNumber;
+    }
+
     public int getTodayReviewedNumber() {
         return todayReviewedNumber;
     }
