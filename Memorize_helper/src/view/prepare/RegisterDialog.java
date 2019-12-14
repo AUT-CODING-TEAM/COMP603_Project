@@ -72,5 +72,6 @@ public class RegisterDialog extends JFrame {
         JButton btn_rgD_ok = new JButton("Sign Up");
         btn_rgD_ok.addActionListener(new RegisterController(this, tf_rgD_username, tf_rgD_password, tf_rgD_pwdConfirm));
         add(btn_rgD_ok);
+        this.getRootPane().setDefaultButton(btn_rgD_ok);
     }
 }

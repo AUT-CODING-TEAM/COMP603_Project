@@ -52,7 +52,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        myPlanFrame = new JFrame("My Plan");
+        myPlanFrame = new JFrame("My Plan(s)");
         setSize(myPlanFrame, 720, 360);
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         myPlanFrame.addWindowListener(new WindowAdapter() {
@@ -69,7 +69,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_myPP_myPlan = new JLabel("My Plan", SwingConstants.CENTER);
+        JLabel lbl_myPP_myPlan = new JLabel("My Plan(s)", SwingConstants.CENTER);
         add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
         JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");

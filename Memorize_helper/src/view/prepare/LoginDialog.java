@@ -66,5 +66,6 @@ public class LoginDialog extends JFrame {
         JButton btn_lgD_ok = new JButton("Sign In");
         btn_lgD_ok.addActionListener(new LoginController(this, tf_lgD_username, tf_lgD_password));
         add(btn_lgD_ok);
+        this.getRootPane().setDefaultButton(btn_lgD_ok);
     }
 }

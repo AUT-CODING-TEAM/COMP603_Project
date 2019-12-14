@@ -71,7 +71,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
 
-        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1 ? "Day" : "Days", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1 ? "day" : "days", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
