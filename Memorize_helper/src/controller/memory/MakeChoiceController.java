@@ -40,7 +40,7 @@ public class MakeChoiceController implements MouseListener{
         }
         else{
             JOptionPane.showMessageDialog(null, "Wrong! Right Answer: " + selectedLabel.getWordObj().getChinese(), "error ", JOptionPane.ERROR_MESSAGE);
-            memoryRecorder.getWordsToReviewFromPromOrErr().add(selectedLabel.getWordObj());
+            memoryRecorder.getWordsToStudy().add(selectedLabel.getWordObj());
         }
         
         MemoryPage memoryPage = memoryRecorder.next();
@@ -50,7 +50,7 @@ public class MakeChoiceController implements MouseListener{
             new MainView(user);
         }
         else{
-            new MemoryPanel(memoryPage, user, memoryRecorder);
+            new MemoryPanel(user, memoryPage, memoryRecorder);
         }
         
         memoryFrame.dispose();

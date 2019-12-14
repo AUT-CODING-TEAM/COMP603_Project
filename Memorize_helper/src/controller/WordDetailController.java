@@ -36,11 +36,11 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     }
 
     // from MemoryPanel
-    public WordDetailController(User user, WordExplainPage wordExplainPage, MemoryPanel memoryPanel, MemoryRecorder memoryRecorder) {
+    public WordDetailController(User user, WordExplainPage wordExplainPage, MemoryPanel memoryPanel) {
         this.user = user;
         this.wordExplainPage = wordExplainPage;
         this.memoryPanel = memoryPanel;
-        this.memoryRecorder = memoryRecorder;
+        this.memoryRecorder = memoryPanel.getMemoryRecorder();
     }
 
     //from SearchResultListPanel
@@ -61,8 +61,8 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (memoryPanel != null) {
-            memoryRecorder.getWordsToReviewFromPromOrErr().add(memoryPanel.getMemoryPage().getWordObj());
-            new WordExplainPanel(wordExplainPage, memoryPanel.getMemoryFrame(), memoryRecorder, user);
+            memoryRecorder.getWordsToStudy().add(memoryPanel.getMemoryPage().getWordObj());
+            new WordExplainPanel(wordExplainPage, memoryPanel, user);
             memoryPanel.getMemoryFrame().dispose();
         }
     }
