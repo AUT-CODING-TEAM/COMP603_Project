@@ -151,7 +151,7 @@ public class StudyPlan {
     }
 
     public void setTotalMemorizedNumber(int totalMemorizedNumber) {
-        this.todayMemorizedNumber = totalMemorizedNumber;
+        this.totalMemorizedNumber = totalMemorizedNumber;
     }
 
     public int getTotalMemorizedNumber() {
