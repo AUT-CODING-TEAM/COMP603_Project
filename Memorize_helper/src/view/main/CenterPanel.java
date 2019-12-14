@@ -84,7 +84,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_todayTargetNumberPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_todayTargetNumberPart2);
 
-        JLabel lbl_cP_todayTargetNumberPart3 = new JLabel("", SwingConstants.CENTER);
+        JLabel lbl_cP_todayTargetNumberPart3 = new JLabel("words", SwingConstants.CENTER);
         jPanel.add(lbl_cP_todayTargetNumberPart3);
 
         add(jPanel, new GridBagTool().setGridx(2).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
@@ -97,8 +97,6 @@ public class CenterPanel extends MainViewViewTemplate {
         
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
         int progress = totalMemorizedNumber * 100 / totalNumber;
-        System.out.println(totalMemorizedNumber);
-        System.out.println(progress);
         
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);

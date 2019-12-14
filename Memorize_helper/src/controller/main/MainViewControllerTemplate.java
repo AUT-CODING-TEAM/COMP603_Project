@@ -14,16 +14,12 @@ import model.User;
  *
  * @author ThinkPad
  */
-public class MainViewControllerTemplate implements ActionListener {
+public abstract class MainViewControllerTemplate implements ActionListener {
     protected JFrame mainView;
     protected User user;
     
     public MainViewControllerTemplate(JFrame mainView, User user) {
         this.mainView = mainView;
         this.user = user;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 }
