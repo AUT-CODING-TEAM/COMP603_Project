@@ -258,7 +258,6 @@ public class PlanControllerTest {
     @Test
     public void testGetRemainWordNum() {
         System.out.println("getRemainWordNum");
-        System.out.println("test");
         PlanController instance = new PlanController();
         int expResult = 609;
         int result = instance.getRemainWordNum(user.getID(), plan);
