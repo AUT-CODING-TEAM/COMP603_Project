@@ -19,8 +19,13 @@ import model.Word;
  */
 public class WordController {
 
-    private static final String[] NOT_WORD_TABLE = {
-        "USERS", "MEMORIZE", "PLAN", "COLLECTION"
+    public static final ArrayList<String> NOT_WORD_TABLE = new ArrayList<String>() {
+        {
+            add("USERS");
+            add("MEMORIZE");
+            add("PLAN");
+            add("COLLECTION");
+        }
     };
 
     /**

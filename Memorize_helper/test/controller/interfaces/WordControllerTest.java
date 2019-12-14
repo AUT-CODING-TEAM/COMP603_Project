@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.User;
 import model.Word;
+import controller.interfaces.WordController;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,78 +26,24 @@ import static org.junit.Assert.*;
  * @author Yun_c
  */
 public class WordControllerTest {
-    
+
     public WordControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
-        Database db = Database.getInstance();
-        SHA256Util sha256 = new SHA256Util();
-        db.init();
-        ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
-        try {
-            if (!res.next()) {
-                db.prepare("insert into USERS (USERNAME, PASSWORD) values (?, ?)", "TEST", sha256.SHA256("TEST"));
-                res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
-            }
-
-            if (res.next()) {
-                int user_id = res.getInt("ID");
-                int everyday_num = 5;
-                int total_day = 0;
-                long time = System.currentTimeMillis();
-                String book = "CET4入门";
-                ResultSet count = db.prepare("select count(*) as NUMBER from CET4入门");
-                ResultSet words = db.prepare("select * from CET4入门");
-
-                if (count.next()) {
-                    total_day = count.getInt("NUMBER") / everyday_num;
-                }
-                db.prepare("insert into PLAN (USER_ID, BOOK, TOTAL_DAY, "
-                        + "START_TIME, TODAY_TARGET_NUMBER, FINISH) values "
-                        + "(?, ?, ?, ?, ?, ?)", user_id, book, total_day, time,
-                        everyday_num, 0);
-                for (int i = 0; i < 100; i++) {
-                    if (words.next()) {
-                        db.prepare("insert into MEMORIZE (USER_ID, WORD_ID,"
-                                + " WORD_SOURCE, LAST_MEM_TIME) values (?, ?, "
-                                + "?, ?)", String.valueOf(user_id), words.getString("ID"),
-                                "CET4入门", "0");
-                    }
-
-                }
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        
     }
 
     @AfterClass
     public static void tearDownClass() {
-        try {
-            Database db = Database.getInstance();
-            SHA256Util sha256 = new SHA256Util();
-            db.init();
-            ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
-            if (res.next()) {
-                int user_id = res.getInt("ID");
-                db.prepare("delete from USERS where USERNAME = ?", "TEST");
-                db.prepare("delete from PLAN where USER_ID = ?", String.valueOf(user_id));
-                db.prepare("delete from MEMORIZE where USER_ID = ?", String.valueOf(user_id));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -106,13 +54,12 @@ public class WordControllerTest {
     @Test
     public void testGetAllWordByID() {
         System.out.println("getAllWordByID");
-        int id = 0;
+        int id = 1;
         WordController instance = new WordController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getAllWordByID(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result != null);
+        assertTrue(result.size() == WordController.NOT_WORD_TABLE.size());
+
     }
 
     /**
@@ -121,13 +68,12 @@ public class WordControllerTest {
     @Test
     public void testGetAllWordByName() {
         System.out.println("getAllWordByName");
-        String word = "";
+        String word = "lens";
         WordController instance = new WordController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getAllWordByName(word);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (Word w : result) {
+            assertEquals(w.getWord(), word);
+        }
     }
 
     /**
@@ -136,14 +82,12 @@ public class WordControllerTest {
     @Test
     public void testGetBookWordByID() {
         System.out.println("getBookWordByID");
-        String book = "";
-        int id = 0;
+        String book = "CET4入门";
+        int id = 1;
         WordController instance = new WordController();
-        Word expResult = null;
+        Word expResult = new Word(id, "lens", "n.透镜，镜片；镜头", "lenz", book);
         Word result = instance.getBookWordByID(book, id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -152,14 +96,12 @@ public class WordControllerTest {
     @Test
     public void testGetBookWordByName() {
         System.out.println("getBookWordByName");
-        String book = "";
-        String name = "";
+        String book = "CET4入门";
+        String name = "lens";
         WordController instance = new WordController();
-        Word expResult = null;
+        Word expResult = new Word(1, "lens", "n.透镜，镜片；镜头", "lenz", book);
         Word result = instance.getBookWordByName(book, name);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -168,12 +110,15 @@ public class WordControllerTest {
     @Test
     public void testGetAllBook() {
         System.out.println("getAllBook");
+        Database db = Database.getInstance();
+        ArrayList<String> tables = db.getAllTable();
         WordController instance = new WordController();
         ArrayList<String> expResult = null;
         ArrayList<String> result = instance.getAllBook();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (String bookname : result) {
+            assertFalse(WordController.NOT_WORD_TABLE.contains(bookname));
+        }
+        assertEquals(result.size(), tables.size() - WordController.NOT_WORD_TABLE.size());
     }
 
     /**
@@ -182,13 +127,11 @@ public class WordControllerTest {
     @Test
     public void testGetWordNumber() {
         System.out.println("getWordNumber");
-        String book = "";
+        String book = "CET4入门";
         WordController instance = new WordController();
-        int expResult = 0;
+        int expResult = 609;
         int result = instance.getWordNumber(book);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -197,13 +140,14 @@ public class WordControllerTest {
     @Test
     public void testGetBookContent() {
         System.out.println("getBookContent");
-        String book = "";
+        String book = "CET4入门";
+        int i = 0;
         WordController instance = new WordController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getBookContent(book);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        while (i < 609) {
+            assertEquals(result.get(i).getID(), i+1);
+            i++;
+        }
     }
 
     /**
@@ -212,13 +156,22 @@ public class WordControllerTest {
     @Test
     public void testSearch() {
         System.out.println("search");
-        String str = "";
+        String str = "appe";
         WordController instance = new WordController();
-        ArrayList<Word> expResult = null;
+        ArrayList<Word> expResult = new ArrayList<Word>() {
+            {
+                add(new Word(0, "appeal", "", "", ""));
+                add(new Word(0, "appetite", "", "", ""));
+            }
+        };
         ArrayList<Word> result = instance.search(str);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (Word wd : result) {
+            for (Word exp : expResult) {
+                if (wd.getWord().equals(exp.getWord())) {
+                    assertTrue(true);
+                }
+            }
+        }
     }
 
     /**
@@ -227,26 +180,18 @@ public class WordControllerTest {
     @Test
     public void testSearchBook() {
         System.out.println("searchBook");
-        String book = "";
-        String str = "";
+        String book = "CET4入门";
+        String str = "ac";
+        ArrayList<Word> expResult = new ArrayList<Word>() {
+            {
+                add(new Word(12, "acid", "", "", book));
+                add(new Word(360, "acre", "", "", book));
+            }
+        };
         WordController instance = new WordController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.searchBook(book, str);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (Word w : result) {
+            assertTrue(expResult.contains(w));
+        }
     }
-
-    /**
-     * Test of main method, of class WordController.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        WordController.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
