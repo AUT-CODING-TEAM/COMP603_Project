@@ -21,6 +21,7 @@ import view.searchResultList.SearchResultListPanel;
 public class TopPanel extends MainViewViewTemplate {
 
     private JPanel searchPanel;
+    private JTextField tf_tP_keyword;
 
     public TopPanel(JFrame mainView, User user) {
         super(mainView, user);
@@ -70,7 +71,7 @@ public class TopPanel extends MainViewViewTemplate {
         JLabel lbl_tP_searchTip = new JLabel("Look Up");
         searchPanel.add(lbl_tP_searchTip);
 
-        JTextField tf_tP_keyword = new JTextField(15);
+        tf_tP_keyword = new JTextField(15);
 
         tf_tP_keyword.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -91,4 +92,12 @@ public class TopPanel extends MainViewViewTemplate {
 
         add(searchPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
     }
+
+    public JTextField getTf_tP_keyword() {
+        return tf_tP_keyword;
+       
+    }
+    
+   
+    
 }
