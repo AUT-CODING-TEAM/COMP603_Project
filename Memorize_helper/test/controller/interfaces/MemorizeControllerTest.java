@@ -22,12 +22,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.StudyPlan;
 
 /**
  *
  * @author Yun_c
  */
 public class MemorizeControllerTest {
+
+    public static User user;
+    public static StudyPlan plan;
 
     public MemorizeControllerTest() {
     }
@@ -37,15 +41,19 @@ public class MemorizeControllerTest {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         db.init();
-        ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+        ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
         try {
             if (!res.next()) {
-                db.prepare("insert into USERS (USERNAME, PASSWORD) values (?, ?)", "TEST", sha256.SHA256("TEST"));
-                res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+                db.prepare("insert into USERS (USERNAME, PASSWORD, STUDY_PLAN) values (?, ?, ?)", "TEST", sha256.SHA256("TEST"), "0");
+                System.out.println("user create");
             }
-
+            res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");
+                String name = res.getString("USERNAME");
+                String pass = res.getString("PASSWORD");
+                MemorizeControllerTest.user = new User(name, pass, user_id);
+
                 int everyday_num = 5;
                 int total_day = 0;
                 long time = System.currentTimeMillis();
@@ -60,22 +68,33 @@ public class MemorizeControllerTest {
                         + "START_TIME, TODAY_TARGET_NUMBER, FINISH) values "
                         + "(?, ?, ?, ?, ?, ?)", user_id, book, total_day, time,
                         everyday_num, 0);
+                System.out.println("plan create");
+
+                res = db.prepare("select * from PLAN where USER_ID = ?", String.valueOf(user_id));
+                res.next();
+                int id = res.getInt("ID");
+                int today_num = res.getInt("TODAY_TARGET_NUMBER");
+                long start = res.getLong("START_TIME");
+                int isFinish = res.getInt("FINISH");
+                int total_num = db.count(book, "", "");
+                plan = new StudyPlan(book, id, total_num, total_day, start, today_num, isFinish);
+                user.setCurrentStudyPlan(plan);
+                db.prepare("update USERS set STUDY_PLAN = ? where ID = ?", String.valueOf(id), user.getID());
                 for (int i = 0; i < 100; i++) {
                     if (words.next()) {
                         db.prepare("insert into MEMORIZE (USER_ID, WORD_ID,"
                                 + " WORD_SOURCE, LAST_MEM_TIME) values (?, ?, "
                                 + "?, ?)", String.valueOf(user_id), words.getString("ID"),
                                 "CET4入门", "0");
+                        System.out.println("memorize insert" + i);
                     }
-
                 }
 
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("Test set up done!");
     }
 
     @AfterClass
@@ -84,12 +103,15 @@ public class MemorizeControllerTest {
             Database db = Database.getInstance();
             SHA256Util sha256 = new SHA256Util();
             db.init();
-            ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+            ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");
                 db.prepare("delete from USERS where USERNAME = ?", "TEST");
+                System.out.println("user delete");
                 db.prepare("delete from PLAN where USER_ID = ?", String.valueOf(user_id));
+                System.out.println("plan delete");
                 db.prepare("delete from MEMORIZE where USER_ID = ?", String.valueOf(user_id));
+                System.out.println("memorize delete");
             }
         } catch (SQLException ex) {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,29 +132,13 @@ public class MemorizeControllerTest {
     @Test
     public void testGetMemorize() {
         System.out.println("getMemorize");
-        User user = null;
-        Word wd = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
-        Memorize expResult = null;
         Memorize result = instance.getMemorize(user, wd);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of initMemorize method, of class MemorizeController.
-     */
-    @Test
-    public void testInitMemorize() {
-        System.out.println("initMemorize");
-        User user = null;
-        MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
-        boolean result = instance.initMemorize(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.getWordSource().equals("CET4入门"));
+        assertTrue(result.getAge() == 0);
+        assertTrue(result.getCorrect() == 0);
+        assertTrue(result.getWrong() == 0);
     }
 
     /**
@@ -141,13 +147,10 @@ public class MemorizeControllerTest {
     @Test
     public void testPutMemorize() {
         System.out.println("putMemorize");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.putMemorize(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -156,15 +159,15 @@ public class MemorizeControllerTest {
     @Test
     public void testUpdateTime_3args_1() {
         System.out.println("updateTime");
-        int userid = 0;
-        int wordid = 0;
-        String source = "";
+        int wordid = 1;
+        String source = "CET4入门";
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
-        boolean result = instance.updateTime(userid, wordid, source);
+        boolean expResult = true;
+        boolean result = instance.updateTime(user.getID(), wordid, source);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -173,15 +176,15 @@ public class MemorizeControllerTest {
     @Test
     public void testUpdateTime_3args_2() {
         System.out.println("updateTime");
-        String username = "";
-        String word = "";
-        String source = "";
+        String word = "lens";
+        String source = "CET4入门";
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
-        boolean result = instance.updateTime(username, word, source);
+        boolean expResult = true;
+        boolean result = instance.updateTime(user.getUsername(), word, source);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -190,14 +193,14 @@ public class MemorizeControllerTest {
     @Test
     public void testUpdateTime_User_Word() {
         System.out.println("updateTime");
-        User user = null;
-        Word wd = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.updateTime(user, wd);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -206,16 +209,13 @@ public class MemorizeControllerTest {
     @Test
     public void testAging() {
         System.out.println("aging");
-        int userid = 0;
-        int wordid = 0;
-        String source = "";
-        int ag = 0;
+        int wordid = 1;
+        String source = "CET4入门";
+        int ag = 1;
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
-        boolean result = instance.aging(userid, wordid, source, ag);
+        boolean expResult = true;
+        boolean result = instance.aging(user.getID(), wordid, source, ag);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -224,14 +224,11 @@ public class MemorizeControllerTest {
     @Test
     public void testGetCorrectCount() {
         System.out.println("getCorrectCount");
-        User user = null;
-        Word wd = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
         int expResult = 0;
         int result = instance.getCorrectCount(user, wd);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -240,14 +237,11 @@ public class MemorizeControllerTest {
     @Test
     public void testGetWrongCount() {
         System.out.println("getWrongCount");
-        User user = null;
-        Word wd = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
         int expResult = 0;
         int result = instance.getWrongCount(user, wd);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -257,12 +251,16 @@ public class MemorizeControllerTest {
     public void testCorrect_Memorize() {
         System.out.println("correct");
         Memorize memo = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        memo = instance.getMemorize(user, wd);
+        boolean expResult = true;
         boolean result = instance.correct(memo);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -273,11 +271,14 @@ public class MemorizeControllerTest {
         System.out.println("wrong");
         Memorize memo = null;
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
+        memo = instance.getMemorize(user, wd);
+        boolean expResult = true;
         boolean result = instance.wrong(memo);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -286,14 +287,14 @@ public class MemorizeControllerTest {
     @Test
     public void testCorrect_User_Word() {
         System.out.println("correct");
-        User user = null;
-        Word wd = null;
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
+        boolean expResult = true;
         boolean result = instance.correct(user, wd);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -302,14 +303,14 @@ public class MemorizeControllerTest {
     @Test
     public void testWrong_User_Word() {
         System.out.println("wrong");
-        User user = null;
-        Word wd = null;
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.wrong(user, wd);
+        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
+                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
+                "0", String.valueOf(user.getID()));
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -319,11 +320,8 @@ public class MemorizeControllerTest {
     public void testGetAllUserMemorizedNum() {
         System.out.println("getAllUserMemorizedNum");
         MemorizeController instance = new MemorizeController();
-        Map<String, Integer> expResult = null;
         Map<String, Integer> result = instance.getAllUserMemorizedNum();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(true);
     }
 
     /**
@@ -332,13 +330,10 @@ public class MemorizeControllerTest {
     @Test
     public void testGetMemorizedWordInPlan() {
         System.out.println("getMemorizedWordInPlan");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getMemorizedWordInPlan(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result != null);
+        assertTrue(0 == result.size());
     }
 
     /**
@@ -347,13 +342,12 @@ public class MemorizeControllerTest {
     @Test
     public void testGetWordNumInMemorize() {
         System.out.println("getWordNumInMemorize");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        int expResult = 0;
+        
+        //beforeClass put 100, and testPutMemorize put another 100, total 200
+        int expResult = 200;
         int result = instance.getWordNumInMemorize(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -362,13 +356,10 @@ public class MemorizeControllerTest {
     @Test
     public void testCountMemorizedWordInPlan() {
         System.out.println("countMemorizedWordInPlan");
-        User user = null;
         MemorizeController instance = new MemorizeController();
         int expResult = 0;
         int result = instance.countMemorizedWordInPlan(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -377,13 +368,10 @@ public class MemorizeControllerTest {
     @Test
     public void testCountMemorizedWord() {
         System.out.println("countMemorizedWord");
-        int id = 0;
         MemorizeController instance = new MemorizeController();
         int expResult = 0;
-        int result = instance.countMemorizedWord(id);
+        int result = instance.countMemorizedWord(user.getID());
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -392,13 +380,9 @@ public class MemorizeControllerTest {
     @Test
     public void testGetWordList() throws Exception {
         System.out.println("getWordList");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getWordList(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(5, result.size());
     }
 
     /**
@@ -407,13 +391,9 @@ public class MemorizeControllerTest {
     @Test
     public void testGetLearntWords() throws Exception {
         System.out.println("getLearntWords");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getLearntWords(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(0, result.size());
     }
 
     /**
@@ -422,13 +402,9 @@ public class MemorizeControllerTest {
     @Test
     public void testGetPlanWords() throws Exception {
         System.out.println("getPlanWords");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getPlanWords(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(609, result.size());
     }
 
     /**
@@ -437,13 +413,9 @@ public class MemorizeControllerTest {
     @Test
     public void testGetReviewWordLists() throws Exception {
         System.out.println("getReviewWordLists");
-        User user = null;
         MemorizeController instance = new MemorizeController();
-        ArrayList<Word> expResult = null;
         ArrayList<Word> result = instance.getReviewWordLists(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(0, result.size());
     }
 
     /**
@@ -452,26 +424,12 @@ public class MemorizeControllerTest {
     @Test
     public void testGetOptions() throws Exception {
         System.out.println("getOptions");
-        String studyPlan = "";
-        Word word = null;
+        String studyPlan = "CET4入门";
+        Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
-        Set<Word> expResult = null;
-        Set<Word> result = instance.getOptions(studyPlan, word);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of main method, of class MemorizeController.
-     */
-    @Test
-    public void testMain() throws Exception {
-        System.out.println("main");
-        String[] args = null;
-        MemorizeController.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Set<Word> result = instance.getOptions(studyPlan, wd);
+        assertEquals(4, result.size());
+        assertTrue(result.contains(wd));
     }
 
 }

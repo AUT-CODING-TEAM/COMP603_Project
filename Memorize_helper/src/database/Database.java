@@ -498,11 +498,11 @@ public class Database {
                 if (type.equals("java.lang.Integer")) {
                     this.p_controller.setInt(i, (Integer) o);
                 } else if (type.equals("java.lang.String")) {
-                    this.p_controller.setString(i, (String)o);
-                } else if( type.equals("java.lang.Double")){
-                    this.p_controller.setDouble(i, (Double)o);
-                }else if(type.equals("java.lang.Long")){
-                     this.p_controller.setLong(i, (Long)o);
+                    this.p_controller.setString(i, (String) o);
+                } else if (type.equals("java.lang.Double")) {
+                    this.p_controller.setDouble(i, (Double) o);
+                } else if (type.equals("java.lang.Long")) {
+                    this.p_controller.setLong(i, (Long) o);
                 }
                 i++;
             }

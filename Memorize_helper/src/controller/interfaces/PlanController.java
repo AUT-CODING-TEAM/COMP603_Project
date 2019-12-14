@@ -257,8 +257,8 @@ public class PlanController {
     /**
      * @param id an user's id
      * @param plan get word number according to this plan
-     * @return the number of words that is put into memorize table. If
-     * he/she is never set a plan, return value is 0
+     * @return the number of words that is put into memorize table. If he/she is
+     * never set a plan, return value is 0
      */
     public int getFinishWordNum(int id, StudyPlan plan) {
         int num = 0;
@@ -293,8 +293,8 @@ public class PlanController {
     /**
      * @param id user's id
      * @param plan get word number according to this plan
-     * @return the number of word that not put into memorize tabel yet. If user is
-     * never set a plan, return value is 0
+     * @return the number of word that not put into memorize tabel yet. If user
+     * is never set a plan, return value is 0
      */
     public int getRemainWordNum(int id, StudyPlan plan) {
         int num = 0;
@@ -408,7 +408,7 @@ public class PlanController {
         long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
         //get today reviewed word
         int review_num = 0;
-        
+
         // LAST_MEM_TIME between day_start and day_end, that means newest operation 
         // on the word is today. AGING >= 2, that means the words who is 
         // reviewed. Above all, this can find out today's reviewed number
@@ -461,5 +461,35 @@ public class PlanController {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ndRevNum;
+    }
+
+    public void editPlan(User user, String book, int dailyNum, int days) {
+        Database db = Database.getInstance();
+        String sqlPrepared = "UPDATE PLAN SET TOTAL_DAY = ?, TODAY_TARGET_NUMBER = ? WHERE USER_ID = ? AND BOOK = ?";
+        int totalNum = db.count(book, "", "");
+        /**
+         * if input daily numbers.
+         */
+        int dailyNumNew = dailyNum;
+        int daysNew = totalNum / dailyNumNew;
+        String userId = user.getID()+"";
+       
+        /**
+         * If input days.
+         */
+        if (dailyNum < 1) {
+            daysNew = days;
+            dailyNumNew = totalNum / daysNew;
+            
+        }
+        
+        db.prepare(sqlPrepared, daysNew, dailyNumNew, userId, book);
+    }
+    
+    public void removePlan(User user, String book){
+        Database db = Database.getInstance();
+        String sqlPrepared = "DELETE FROM PLAN WHERE USER_ID = ? AND BOOK = ?";
+        String userId = user.getID()+"";
+        db.prepare(sqlPrepared, userId, book);
     }
 }
