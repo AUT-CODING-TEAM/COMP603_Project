@@ -54,7 +54,7 @@ public class CenterPanel extends MainViewViewTemplate {
         btn_cP_changePlan.addActionListener(new ChangePlanController(mainView, user));
         add(btn_cP_changePlan, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
-        JLabel lbl_cP_finishedNumber = new JLabel("Learned: " + sp.getTodayMemorizedNumber() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
+        JLabel lbl_cP_finishedNumber = new JLabel("Learned: " + sp.getTotalMemorizedNumber() + "/" + user.getCurrentStudyPlan().getTotalNumber(), SwingConstants.CENTER);
         add(lbl_cP_finishedNumber, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         JButton btn_cP_vocabulary = new JButton("Word List");
@@ -71,7 +71,7 @@ public class CenterPanel extends MainViewViewTemplate {
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
 
-        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1? "Day" : "Days", SwingConstants.CENTER);
+        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1 ? "Day" : "Days", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
@@ -92,8 +92,14 @@ public class CenterPanel extends MainViewViewTemplate {
 
     private void addProgressBar() {
         StudyPlan sp = user.getCurrentStudyPlan();
+        int totalMemorizedNumber = sp.getTotalMemorizedNumber();
+        int totalNumber = sp.getTotalNumber();
+        
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
-        int progress = sp.getTotalMemorizedNumber() * 100 / user.getCurrentStudyPlan().getTotalNumber();
+        int progress = totalMemorizedNumber * 100 / totalNumber;
+        System.out.println(totalMemorizedNumber);
+        System.out.println(progress);
+        
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);
         psBar_cP_progress.setBackground(Color.decode("#F8F6F1"));

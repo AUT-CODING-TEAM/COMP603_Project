@@ -85,7 +85,7 @@ public class User {
 //        }
 //        
 //        int reviewNumber = this.currentStudyPlan.getTodayTargetNumber() - this.currentStudyPlan.getTodayReviewedNumber();
-//        if (reviewNumber < 0) {
+//        if (reviewNumber < 0) {f
 //            reviewNumber = 0;
 //        }
         return this.currentStudyPlan.getNeedReviewNumber();
