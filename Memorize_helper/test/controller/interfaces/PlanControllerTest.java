@@ -25,24 +25,30 @@ import static org.junit.Assert.*;
  * @author Yun_c
  */
 public class PlanControllerTest {
-    
+
+    public static User user;
+    public static StudyPlan plan;
+
     public PlanControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
         db.init();
-        ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+        ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
         try {
             if (!res.next()) {
-                db.prepare("insert into USERS (USERNAME, PASSWORD) values (?, ?)", "TEST", sha256.SHA256("TEST"));
-                res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+                db.prepare("insert into USERS (USERNAME, PASSWORD, STUDY_PLAN) values (?, ?, ?)", "TEST", sha256.SHA256("TEST"), "0");
             }
-
+            res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");
+                String name = res.getString("USERNAME");
+                String pass = res.getString("PASSWORD");
+                PlanControllerTest.user = new User(name, pass, user_id);
+
                 int everyday_num = 5;
                 int total_day = 0;
                 long time = System.currentTimeMillis();
@@ -57,6 +63,14 @@ public class PlanControllerTest {
                         + "START_TIME, TODAY_TARGET_NUMBER, FINISH) values "
                         + "(?, ?, ?, ?, ?, ?)", user_id, book, total_day, time,
                         everyday_num, 0);
+                res = db.prepare("select * from PLAN where USER_ID = ?", String.valueOf(user_id));
+                res.next();
+                int id = res.getInt("ID");
+                int today_num = res.getInt("TODAY_TARGET_NUMBER");
+                long start = res.getLong("START_TIME");
+                int isFinish = res.getInt("FINISH");
+                int total_num = db.count(book, "", "");
+                PlanControllerTest.plan = new StudyPlan(book, id, total_num, total_day, start, today_num, isFinish);
                 for (int i = 0; i < 100; i++) {
                     if (words.next()) {
                         db.prepare("insert into MEMORIZE (USER_ID, WORD_ID,"
@@ -64,15 +78,12 @@ public class PlanControllerTest {
                                 + "?, ?)", String.valueOf(user_id), words.getString("ID"),
                                 "CET4入门", "0");
                     }
-
                 }
-
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("Test set up done!");
     }
 
     @AfterClass
@@ -81,7 +92,7 @@ public class PlanControllerTest {
             Database db = Database.getInstance();
             SHA256Util sha256 = new SHA256Util();
             db.init();
-            ResultSet res = db.prepare("select * from USERS where USERNAME = ? and PASSWORD = ?", "TEST", sha256.SHA256("TEST"));
+            ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");
                 db.prepare("delete from USERS where USERNAME = ?", "TEST");
@@ -92,11 +103,11 @@ public class PlanControllerTest {
             Logger.getLogger(MemorizeControllerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -107,13 +118,12 @@ public class PlanControllerTest {
     @Test
     public void testGetPlan_int() {
         System.out.println("getPlan");
-        int pid = 0;
         PlanController instance = new PlanController();
-        StudyPlan expResult = null;
-        StudyPlan result = instance.getPlan(pid);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        StudyPlan result = instance.getPlan(plan.getID());
+        assertEquals(plan.getName(), result.getName());
+        assertEquals(plan.getID(), result.getID());
+        
     }
 
     /**
@@ -122,14 +132,11 @@ public class PlanControllerTest {
     @Test
     public void testGetPlan_User_String() {
         System.out.println("getPlan");
-        User user = null;
-        String book = "";
+        String book = "CET4入门";
         PlanController instance = new PlanController();
-        StudyPlan expResult = null;
         StudyPlan result = instance.getPlan(user, book);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(plan.getName(), result.getName());
+        assertEquals(plan.getID(), result.getID());
     }
 
     /**
@@ -138,29 +145,10 @@ public class PlanControllerTest {
     @Test
     public void testGetPlanIdByBook() {
         System.out.println("getPlanIdByBook");
-        User user = null;
-        String book = "";
+        String book = "CET4入门";
         PlanController instance = new PlanController();
-        int expResult = 0;
         int result = instance.getPlanIdByBook(user, book);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPlan method, of class PlanController.
-     */
-    @Test
-    public void testGetPlan_User() {
-        System.out.println("getPlan");
-        User user = null;
-        PlanController instance = new PlanController();
-        StudyPlan expResult = null;
-        StudyPlan result = instance.getPlan(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(plan.getID(), result);
     }
 
     /**
@@ -169,13 +157,10 @@ public class PlanControllerTest {
     @Test
     public void testGetAllPlanByUser() {
         System.out.println("getAllPlanByUser");
-        User user = null;
         PlanController instance = new PlanController();
-        ArrayList<StudyPlan> expResult = null;
         ArrayList<StudyPlan> result = instance.getAllPlanByUser(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.size() == 1);
+        assertEquals(result.get(0).getID(), plan.getID());
     }
 
     /**
@@ -184,14 +169,12 @@ public class PlanControllerTest {
     @Test
     public void testIsPlan() {
         System.out.println("isPlan");
-        User user = null;
-        String book = "";
+        String book = "CET4入门";
         PlanController instance = new PlanController();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isPlan(user, book);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -200,15 +183,12 @@ public class PlanControllerTest {
     @Test
     public void testAddPlan_3args_1() {
         System.out.println("addPlan");
-        String book = "";
-        int everyday_num = 0;
-        int user_id = 0;
+        String book = "CET4进阶";
+        int everyday_num = 1;
         PlanController instance = new PlanController();
         int expResult = 0;
-        int result = instance.addPlan(book, everyday_num, user_id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = instance.addPlan(book, everyday_num, user.getID());
+        assertFalse(expResult == result);
     }
 
     /**
@@ -217,15 +197,12 @@ public class PlanControllerTest {
     @Test
     public void testAddPlan_3args_2() {
         System.out.println("addPlan");
-        int total_day = 0;
-        String book = "";
-        int user_id = 0;
+        int total_day = 100;
+        String book = "CET6入门";
         PlanController instance = new PlanController();
         int expResult = 0;
-        int result = instance.addPlan(total_day, book, user_id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = instance.addPlan(total_day, book, user.getID());
+        assertFalse(expResult==result);
     }
 
     /**
@@ -234,12 +211,9 @@ public class PlanControllerTest {
     @Test
     public void testSetPlan() {
         System.out.println("setPlan");
-        User user = null;
-        int pid = 0;
         PlanController instance = new PlanController();
-        instance.setPlan(user, pid);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setPlan(user, plan.getID());
+        assertTrue(true);
     }
 
     /**
@@ -248,13 +222,10 @@ public class PlanControllerTest {
     @Test
     public void testGetTotalWordNum() {
         System.out.println("getTotalWordNum");
-        StudyPlan plan = null;
         PlanController instance = new PlanController();
-        int expResult = 0;
+        int expResult = 609;
         int result = instance.getTotalWordNum(plan);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -263,14 +234,10 @@ public class PlanControllerTest {
     @Test
     public void testGetFinishWordNum_int_StudyPlan() {
         System.out.println("getFinishWordNum");
-        int id = 0;
-        StudyPlan plan = null;
         PlanController instance = new PlanController();
         int expResult = 0;
-        int result = instance.getFinishWordNum(id, plan);
+        int result = instance.getFinishWordNum(user.getID(), plan);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -279,13 +246,10 @@ public class PlanControllerTest {
     @Test
     public void testGetFinishWordNum_User() {
         System.out.println("getFinishWordNum");
-        User user = null;
         PlanController instance = new PlanController();
         int expResult = 0;
         int result = instance.getFinishWordNum(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -294,14 +258,11 @@ public class PlanControllerTest {
     @Test
     public void testGetRemainWordNum() {
         System.out.println("getRemainWordNum");
-        int id = 0;
-        StudyPlan plan = null;
+        System.out.println("test");
         PlanController instance = new PlanController();
-        int expResult = 0;
-        int result = instance.getRemainWordNum(id, plan);
+        int expResult = 609;
+        int result = instance.getRemainWordNum(user.getID(), plan);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -310,13 +271,10 @@ public class PlanControllerTest {
     @Test
     public void testGetPlanName() {
         System.out.println("getPlanName");
-        StudyPlan plan = null;
         PlanController instance = new PlanController();
-        String expResult = "";
+        String expResult = "CET4入门";
         String result = instance.getPlanName(plan);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -325,11 +283,9 @@ public class PlanControllerTest {
     @Test
     public void testUpdateTodayPlanInfo() {
         System.out.println("updateTodayPlanInfo");
-        User user = null;
         PlanController instance = new PlanController();
         instance.updateTodayPlanInfo(user);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(true);
     }
 
     /**
@@ -338,13 +294,10 @@ public class PlanControllerTest {
     @Test
     public void testGetTodayMemorizedNum() {
         System.out.println("getTodayMemorizedNum");
-        User user = null;
         PlanController instance = new PlanController();
         int expResult = 0;
         int result = instance.getTodayMemorizedNum(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -353,13 +306,10 @@ public class PlanControllerTest {
     @Test
     public void testGetTodayReviewedNum() {
         System.out.println("getTodayReviewedNum");
-        User user = null;
         PlanController instance = new PlanController();
         int expResult = 0;
         int result = instance.getTodayReviewedNum(user);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

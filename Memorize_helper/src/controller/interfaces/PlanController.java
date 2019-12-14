@@ -91,17 +91,6 @@ public class PlanController {
     }
 
     /**
-     * @param user this user's plan info will be got
-     * @return an instance of StudyPlan
-     *
-     * this function equals to User.getStudyPlan()
-     *
-     */
-    public StudyPlan getPlan(User user) {
-        return user.getCurrentStudyPlan();
-    }
-
-    /**
      * @param user the user
      * @return all book which is user's plan
      */
