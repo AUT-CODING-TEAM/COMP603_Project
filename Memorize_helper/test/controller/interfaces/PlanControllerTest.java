@@ -123,7 +123,7 @@ public class PlanControllerTest {
         StudyPlan result = instance.getPlan(plan.getID());
         assertEquals(plan.getName(), result.getName());
         assertEquals(plan.getID(), result.getID());
-        
+
     }
 
     /**
@@ -188,6 +188,8 @@ public class PlanControllerTest {
         PlanController instance = new PlanController();
         int expResult = 0;
         int result = instance.addPlan(book, everyday_num, user.getID());
+        Database.getInstance().prepare("delete from PLAN where user_id = ? and BOOK = ?",
+                String.valueOf(user.getID()), book);
         assertFalse(expResult == result);
     }
 
@@ -202,7 +204,10 @@ public class PlanControllerTest {
         PlanController instance = new PlanController();
         int expResult = 0;
         int result = instance.addPlan(total_day, book, user.getID());
-        assertFalse(expResult==result);
+        Database.getInstance().prepare("delete from PLAN where user_id = ? and BOOK = ?",
+                String.valueOf(user.getID()), book);
+
+        assertFalse(expResult == result);
     }
 
     /**
@@ -235,7 +240,7 @@ public class PlanControllerTest {
     public void testGetFinishWordNum_int_StudyPlan() {
         System.out.println("getFinishWordNum");
         PlanController instance = new PlanController();
-        int expResult = 0;
+        int expResult = 100;
         int result = instance.getFinishWordNum(user.getID(), plan);
         assertEquals(expResult, result);
     }
