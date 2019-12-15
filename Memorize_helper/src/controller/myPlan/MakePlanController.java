@@ -40,8 +40,8 @@ public class MakePlanController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         //change after login
-        if (myPlanPanel != null && myPlanPanel.getBookName() != null) {
-            new UserController().changeStudyPlan(user, myPlanPanel.getBookName());
+        if (myPlanPanel != null && myPlanPanel.getSelectedPlan() != null) {
+            new UserController().changeStudyPlan(user, myPlanPanel.getSelectedPlan());
             myPlanPanel.getMyPlanFrame().dispose();
             new MainView(user);
             

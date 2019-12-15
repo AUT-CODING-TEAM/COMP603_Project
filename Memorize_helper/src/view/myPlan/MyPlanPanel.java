@@ -25,7 +25,6 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
 
-    private String bookName;
     private String quantity;
 
     //Buttons
@@ -36,6 +35,10 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
     //Plan
     private String selectedPlan;
+
+    public String getSelectedPlan() {
+        return selectedPlan;
+    }
     private ArrayList<PlanPanelUnit> panelList;
 
     //Controllers
@@ -43,10 +46,6 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
     public JFrame getMyPlanFrame() {
         return myPlanFrame;
-    }
-
-    public String getBookName() {
-        return bookName;
     }
 
     public String getQuantity() {
