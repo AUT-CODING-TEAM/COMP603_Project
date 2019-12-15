@@ -22,9 +22,6 @@ import view.main.MainView;
  */
 public class MyPlanPanel extends GroundPanelTemplate {
 
-//    public static Border defaultBorder = BorderFactory.createLineBorder(new Color(91, 110, 125));
-//    public static Border currentBorder = BorderFactory.createLineBorder(new Color(23, 35, 61));
-    public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240), 5);
     public static Color currentColor = new Color(23, 35, 61);
     private User user;
     private MyPlanInfo myPlanInfo;
@@ -107,98 +104,115 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
     public void addMyBookPanel() {
         JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
+        
+        for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {;
+            PlanPanelUnit plan = new PlanPanelUnit(user, myPlanInfo.getMyStudyPlans().get(i));
+            this.panelList.add(plan);
+//            jPanel.setName(String.valueOf(i));
 
-        for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {
-            OnePlanPanel jPanel = new OnePlanPanel();
-            this.panelList.add(jPanel);
-            jPanel.setName(String.valueOf(i));
-
-            JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getMyStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
-            lbl_myPP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-            jPanel.addStudyPlanName(lbl_myPP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
-
-            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
-            lbl_myPP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
-            jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
-
-            jPanel.setBackground(new Color(91, 110, 125));
-//            jPanel.setBorder(defaultBorder);
-            if (this.user.getCurrentStudyPlan().getStudyPlanName().equals(lbl_myPP_studyPlanName.getText())) {
-                jPanel.setBackground(currentColor);
-//                jPanel.setBorder(currentBorder);
-                StringBuilder sb = new StringBuilder();
-                sb.append("<html>&nbsp;(Current)<br>");
-                sb.append(lbl_myPP_totalNumber.getText() + "</html>");
-                lbl_myPP_totalNumber.setText(sb.toString());
-                lbl_myPP_studyPlanName.setForeground(Color.white);
-                lbl_myPP_totalNumber.setForeground(Color.white);
-
-            }
-
-            jPanel.addMouseListener(new MouseListener() {
-                MyPlanPanel that = MyPlanPanel.this;
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
-                    that.selected = selectedPanel;
-                    int index = Integer.parseInt(selectedPanel.getName());
-                    bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
-                    if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
-                        jPanel.setBorder(selectedBorder);
-                        for (JPanel jp : that.panelList) {
-                            if (jp == jPanel) {
-                                continue;
-                            }
-
-                            jp.setBorder(null);
-                        }
-                        btn_myPP_handleByBookSituation.setEnabled(true);
-                        remove.setEnabled(true);
-                        edit.setEnabled(true);
-                    }
-                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
-                        jPanel.setBorder(selectedBorder);
-                        for (JPanel jp : that.panelList) {
-                            if (jp == jPanel) {
-                                continue;
-                            }
-                            jp.setBorder(null);
-                        }
-                        btn_myPP_handleByBookSituation.setEnabled(false);
-                        remove.setEnabled(true);
-                        edit.setEnabled(true);
-                    }
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-            if (myPlanInfo.getMyStudyPlans().get(i).getFinished() == 1) {
-                jPanel.setBorder(new TitledBorder("Completed"));
-            }
-
-            myBookPanel.add(jPanel);
+//            JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getMyStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
+//            lbl_myPP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
+//            jPanel.addStudyPlanName(lbl_myPP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
+//
+//            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
+//            lbl_myPP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
+//            jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
+//
+//            jPanel.setBackground(new Color(91, 110, 125));
+////            jPanel.setBorder(defaultBorder);
+//            if (this.user.getCurrentStudyPlan().getStudyPlanName().equals(lbl_myPP_studyPlanName.getText())) {
+//                jPanel.setBackground(currentColor);
+////                jPanel.setBorder(currentBorder);
+//                StringBuilder sb = new StringBuilder();
+//                sb.append("<html>&nbsp;(Current)<br>");
+//                sb.append(lbl_myPP_totalNumber.getText() + "</html>");
+//                lbl_myPP_totalNumber.setText(sb.toString());
+//                lbl_myPP_studyPlanName.setForeground(Color.white);
+//                lbl_myPP_totalNumber.setForeground(Color.white);
+//
+//            }
+//            jPanel.addMouseListener(new MouseListener() {
+//                MyPlanPanel that = MyPlanPanel.this;
+//
+//                @Override
+//                public void mouseClicked(MouseEvent e) {
+//                    OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
+//                    that.selected = selectedPanel;
+//                    int index = Integer.parseInt(selectedPanel.getName());
+//                    bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
+//                    if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
+//                        jPanel.setBorder(selectedBorder);
+//                        for (JPanel jp : that.panelList) {
+//                            if (jp == jPanel) {
+//                                continue;
+//                            }
+//
+//                            jp.setBorder(null);
+//                        }
+//                        btn_myPP_handleByBookSituation.setEnabled(true);
+//                        remove.setEnabled(true);
+//                        edit.setEnabled(true);
+//                    }
+//                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
+//                        jPanel.setBorder(selectedBorder);
+//                        for (JPanel jp : that.panelList) {
+//                            if (jp == jPanel) {
+//                                continue;
+//                            }
+//                            jp.setBorder(null);
+//                        }
+//                        btn_myPP_handleByBookSituation.setEnabled(false);
+//                        remove.setEnabled(true);
+//                        edit.setEnabled(true);
+//                    }
+//                }
+//
+//                @Override
+//                public void mousePressed(MouseEvent e) {
+//                }
+//
+//                @Override
+//                public void mouseReleased(MouseEvent e) {
+//                }
+//
+//                @Override
+//                public void mouseEntered(MouseEvent e) {
+//                }
+//
+//                @Override
+//                public void mouseExited(MouseEvent e) {
+//                }
+//            });
+//            if (myPlanInfo.getMyStudyPlans().get(i).getFinished() == 1) {
+//                jPanel.setBorder(new TitledBorder("Completed"));
+//            }
+            myBookPanel.add(plan);
         }
-
+        
         JButton btn_myBP_addBook = new JButton("Add a Plan");
         btn_myBP_addBook.addActionListener(new ShowPlanListController(myPlanFrame, user));
         myBookPanel.add(btn_myBP_addBook);
-
         JScrollPane jScrollPane = new JScrollPane(myBookPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.15));
+        
+        myBookPanel.addMouseListener(new MouseListener(){
+            public void mouseClicked(MouseEvent e) {
+                if(e.getSource() instanceof PlanPanelUnit){
+                    PlanPanelUnit pn = (PlanPanelUnit)e.getSource();
+                    for(JPanel p : MyPlanPanel.this.panelList){
+                        PlanPanelUnit pn_inlist = (PlanPanelUnit)p;
+                        if(pn == pn_inlist){
+                            continue;
+                        }
+                        pn_inlist.unSelect();
+                    }
+                }
+            }
+
+            public void mousePressed(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
     }
 }
