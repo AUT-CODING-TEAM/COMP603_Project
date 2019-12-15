@@ -6,6 +6,7 @@
 package view.myPlan;
 
 import controller.interfaces.PlanController;
+import controller.interfaces.UserController;
 import controller.myPlan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import model.*;
 import view.*;
 import view.main.MainView;
+import view.planList.CreatePlanPanel;
 import view.planList.PlanListPanel;
 
 /**
@@ -26,7 +28,8 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
-
+    private WindowListener windowListener1;
+    private WindowListener windowListener2;
     private String quantity;
 
     //Buttons
@@ -63,6 +66,31 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         this.panelList = new ArrayList<>();
         this.setProperty();
         this.addComponents();
+
+        if (this.windowListener1 == null) {
+            this.windowListener1 = new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    new MainView(user);
+                }
+            };
+        }
+        if (this.windowListener2 == null) {
+            this.windowListener2 = new WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without selecting a plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+                        }
+                        System.exit(0);
+                    }
+                }
+            };
+        }
     }
 
     public void setProperty() {
@@ -72,12 +100,36 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     public void addComponents() {
         this.myPlanFrame = new JFrame("My Plan(s)");
         super.setSize(myPlanFrame, 720, 360);
+        if (this.windowListener1 == null) {
+            System.out.println("null");
+        }
+        if (this.windowListener1 == null) {
+            this.windowListener1 = new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    new MainView(user);
+                }
+            };
+        }
+        if (this.windowListener2 == null) {
+            this.windowListener2 = new WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without selecting a plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+                        }
+                        System.exit(0);
+                    }
+                }
+            };
+        }
+
+        myPlanFrame.addWindowListener(this.windowListener1);
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        myPlanFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                new MainView(user);
-            }
-        });
 
         this.fillBlank();
         this.addTextLabel();
@@ -164,7 +216,12 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
                 case "Edit":
                     if (this.selectedPlan != null) {
-                        //Edit
+                        for (StudyPlan sp:this.myPlanInfo.getMyStudyPlans()) {
+                            if (sp.getStudyPlanName().equals(this.selectedPlan)) {
+                                new CreatePlanPanel(user,sp,myPlanFrame);
+                            }
+                        }
+                        myPlanFrame.dispose();
                         break;
                     }
                     break;
@@ -192,18 +249,9 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
                             }
                             this.refreshPlanPanel();
                             if (this.selectedPlan.equals(user.getCurrentStudyPlan().getStudyPlanName())) {
+                                this.myPlanFrame.removeWindowListener(windowListener1);
+                                this.myPlanFrame.addWindowListener(windowListener2);
                                 this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                                this.myPlanFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                                    @Override
-                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                                        if (JOptionPane.showConfirmDialog(null,
-                                                "Do you want to leave without selecting a plan?", "Close Window?",
-                                                JOptionPane.YES_NO_OPTION,
-                                                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                                            System.exit(0);
-                                        }
-                                    }
-                                });
                             }
                             if (this.myPlanInfo.getMyStudyPlans().isEmpty()) {
                                 this.user.setCurrentStudyPlan(null);

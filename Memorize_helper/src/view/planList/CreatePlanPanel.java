@@ -5,8 +5,11 @@
  */
 package view.planList;
 
+import controller.interfaces.PlanController;
 import controller.myPlan.MakePlanController;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -14,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.*;
 import view.*;
+import view.main.MainView;
 import view.myPlan.MyPlanPanel;
 
 /**
@@ -33,6 +37,9 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private JList makePlanListPart2;
     private String quantity;
 
+    private boolean isEdit = false;
+    JFrame myPlanFrame;
+
     public String getQuantity() {
         return quantity;
     }
@@ -47,6 +54,18 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         this.selectedPlan = selectedPlan;
         setProperty();
         addComponents();
+        this.isEdit = false;
+    }
+
+    public CreatePlanPanel(User user, StudyPlan selectedPlan, JFrame myPlanFrame) {
+        super(GroundPanelTemplate.BACK);
+        this.user = user;
+        this.selectedPlan = selectedPlan;
+        this.isEdit = true;
+        this.myPlanFrame = myPlanFrame;
+        setProperty();
+        addComponents();
+
     }
 
     public void setProperty() {
@@ -88,7 +107,51 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         btn_confirm = new JButton();
         btn_confirm.setText("OK");
 
-        btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
+        if (this.isEdit) {
+            btn_confirm.addActionListener(new ActionListener() {
+                CreatePlanPanel that = CreatePlanPanel.this;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (that.makePlanListPart1.getSelectedValue() == null && that.makePlanListPart2.getSelectedValue() == null) {
+                        JOptionPane.showMessageDialog(null, "please decide a ideal schedult!!");
+                    }
+                    int num = 0;
+                    int day = 0;
+                    String str = "";
+                    if (that.optionTabs.getSelectedComponent().equals(that.makePlanListPart1)) {
+                        if (that.makePlanListPart1.getSelectedValue() != null) {
+                            str = (String) that.makePlanListPart1.getSelectedValue();
+                            String[] strs = str.split(" ");
+                            str = strs[strs.length - 2];
+                            num = Integer.parseInt(str);
+                            day = -1;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "please decide a ideal schedult!!");
+                        }
+                    } else {
+                        if (that.makePlanListPart2.getSelectedValue() != null) {
+                            str = (String) that.makePlanListPart2.getSelectedValue();
+                            String[] strs = str.split(" ");
+                            str = strs[strs.length - 2];
+                            num = -1;
+                            day = Integer.parseInt(str);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "please decide a ideal schedult!!");
+                        }
+                    }
+
+                    PlanController pc = new PlanController();
+                    pc.editPlan(that.user, that.selectedPlan.getStudyPlanName(), num, day);
+                    that.selectedPlanFrame.dispose();
+                    pc.updateTodayPlanInfo(user);
+                    new MyPlanPanel(user, new MyPlanInfo(user));
+                }
+            });
+        } else {
+            btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
+        }
+
         add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         selectedPlanFrame.add(this);

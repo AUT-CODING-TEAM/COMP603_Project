@@ -5,6 +5,7 @@
  */
 package view.main;
 
+import controller.interfaces.PlanController;
 import database.Database;
 import view.prepare.*;
 import java.awt.*;
@@ -25,9 +26,11 @@ public class MainView extends JFrame {
     private TopPanel topPanel;
     private CenterPanel centralPanel;
     private BottomPanel bottomPanel;
+    private PlanController pc;
 
     public MainView(User user) {
         this.user = user;
+        this.pc = new PlanController();
         setProperty();
         addComponents();
         setVisible(true);
@@ -64,6 +67,7 @@ public class MainView extends JFrame {
         jPanel.add(new JLabel(), new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         //bottom fill label
         jPanel.add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        pc.updateTodayPlanInfo(this.user);
 
         topPanel = new TopPanel(this, user);
 
