@@ -21,7 +21,6 @@ import javax.swing.border.TitledBorder;
 import model.StudyPlan;
 import model.User;
 import view.GridBagTool;
-import static view.myPlan.MyPlanPanel.currentColor;
 
 /**
  *
