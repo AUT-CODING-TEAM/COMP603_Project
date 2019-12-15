@@ -8,6 +8,8 @@ package view.main;
 import database.Database;
 import view.prepare.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Locale;
 import javax.swing.*;
 import model.*;
@@ -15,11 +17,14 @@ import view.*;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class MainView extends JFrame {
 
     private User user;
+    private TopPanel topPanel;
+    private CenterPanel centralPanel;
+    private BottomPanel bottomPanel;
 
     public MainView(User user) {
         this.user = user;
@@ -50,7 +55,7 @@ public class MainView extends JFrame {
         jPanel.setLayout(new GridBagLayout());
         jPanel.setOpaque(true);
         jPanel.setBackground(Color.decode("#EEECE8"));
-        
+
         //left fill label
         jPanel.add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
         //right fill label
@@ -59,16 +64,23 @@ public class MainView extends JFrame {
         jPanel.add(new JLabel(), new GridBagTool().setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         //bottom fill label
         jPanel.add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        
-        TopPanel topPanel = new TopPanel(this, user);
+
+        topPanel = new TopPanel(this, user);
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowOpened(WindowEvent e) {
+                MainView.this.topPanel.getTf_tP_keyword().requestFocus();
+            }
+        });
+
         jPanel.add(topPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
-        CenterPanel centralPanel = new CenterPanel(this, user);
+        centralPanel = new CenterPanel(this, user);
         jPanel.add(centralPanel, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.6));
 
-        BottomPanel bottomPanel = new BottomPanel(this, user);
+        bottomPanel = new BottomPanel(this, user);
         jPanel.add(bottomPanel, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.2));
-        
+
         add(jPanel);
     }
 

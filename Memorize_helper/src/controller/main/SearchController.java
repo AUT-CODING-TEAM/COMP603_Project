@@ -12,7 +12,7 @@ import model.SearchResultInfo;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class SearchController implements DocumentListener {
 
@@ -24,13 +24,9 @@ public class SearchController implements DocumentListener {
     }
 
     private void response() {
-        try {
-            Document doc = searchResultListPanel.getTf_sRLP_keyword().getDocument();
-            this.inputKeyWord = doc.getText(0, doc.getLength());
-        } catch (Exception e) {
 
-        }
-        
+        this.inputKeyWord = searchResultListPanel.getTf_sRLP_keyword().getText();
+
         if ("".equals(inputKeyWord)) {
             searchResultListPanel.backToMain();
             searchResultListPanel.getSearchResultListFrame().dispose();
