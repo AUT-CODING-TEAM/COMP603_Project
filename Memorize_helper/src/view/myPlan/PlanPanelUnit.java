@@ -101,6 +101,10 @@ public class PlanPanelUnit extends JPanel implements MouseListener {
         }
     }
 
+    public String getPlanName(){
+        return this.planName.getText();
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         this.setSelect();
