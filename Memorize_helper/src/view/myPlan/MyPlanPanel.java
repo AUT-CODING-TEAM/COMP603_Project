@@ -17,7 +17,7 @@ import view.main.MainView;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan, Yizhao
  */
 public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, MouseListener {
 
