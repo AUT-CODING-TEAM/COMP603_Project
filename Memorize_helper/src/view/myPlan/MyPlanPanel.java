@@ -24,6 +24,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
 //    public static Border defaultBorder = BorderFactory.createLineBorder(new Color(91, 110, 125));
 //    public static Border currentBorder = BorderFactory.createLineBorder(new Color(23, 35, 61));
+    public PlanManagementListener planManager;
     public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240),5);
     public static Color currentColor = new Color(23, 35, 61);
     private User user;
@@ -99,6 +100,10 @@ public class MyPlanPanel extends GroundPanelTemplate {
         this.remove.setEnabled(false);
         add(edit, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         add(remove,new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.planManager = new PlanManagementListener(user);
+        this.remove.addActionListener(this.planManager);
+        this.edit.addActionListener(this.planManager);
+        
         
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
@@ -139,8 +144,12 @@ public class MyPlanPanel extends GroundPanelTemplate {
                         
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                     OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
+                    JLabel jl = (JLabel)selectedPanel.getComponent(0);
+                    that.planManager.setPlan(jl.getText());
+                    
+                    
                     int index = Integer.parseInt(selectedPanel.getName());
                     bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
                     if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
