@@ -57,6 +57,7 @@ public class PlanPanelUnit extends JPanel implements MouseListener {
         this.wordNumber = new JLabel(String.valueOf(p.getTotalNumber()) + "words", SwingConstants.CENTER);
         this.wordNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
 
+        this.setLayout(new GridBagLayout());
         this.add(this.planName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
         this.add(this.wordNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
