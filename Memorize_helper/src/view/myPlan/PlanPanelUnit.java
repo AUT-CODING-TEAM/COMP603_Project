@@ -21,7 +21,6 @@ import javax.swing.border.TitledBorder;
 import model.StudyPlan;
 import model.User;
 import view.GridBagTool;
-import static view.myPlan.MyPlanPanel.currentColor;
 
 /**
  *
@@ -44,7 +43,6 @@ public class PlanPanelUnit extends JPanel implements MouseListener {
         }
     };
 
-    private Color color;
     private JLabel planName;
     private JLabel wordNumber;
     private StudyPlan plan;
@@ -102,10 +100,10 @@ public class PlanPanelUnit extends JPanel implements MouseListener {
         }
     }
 
-    public String getPlanName(){
+    public String getPlanName() {
         return this.planName.getText();
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
         this.setSelect();

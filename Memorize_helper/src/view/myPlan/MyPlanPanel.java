@@ -20,6 +20,7 @@ import view.main.MainView;
  * @author ThinkPad, Pingchuan, Yizhao
  */
 public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, MouseListener {
+
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
@@ -31,6 +32,7 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     private JButton switchBtn;
     private JButton editBtn;
     private JButton removeBtn;
+    private JButton addBtn;
 
     //Plan
     private String selectedPlan;
@@ -80,15 +82,18 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
         switchBtn = new JButton("Switch");
         switchBtn.setEnabled(false);
-        switchBtn.addActionListener(new MakePlanController(user, this));
         add(switchBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        switchBtn.addActionListener(new MakePlanController(user, this));
 
         this.editBtn = new JButton("Edit");
-        this.removeBtn = new JButton("Remove");
         this.editBtn.setEnabled(false);
-        this.removeBtn.setEnabled(false);
         add(editBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.editBtn.addActionListener(this);
+        
+        this.removeBtn = new JButton("Remove");
+        this.removeBtn.setEnabled(false);
         add(removeBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.removeBtn.addActionListener(this);
 
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
@@ -121,9 +126,10 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
             myBookPanel.add(plan);
         }
 
-        JButton btn_myBP_addBook = new JButton("Add a Plan");
-        btn_myBP_addBook.addActionListener(new ShowPlanListController(myPlanFrame, user));
-        myBookPanel.add(btn_myBP_addBook);
+        addBtn = new JButton("Add a Plan");
+        addBtn.addActionListener(new ShowPlanListController(myPlanFrame, user));
+        myBookPanel.add(addBtn);
+        
         JScrollPane jScrollPane = new JScrollPane(myBookPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.15));
 
@@ -194,10 +200,11 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
              */
             this.selectedPlan = clicked.getPlanName();
             /**
-             * Enable button
+             * Set buttons condition
              */
             this.removeBtn.setEnabled(true);
             this.editBtn.setEnabled(true);
+            this.switchBtn.setEnabled(false);
             if (!clicked.isActivated()) {
                 this.switchBtn.setEnabled(true);
             }
