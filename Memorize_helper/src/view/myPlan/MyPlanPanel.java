@@ -20,8 +20,6 @@ import view.main.MainView;
  * @author ThinkPad
  */
 public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, MouseListener {
-
-    public static Color currentColor = new Color(23, 35, 61);
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
@@ -79,14 +77,6 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         this.fillBlank();
         this.addTextLabel();
         this.addMyBookPanel();
-
-        JLabel lbl_myPP_myPlan = new JLabel("My Plan(s)", SwingConstants.CENTER);
-        add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-
-        JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");
-        add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
-
-        addMyBookPanel();
 
         switchBtn = new JButton("Switch");
         switchBtn.setEnabled(false);
