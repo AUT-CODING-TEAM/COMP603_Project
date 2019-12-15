@@ -61,10 +61,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "Please schedule the plan!", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without scheduling the plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
                     new CreatePlanPanel(user, selectedPlan);
-                }
-                else{
+                } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));
                 }
             }
@@ -162,7 +166,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + (i == 0? " day": " days"));
+                    s[i] = String.format("%50s", (i + 1) + (i == 0 ? " day" : " days"));
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);
