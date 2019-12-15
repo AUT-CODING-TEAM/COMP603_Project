@@ -332,10 +332,16 @@ public class PlanController {
             StudyPlan p = user.getCurrentStudyPlan();
             if (p != null) {
                 MemorizeController mct = new MemorizeController();
-                long day_start = System.currentTimeMillis() / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                long day_start
+                        = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())
+                        / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                         - TimeZone.getDefault().getRawOffset();
-                long plan_start_time = p.getStartTime() / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+                
+                long plan_start_time
+                        = (p.getStartTime() + +TimeZone.getDefault().getRawOffset())
+                        / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                         - TimeZone.getDefault().getRawOffset();
+                
                 long delta = (day_start - plan_start_time) / (1000 * 3600 * 24);
 
                 int remain_day = p.getTotalDay() - (int) delta;
@@ -369,9 +375,10 @@ public class PlanController {
 
         String table = plan.getStudyPlanName();
         Long time = System.currentTimeMillis();
-        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+        long day_start = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())
+                / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                 - TimeZone.getDefault().getRawOffset();
-        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        long day_end = day_start + 1000 * 24 * 60 * 60 - 1;
         //get today memorized word
         int mem_num = 0;
         StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
@@ -403,9 +410,11 @@ public class PlanController {
         }
         String table = plan.getStudyPlanName();
         Long time = System.currentTimeMillis();
-        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+        long day_start
+                = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())
+                / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                 - TimeZone.getDefault().getRawOffset();
-        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        long day_end = day_start + 1000 * 24 * 60 * 60 - 1;
         //get today reviewed word
         int review_num = 0;
 
@@ -442,9 +451,11 @@ public class PlanController {
 
         String table = plan.getStudyPlanName();
         Long time = System.currentTimeMillis();
-        long day_start = time / (1000 * 3600 * 24) * (1000 * 3600 * 24)
+        long day_start
+                = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())
+                / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                 - TimeZone.getDefault().getRawOffset();
-        long day_end = day_start + 1000 * (24 * 60 * 60 - 1);
+        long day_end = day_start + 1000 * 24 * 60 * 60 - 1;
         int ndRevNum = 0;
         // aging is 1, that means the words who is memorized today or other days 
         // without review. 
@@ -472,24 +483,24 @@ public class PlanController {
          */
         int dailyNumNew = dailyNum;
         int daysNew = totalNum / dailyNumNew;
-        String userId = user.getID()+"";
-       
+        String userId = user.getID() + "";
+
         /**
          * If input days.
          */
         if (dailyNum < 1) {
             daysNew = days;
             dailyNumNew = totalNum / daysNew;
-            
+
         }
-        
+
         db.prepare(sqlPrepared, daysNew, dailyNumNew, userId, book);
     }
-    
-    public void removePlan(User user, String book){
+
+    public void removePlan(User user, String book) {
         Database db = Database.getInstance();
         String sqlPrepared = "DELETE FROM PLAN WHERE USER_ID = ? AND BOOK = ?";
-        String userId = user.getID()+"";
+        String userId = user.getID() + "";
         db.prepare(sqlPrepared, userId, book);
     }
 }
