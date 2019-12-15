@@ -8,7 +8,9 @@ package view.myPlan;
 import controller.myPlan.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import model.*;
 import view.*;
@@ -20,12 +22,20 @@ import view.main.MainView;
  */
 public class MyPlanPanel extends GroundPanelTemplate {
 
+//    public static Border defaultBorder = BorderFactory.createLineBorder(new Color(91, 110, 125));
+//    public static Border currentBorder = BorderFactory.createLineBorder(new Color(23, 35, 61));
+    public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240),5);
+    public static Color currentColor = new Color(23, 35, 61);
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
     private JButton btn_myPP_handleByBookSituation;
     private String bookName;
     private String quantity;
+
+    private ArrayList<JPanel> panelList;
+    private JButton edit;
+    private JButton remove;
 
     public JFrame getMyPlanFrame() {
         return myPlanFrame;
@@ -43,6 +53,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
         super(GroundPanelTemplate.BACK);
         this.user = user;
         this.myPlanInfo = myPlanInfo;
+        this.panelList = new ArrayList<>();
         setProperty();
         addComponents();
     }
@@ -81,16 +92,24 @@ public class MyPlanPanel extends GroundPanelTemplate {
         btn_myPP_handleByBookSituation.setEnabled(false);
         btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
         add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-
+        
+        this.edit = new JButton("Edit");
+        this.remove = new JButton("Remove");
+        this.edit.setEnabled(false);
+        this.remove.setEnabled(false);
+        add(edit, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        add(remove,new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
     }
 
     public void addMyBookPanel() {
         JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
-
+        
         for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {
             OnePlanPanel jPanel = new OnePlanPanel();
+            this.panelList.add(jPanel);
             jPanel.setName(String.valueOf(i));
 
             JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getMyStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
@@ -102,17 +121,52 @@ public class MyPlanPanel extends GroundPanelTemplate {
             jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
             jPanel.setBackground(new Color(91, 110, 125));
+//            jPanel.setBorder(defaultBorder);
+            if (this.user.getCurrentStudyPlan().getStudyPlanName().equals(lbl_myPP_studyPlanName.getText())) {
+                jPanel.setBackground(currentColor);
+//                jPanel.setBorder(currentBorder);
+                StringBuilder sb = new StringBuilder();
+                sb.append("<html>&nbsp;(Current)<br>");
+                sb.append(lbl_myPP_totalNumber.getText() + "</html>");
+                lbl_myPP_totalNumber.setText(sb.toString());
+                lbl_myPP_studyPlanName.setForeground(Color.white);
+                lbl_myPP_totalNumber.setForeground(Color.white);
+
+            }
+
             jPanel.addMouseListener(new MouseListener() {
+                MyPlanPanel that = MyPlanPanel.this;
+                        
                 @Override
                 public void mouseClicked(MouseEvent e) {
+
                     OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
                     int index = Integer.parseInt(selectedPanel.getName());
                     bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
                     if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
+                        jPanel.setBorder(selectedBorder);
+                        for (JPanel jp : that.panelList) {
+                            if (jp == jPanel) {
+                                continue;
+                            }
+
+                            jp.setBorder(null);
+                        }
                         btn_myPP_handleByBookSituation.setEnabled(true);
+                        remove.setEnabled(true);
+                        edit.setEnabled(true);
                     }
                     if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
+                        jPanel.setBorder(selectedBorder);
+                        for (JPanel jp : that.panelList) {
+                            if (jp == jPanel) {
+                                continue;
+                            }
+                            jp.setBorder(null);
+                        }
                         btn_myPP_handleByBookSituation.setEnabled(false);
+                        remove.setEnabled(true);
+                        edit.setEnabled(true);
                     }
                 }
 
