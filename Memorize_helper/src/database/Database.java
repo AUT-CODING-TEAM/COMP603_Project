@@ -64,12 +64,6 @@ public class Database {
         try {
             File[] files = this.getConfigFiles();
 
-            if (files == null || files.length == 0) {
-                System.out.println("No config file found");
-                return;
-            }
-            String[] type = {"TABLE"};
-
             ResultSet user_table = this.meta.getTables(null, null, "USERS", null);
             if (!user_table.next()) {
                 String str1 = "create table users\n"
@@ -158,6 +152,11 @@ public class Database {
                 this.controller.executeUpdate(str1);
                 this.controller.executeUpdate(str2);
                 this.controller.executeUpdate(str3);
+            }
+
+            if (files == null || files.length == 0) {
+                System.out.println("No config file found");
+                return;
             }
 
             for (File f : files) {

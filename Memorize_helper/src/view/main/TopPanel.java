@@ -7,20 +7,25 @@ package view.main;
 
 import controller.main.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 import model.*;
 import view.*;
 import view.searchResultList.SearchResultListPanel;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan.Huang
  */
 public class TopPanel extends MainViewViewTemplate {
 
     private JPanel searchPanel;
+    private JTextField tf_tP_keyword;
 
     public TopPanel(JFrame mainView, User user) {
         super(mainView, user);
@@ -70,12 +75,12 @@ public class TopPanel extends MainViewViewTemplate {
         JLabel lbl_tP_searchTip = new JLabel("Look Up");
         searchPanel.add(lbl_tP_searchTip);
 
-        JTextField tf_tP_keyword = new JTextField(15);
-
+        tf_tP_keyword = new JTextField(15);
         tf_tP_keyword.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                new SearchResultListPanel(tf_tP_keyword.getText(), user);
+                String str = tf_tP_keyword.getText();
+                new SearchResultListPanel(str, user);
                 mainView.dispose();
             }
 
@@ -91,4 +96,11 @@ public class TopPanel extends MainViewViewTemplate {
 
         add(searchPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.EAST).setGridx(3).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.3).setWeighty(1));
     }
+
+    public JTextField getTf_tP_keyword() {
+        return tf_tP_keyword;
+
+    }
+
 }
+

@@ -100,7 +100,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         selectedBookName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         topJPanel.add(selectedBookName);
 
-        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + "words", SwingConstants.CENTER);
+        selectedBookTotalNumber = new JLabel(String.valueOf(selectedPlan.getTotalNumber()) + " words", SwingConstants.CENTER);
         selectedBookTotalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
         topJPanel.add(selectedBookTotalNumber);
 
@@ -137,14 +137,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 if (selectedPlan.getTotalNumber() % 5 == 0) {
                     s = new String[selectedPlan.getTotalNumber() / 5];
                     for (int i = 0; i < s.length; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + " words"));
                     }
                 } else {
                     s = new String[selectedPlan.getTotalNumber() / 5 + 1];
                     for (int i = 0; i < s.length - 1; i++) {
-                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + "words"));
+                        s[i] = String.format("%50s", String.valueOf(5 * (i + 1) + " words"));
                     }
-                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + "words"));
+                    s[s.length - 1] = String.format("%50s", String.valueOf(selectedPlan.getTotalNumber() + " words"));
                 }
                 makePlanListPart1 = new ListInScrollTemplate(s);
                 makePlanListPart1.setEnabled(true);
@@ -162,7 +162,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + (i == 0? "day": "days"));
+                    s[i] = String.format("%50s", (i + 1) + (i == 0? " day": " days"));
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);
