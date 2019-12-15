@@ -24,7 +24,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
 //    public static Border defaultBorder = BorderFactory.createLineBorder(new Color(91, 110, 125));
 //    public static Border currentBorder = BorderFactory.createLineBorder(new Color(23, 35, 61));
-    public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240),5);
+    public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240), 5);
     public static Color currentColor = new Color(23, 35, 61);
     private User user;
     private MyPlanInfo myPlanInfo;
@@ -32,6 +32,7 @@ public class MyPlanPanel extends GroundPanelTemplate {
     private JButton btn_myPP_handleByBookSituation;
     private String bookName;
     private String quantity;
+    private JPanel selected;
 
     private ArrayList<JPanel> panelList;
     private JButton edit;
@@ -92,21 +93,21 @@ public class MyPlanPanel extends GroundPanelTemplate {
         btn_myPP_handleByBookSituation.setEnabled(false);
         btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
         add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        
+
         this.edit = new JButton("Edit");
         this.remove = new JButton("Remove");
         this.edit.setEnabled(false);
         this.remove.setEnabled(false);
         add(edit, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        add(remove,new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        
+        add(remove, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
     }
 
     public void addMyBookPanel() {
         JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
-        
+
         for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {
             OnePlanPanel jPanel = new OnePlanPanel();
             this.panelList.add(jPanel);
@@ -136,11 +137,11 @@ public class MyPlanPanel extends GroundPanelTemplate {
 
             jPanel.addMouseListener(new MouseListener() {
                 MyPlanPanel that = MyPlanPanel.this;
-                        
+
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
                     OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
+                    that.selected = selectedPanel;
                     int index = Integer.parseInt(selectedPanel.getName());
                     bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
                     if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
