@@ -9,6 +9,7 @@ import controller.interfaces.UserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import model.User;
 import view.main.MainView;
 import view.myPlan.MyPlanPanel;
@@ -18,21 +19,22 @@ import view.planList.CreatePlanPanel;
  *
  * @author ThinkPad
  */
-public class MakePlanController implements ActionListener{
+public class MakePlanController implements ActionListener {
+
     private User user;
     private CreatePlanPanel createPlanPanel;
     private JFrame selectedPlanFrame;
     private MyPlanPanel myPlanPanel;
-    
+
     //login first time
-    public MakePlanController(User user, CreatePlanPanel createPlanPanel, JFrame selectedPlanFrame){
+    public MakePlanController(User user, CreatePlanPanel createPlanPanel, JFrame selectedPlanFrame) {
         this.user = user;
         this.createPlanPanel = createPlanPanel;
         this.selectedPlanFrame = selectedPlanFrame;
     }
-    
+
     //change after login
-    public MakePlanController(User user,  MyPlanPanel myPlanPanel){
+    public MakePlanController(User user, MyPlanPanel myPlanPanel) {
         this.user = user;
         this.myPlanPanel = myPlanPanel;
     }
@@ -44,20 +46,32 @@ public class MakePlanController implements ActionListener{
             new UserController().changeStudyPlan(user, myPlanPanel.getSelectedPlan());
             myPlanPanel.getMyPlanFrame().dispose();
             new MainView(user);
-            
+
             return;
         }
-        
+
         //login first time
-        if (createPlanPanel.getDayQuantity()!= null || createPlanPanel.getNumQuantity()!= null) {
-            if (createPlanPanel.getOptionTabs().getSelectedIndex() == 1) {
-                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getDayQuantity().split(" day")[0]));
-            }
-            else{
-                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getNumQuantity().split(" word")[0]));            
-            }
-            selectedPlanFrame.dispose();
-            new MainView(user);
+        if (createPlanPanel.getDayQuantity() == null && createPlanPanel.getWordQuantity() == null) {
+            JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+            return;
         }
+
+        if (createPlanPanel.getOptionTabs().getSelectedIndex() == 1) {
+            if (createPlanPanel.getDayQuantity() != null) {
+                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getDayQuantity().split(" day")[0]));
+            } else {
+                JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                return;
+            }
+        } else {
+            if (createPlanPanel.getWordQuantity() != null) {
+                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getWordQuantity().split(" word")[0]));
+            } else {
+                JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                return;
+            }
+        }
+        selectedPlanFrame.dispose();
+        new MainView(user);
     }
 }
