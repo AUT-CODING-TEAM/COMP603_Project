@@ -45,7 +45,13 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 if (user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list!", "information ", JOptionPane.INFORMATION_MESSAGE);
+//                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list!", "information ", JOptionPane.INFORMATION_MESSAGE);
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without selecting a plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
                     new PlanListPanel(user, new PlanListInfo(user));
                 } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));

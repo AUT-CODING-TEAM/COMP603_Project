@@ -1,49 +1,58 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editBtnor.
  */
 package view.myPlan;
 
+import controller.interfaces.PlanController;
+import controller.interfaces.UserController;
 import controller.myPlan.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import model.*;
 import view.*;
 import view.main.MainView;
+import view.planList.CreatePlanPanel;
+import view.planList.PlanListPanel;
 
 /**
  *
- * @author ThinkPad
+ * @author ThinkPad, Pingchuan, Yizhao
  */
-public class MyPlanPanel extends GroundPanelTemplate {
+public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, MouseListener {
 
-//    public static Border defaultBorder = BorderFactory.createLineBorder(new Color(91, 110, 125));
-//    public static Border currentBorder = BorderFactory.createLineBorder(new Color(23, 35, 61));
-    public PlanManagementListener planManager;
-    public static Border selectedBorder = BorderFactory.createLineBorder(new Color(45, 140, 240),5);
-    public static Color currentColor = new Color(23, 35, 61);
     private User user;
     private MyPlanInfo myPlanInfo;
     private JFrame myPlanFrame;
-    private JButton btn_myPP_handleByBookSituation;
-    private String bookName;
+    private WindowListener windowListener1;
+    private WindowListener windowListener2;
     private String quantity;
 
-    private ArrayList<JPanel> panelList;
-    private JButton edit;
-    private JButton remove;
+    //Buttons
+    private JButton switchBtn;
+    private JButton editBtn;
+    private JButton removeBtn;
+    private JButton addBtn;
+
+    //Plan
+    private String selectedPlan;
+    private ArrayList<PlanPanelUnit> panelList;
+    private JPanel planPanel;
+
+    //Controllers
+    private static final PlanController PLAN_CONTROLLER = new PlanController();
+
+    //Getters
+    public String getSelectedPlan() {
+        return selectedPlan;
+    }
 
     public JFrame getMyPlanFrame() {
         return myPlanFrame;
-    }
-
-    public String getBookName() {
-        return bookName;
     }
 
     public String getQuantity() {
@@ -55,8 +64,33 @@ public class MyPlanPanel extends GroundPanelTemplate {
         this.user = user;
         this.myPlanInfo = myPlanInfo;
         this.panelList = new ArrayList<>();
-        setProperty();
-        addComponents();
+        this.setProperty();
+        this.addComponents();
+
+        if (this.windowListener1 == null) {
+            this.windowListener1 = new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    new MainView(user);
+                }
+            };
+        }
+        if (this.windowListener2 == null) {
+            this.windowListener2 = new WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without selecting a plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+                        }
+                        System.exit(0);
+                    }
+                }
+            };
+        }
     }
 
     public void setProperty() {
@@ -64,149 +98,229 @@ public class MyPlanPanel extends GroundPanelTemplate {
     }
 
     public void addComponents() {
-        myPlanFrame = new JFrame("My Plan(s)");
-        setSize(myPlanFrame, 720, 360);
+        this.myPlanFrame = new JFrame("My Plan(s)");
+        super.setSize(myPlanFrame, 720, 360);
+        if (this.windowListener1 == null) {
+            System.out.println("null");
+        }
+        if (this.windowListener1 == null) {
+            this.windowListener1 = new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    new MainView(user);
+                }
+            };
+        }
+        if (this.windowListener2 == null) {
+            this.windowListener2 = new WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without selecting a plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+                        }
+                        System.exit(0);
+                    }
+                }
+            };
+        }
+
+        myPlanFrame.addWindowListener(this.windowListener1);
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        myPlanFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-//                super.windowClosing(e);
-                new MainView(user);
-            }
-        });
 
-        //left fill label
-        add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
-        //right fill label
-        add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
-        //bottom fill label
-        add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.fillBlank();
+        this.addTextLabel();
+        this.addMyBookPanel();
 
-        JLabel lbl_myPP_myPlan = new JLabel("My Plan(s)", SwingConstants.CENTER);
-        add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        /**
+         * Add and configure 3 buttons.
+         */
+        switchBtn = new JButton("Switch");
+        switchBtn.setEnabled(false);
+        add(switchBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        switchBtn.addActionListener(new MakePlanController(user, this));
 
-        JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");
-        add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+        this.editBtn = new JButton("Edit");
+        this.editBtn.setEnabled(false);
+        add(editBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.editBtn.addActionListener(this);
 
-        addMyBookPanel();
+        this.removeBtn = new JButton("Remove");
+        this.removeBtn.setEnabled(false);
+        add(removeBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        this.removeBtn.addActionListener(this);
 
-        btn_myPP_handleByBookSituation = new JButton("Switch");
-        btn_myPP_handleByBookSituation.setEnabled(false);
-        btn_myPP_handleByBookSituation.addActionListener(new MakePlanController(user, this));
-        add(btn_myPP_handleByBookSituation, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        
-        this.edit = new JButton("Edit");
-        this.remove = new JButton("Remove");
-        this.edit.setEnabled(false);
-        this.remove.setEnabled(false);
-        add(edit, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        add(remove,new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        this.planManager = new PlanManagementListener(user);
-        this.remove.addActionListener(this.planManager);
-        this.edit.addActionListener(this.planManager);
-        
-        
         myPlanFrame.add(this);
         myPlanFrame.setVisible(true);
     }
 
-    public void addMyBookPanel() {
-        JPanel myBookPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
-        
+    private void fillBlank() {
+        //left fill label
+        this.add(new JLabel(), new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
+        //right fill label
+        this.add(new JLabel(), new GridBagTool().setGridx(2).setGridy(0).setGridwidth(1).setGridheight(5).setWeightx(0.05).setWeighty(1));
+        //bottom fill label
+        this.add(new JLabel(), new GridBagTool().setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+    }
+
+    private void addTextLabel() {
+        JLabel lbl_myPP_myPlan = new JLabel("My Plan(s)", SwingConstants.CENTER);
+        this.add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+
+        JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");
+        this.add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+    }
+
+    private void addMyBookPanel() {
+        this.planPanel = new JPanel(new GridLayout(1, myPlanInfo.getMyStudyPlans().size() + 1, 20, 20));
+
+        this.refreshPlanPanel();
+
+        JScrollPane jScrollPane = new JScrollPane(this.planPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.15));
+
+        this.planPanel.addMouseListener(this);
+    }
+
+    public void refreshPlanPanel() {
+        this.planPanel.removeAll();
         for (int i = 0; i < myPlanInfo.getMyStudyPlans().size(); i++) {
-            OnePlanPanel jPanel = new OnePlanPanel();
-            this.panelList.add(jPanel);
-            jPanel.setName(String.valueOf(i));
+            PlanPanelUnit plan = new PlanPanelUnit(user, myPlanInfo.getMyStudyPlans().get(i));
+            this.panelList.add(plan);
 
-            JLabel lbl_myPP_studyPlanName = new JLabel(myPlanInfo.getMyStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
-            lbl_myPP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-            jPanel.addStudyPlanName(lbl_myPP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
-
-            JLabel lbl_myPP_totalNumber = new JLabel(String.valueOf(myPlanInfo.getMyStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
-            lbl_myPP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
-            jPanel.addTotalNumber(lbl_myPP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
-
-            jPanel.setBackground(new Color(91, 110, 125));
-//            jPanel.setBorder(defaultBorder);
-            if (this.user.getCurrentStudyPlan().getStudyPlanName().equals(lbl_myPP_studyPlanName.getText())) {
-                jPanel.setBackground(currentColor);
-//                jPanel.setBorder(currentBorder);
-                StringBuilder sb = new StringBuilder();
-                sb.append("<html>&nbsp;(Current)<br>");
-                sb.append(lbl_myPP_totalNumber.getText() + "</html>");
-                lbl_myPP_totalNumber.setText(sb.toString());
-                lbl_myPP_studyPlanName.setForeground(Color.white);
-                lbl_myPP_totalNumber.setForeground(Color.white);
-
-            }
-
-            jPanel.addMouseListener(new MouseListener() {
-                MyPlanPanel that = MyPlanPanel.this;
-                        
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    
-                    OnePlanPanel selectedPanel = (OnePlanPanel) e.getSource();
-                    JLabel jl = (JLabel)selectedPanel.getComponent(0);
-                    that.planManager.setPlan(jl.getText());
-                    
-                    
-                    int index = Integer.parseInt(selectedPanel.getName());
-                    bookName = myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName();
-                    if (myPlanInfo.getMyStudyPlans().get(index).getFinished() == 0) {
-                        jPanel.setBorder(selectedBorder);
-                        for (JPanel jp : that.panelList) {
-                            if (jp == jPanel) {
-                                continue;
-                            }
-
-                            jp.setBorder(null);
-                        }
-                        btn_myPP_handleByBookSituation.setEnabled(true);
-                        remove.setEnabled(true);
-                        edit.setEnabled(true);
-                    }
-                    if (user.getCurrentStudyPlan().getStudyPlanName().equals(myPlanInfo.getMyStudyPlans().get(index).getStudyPlanName())) {
-                        jPanel.setBorder(selectedBorder);
-                        for (JPanel jp : that.panelList) {
-                            if (jp == jPanel) {
-                                continue;
-                            }
-                            jp.setBorder(null);
-                        }
-                        btn_myPP_handleByBookSituation.setEnabled(false);
-                        remove.setEnabled(true);
-                        edit.setEnabled(true);
-                    }
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-            if (myPlanInfo.getMyStudyPlans().get(i).getFinished() == 1) {
-                jPanel.setBorder(new TitledBorder("Completed"));
-            }
-
-            myBookPanel.add(jPanel);
+            this.planPanel.add(plan);
         }
 
-        JButton btn_myBP_addBook = new JButton("Add a Plan");
-        btn_myBP_addBook.addActionListener(new ShowPlanListController(myPlanFrame, user));
-        myBookPanel.add(btn_myBP_addBook);
+        addBtn = new JButton("Add a Plan");
+        addBtn.addActionListener(new ShowPlanListController(myPlanFrame, user));
+        this.planPanel.add(addBtn);
+        this.planPanel.repaint();
+        this.planPanel.revalidate();
+    }
 
-        JScrollPane jScrollPane = new JScrollPane(myBookPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.15));
+    /**
+     * A set of listeners
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        /**
+         * To control buttons of plan management.
+         */
+        if (e.getSource() instanceof JButton) {
+            JButton btn = (JButton) e.getSource();
+
+            switch (btn.getText()) {
+
+                case "Edit":
+                    if (this.selectedPlan != null) {
+                        for (StudyPlan sp:this.myPlanInfo.getMyStudyPlans()) {
+                            if (sp.getStudyPlanName().equals(this.selectedPlan)) {
+                                new CreatePlanPanel(user,sp,myPlanFrame);
+                            }
+                        }
+                        myPlanFrame.dispose();
+                        break;
+                    }
+                    break;
+
+                case "Remove":
+                    if (this.selectedPlan != null) {
+                        int choice = JOptionPane.showConfirmDialog(
+                                null,
+                                "Are you sure to remove this plan?",
+                                "Remove check",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.WARNING_MESSAGE
+                        );
+
+                        if (choice == 0) {
+                            PLAN_CONTROLLER.removePlan(user, selectedPlan);
+                            Iterator<StudyPlan> planIt = this.myPlanInfo.getMyStudyPlans().iterator();
+                            StudyPlan sp;
+                            while (planIt.hasNext()) {
+                                sp = planIt.next();
+                                if (sp.getStudyPlanName().equals(selectedPlan)) {
+                                    planIt.remove();
+                                    break;
+                                }
+                            }
+                            this.refreshPlanPanel();
+                            if (this.selectedPlan.equals(user.getCurrentStudyPlan().getStudyPlanName())) {
+                                this.myPlanFrame.removeWindowListener(windowListener1);
+                                this.myPlanFrame.addWindowListener(windowListener2);
+                                this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                            }
+                            if (this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                                this.user.setCurrentStudyPlan(null);
+                                this.myPlanFrame.setVisible(false);
+                                new PlanListPanel(user, new PlanListInfo(user));
+                            }
+                        }
+                        break;
+                    }
+                    break;
+
+                case "Switch":
+                    if (this.selectedPlan != null) {
+                        //another controler...
+                        break;
+                    }
+                    break;
+            }
+
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() instanceof PlanPanelUnit) {
+            PlanPanelUnit clicked = (PlanPanelUnit) e.getSource();
+
+            /**
+             * Fix border of plan units
+             */
+            for (PlanPanelUnit p : this.panelList) {
+                if (clicked != p) {
+                    p.unSelect();
+                }
+            }
+
+            /**
+             * Set selected plan name.
+             */
+            this.selectedPlan = clicked.getPlanName();
+            /**
+             * Set buttons condition
+             */
+            this.removeBtn.setEnabled(true);
+            this.editBtn.setEnabled(true);
+            this.switchBtn.setEnabled(false);
+            if (!clicked.isActivated()) {
+                this.switchBtn.setEnabled(true);
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
