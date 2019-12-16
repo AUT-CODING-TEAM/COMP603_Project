@@ -101,9 +101,6 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         this.myPlanFrame = new JFrame("My Plan(s)");
         super.setSize(myPlanFrame, 720, 360);
         if (this.windowListener1 == null) {
-            System.out.println("null");
-        }
-        if (this.windowListener1 == null) {
             this.windowListener1 = new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -143,7 +140,7 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         add(switchBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         switchBtn.addActionListener(new MakePlanController(user, this));
 
-        this.editBtn = new JButton("Edit");
+        this.editBtn = new JButton("Reschedule");
         this.editBtn.setEnabled(false);
         add(editBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
         this.editBtn.addActionListener(this);
@@ -214,7 +211,7 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
             switch (btn.getText()) {
 
-                case "Edit":
+                case "Reschedule":
                     if (this.selectedPlan != null) {
                         for (StudyPlan sp:this.myPlanInfo.getMyStudyPlans()) {
                             if (sp.getStudyPlanName().equals(this.selectedPlan)) {

@@ -35,7 +35,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private JButton btn_confirm;
     private JList makePlanListPart1;
     private JList makePlanListPart2;
-    private String quantity;
+    private String numQuantity;
+    private String dayQuantity;
 
     MakePlanTabPanel makePlanTabPanelPart1;
     MakePlanTabPanel makePlanTabPanelPart2;
@@ -43,8 +44,16 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private boolean isEdit = false;
     JFrame myPlanFrame;
 
-    public String getQuantity() {
-        return quantity;
+    public JTabbedPane getOptionTabs() {
+        return optionTabs;
+    }
+
+    public String getNumQuantity() {
+        return numQuantity;
+    }
+
+    public String getDayQuantity() {
+        return dayQuantity;
     }
 
     public StudyPlan getSelectedPlan() {
@@ -224,7 +233,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (makePlanListPart1.getValueIsAdjusting()) {
-                            quantity = makePlanListPart1.getSelectedValue().toString().trim();
+                            numQuantity = makePlanListPart1.getSelectedValue().toString().trim();
                         }
                     }
                 });
@@ -242,7 +251,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (makePlanListPart2.getValueIsAdjusting()) {
-                            quantity = makePlanListPart2.getSelectedValue().toString().trim();
+                            dayQuantity = makePlanListPart2.getSelectedValue().toString().trim();
                         }
                     }
                 });

@@ -49,13 +49,12 @@ public class MakePlanController implements ActionListener{
         }
         
         //login first time
-        if (createPlanPanel.getQuantity() != null) {
-            //"days" contains "day"
-            if (createPlanPanel.getQuantity().contains("day")) {
-                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split(" day")[0]));
+        if (createPlanPanel.getDayQuantity()!= null || createPlanPanel.getNumQuantity()!= null) {
+            if (createPlanPanel.getOptionTabs().getSelectedIndex() == 1) {
+                new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getDayQuantity().split(" day")[0]));
             }
             else{
-                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getQuantity().split(" word")[0]));
+                new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getNumQuantity().split(" word")[0]));            
             }
             selectedPlanFrame.dispose();
             new MainView(user);
