@@ -124,9 +124,14 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
                 }
             };
         }
+        if (this.user.getCurrentStudyPlan() == null) {
+            myPlanFrame.addWindowListener(this.windowListener2);
+            this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        myPlanFrame.addWindowListener(this.windowListener1);
-        myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        } else {
+            myPlanFrame.addWindowListener(this.windowListener1);
+            myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
 
         this.fillBlank();
         this.addTextLabel();
@@ -213,9 +218,9 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
                 case "Reschedule":
                     if (this.selectedPlan != null) {
-                        for (StudyPlan sp:this.myPlanInfo.getMyStudyPlans()) {
+                        for (StudyPlan sp : this.myPlanInfo.getMyStudyPlans()) {
                             if (sp.getStudyPlanName().equals(this.selectedPlan)) {
-                                new CreatePlanPanel(user,sp,myPlanFrame);
+                                new CreatePlanPanel(user, sp, myPlanFrame);
                             }
                         }
                         myPlanFrame.dispose();
@@ -246,9 +251,12 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
                             }
                             this.refreshPlanPanel();
                             if (this.selectedPlan.equals(user.getCurrentStudyPlan().getStudyPlanName())) {
-                                this.myPlanFrame.removeWindowListener(windowListener1);
-                                this.myPlanFrame.addWindowListener(windowListener2);
-                                this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//                                this.myPlanFrame.removeWindowListener(windowListener1);
+//                                this.myPlanFrame.addWindowListener(windowListener2);
+//                                this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                                this.user.setCurrentStudyPlan(this.myPlanInfo.getMyStudyPlans().get(0));
+                                this.refreshPlanPanel();
+                                
                             }
                             if (this.myPlanInfo.getMyStudyPlans().isEmpty()) {
                                 this.user.setCurrentStudyPlan(null);

@@ -52,7 +52,7 @@ public class MakePlanController implements ActionListener {
 
         //login first time
         if (createPlanPanel.getDayQuantity() == null && createPlanPanel.getWordQuantity() == null) {
-            JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+            JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
             return;
         }
 
@@ -60,14 +60,14 @@ public class MakePlanController implements ActionListener {
             if (createPlanPanel.getDayQuantity() != null) {
                 new UserController().activateStudyPlanByDay(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getDayQuantity().split(" day")[0]));
             } else {
-                JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
                 return;
             }
         } else {
             if (createPlanPanel.getWordQuantity() != null) {
                 new UserController().activateStudyPlanByNum(user, createPlanPanel.getSelectedPlan().getStudyPlanName(), Integer.parseInt(createPlanPanel.getWordQuantity().split(" word")[0]));
             } else {
-                JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
                 return;
             }
         }

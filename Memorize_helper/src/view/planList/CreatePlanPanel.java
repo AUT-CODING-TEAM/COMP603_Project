@@ -125,7 +125,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (that.makePlanListPart1.getSelectedValue() == null && that.makePlanListPart2.getSelectedValue() == null) {
-                        JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                        JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
                         return;
                     }
                     int num = 0;
@@ -140,7 +140,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                             num = Integer.parseInt(str);
                             day = -1;
                         } else {
-                            JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                            JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
                             return;
                         }
                     } else {
@@ -151,7 +151,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                             num = -1;
                             day = Integer.parseInt(str);
                         } else {
-                            JOptionPane.showMessageDialog(null, "please decide an ideal schedult!!");
+                            JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
                             return;
                         }
                     }
