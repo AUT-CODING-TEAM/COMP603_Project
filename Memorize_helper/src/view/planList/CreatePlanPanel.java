@@ -37,6 +37,9 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private JList makePlanListPart2;
     private String quantity;
 
+    MakePlanTabPanel makePlanTabPanelPart1;
+    MakePlanTabPanel makePlanTabPanelPart2;
+
     private boolean isEdit = false;
     JFrame myPlanFrame;
 
@@ -119,7 +122,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                     int num = 0;
                     int day = 0;
                     String str = "";
-                    if (that.optionTabs.getSelectedComponent().equals(that.makePlanListPart1)) {
+                    Component c = that.optionTabs.getSelectedComponent();
+                    if (c.equals(that.makePlanTabPanelPart1)) {
                         if (that.makePlanListPart1.getSelectedValue() != null) {
                             str = (String) that.makePlanListPart1.getSelectedValue();
                             String[] strs = str.split(" ");
@@ -175,8 +179,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
 
         optionTabs = new JTabbedPane();
 
-        MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
-        MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
+        makePlanTabPanelPart1 = new MakePlanTabPanel(0);
+        makePlanTabPanelPart2 = new MakePlanTabPanel(1);
 
         optionTabs.addTab("based on DAILY TASK", makePlanTabPanelPart1);
         optionTabs.addTab("based on LEARNING DURATION", makePlanTabPanelPart2);
