@@ -67,30 +67,30 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         this.setProperty();
         this.addComponents();
 
-        if (this.windowListener1 == null) {
-            this.windowListener1 = new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    new MainView(user);
-                }
-            };
-        }
-        if (this.windowListener2 == null) {
-            this.windowListener2 = new WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            "Do you want to leave without selecting a plan?", "Close Window?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
-                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
-                        }
-                        System.exit(0);
-                    }
-                }
-            };
-        }
+//        if (this.windowListener1 == null) {
+//            this.windowListener1 = new WindowAdapter() {
+//                @Override
+//                public void windowClosing(WindowEvent e) {
+//                    new MainView(user);
+//                }
+//            };
+//        }
+//        if (this.windowListener2 == null) {
+//            this.windowListener2 = new WindowAdapter() {
+//                @Override
+//                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+//                    if (JOptionPane.showConfirmDialog(null,
+//                            "Do you want to leave without selecting a plan?", "Close Window?",
+//                            JOptionPane.YES_NO_OPTION,
+//                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+//                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+//                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+//                        }
+//                        System.exit(0);
+//                    }
+//                }
+//            };
+//        }
     }
 
     public void setProperty() {
@@ -100,63 +100,86 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     public void addComponents() {
         this.myPlanFrame = new JFrame("My Plan(s)");
         super.setSize(myPlanFrame, 720, 360);
-        if (this.windowListener1 == null) {
-            this.windowListener1 = new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    new MainView(user);
-                }
-            };
-        }
-        if (this.windowListener2 == null) {
-            this.windowListener2 = new WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            "Do you want to leave without selecting a plan?", "Close Window?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
-                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
-                        }
-                        System.exit(0);
-                    }
-                }
-            };
-        }
-        if (this.user.getCurrentStudyPlan() == null) {
-            myPlanFrame.addWindowListener(this.windowListener2);
-            this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        } else {
-            myPlanFrame.addWindowListener(this.windowListener1);
-            myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        }
+//        if (this.windowListener1 == null) {
+//            this.windowListener1 = new WindowAdapter() {
+//                @Override
+//                public void windowClosing(WindowEvent e) {
+//                    new MainView(user);
+//                }
+//            };
+//        }
+//        if (this.windowListener2 == null) {
+//            this.windowListener2 = new WindowAdapter() {
+//                @Override
+//                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+//                    if (JOptionPane.showConfirmDialog(null,
+//                            "Do you want to leave without selecting a plan?", "Close Window?",
+//                            JOptionPane.YES_NO_OPTION,
+//                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+//                        if (!MyPlanPanel.this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+//                            new UserController().changeStudyPlan(user, MyPlanPanel.this.myPlanInfo.getMyStudyPlans().get(0).getStudyPlanName());
+//                        }
+//                        System.exit(0);
+//                    }
+//                }
+//            };
+//        }
+//        if (this.user.getCurrentStudyPlan() == null) {
+//            myPlanFrame.addWindowListener(this.windowListener2);
+//            this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//
+//        } else {
+        myPlanFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new MainView(user);
+            }
+        });
+        myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        }
 
         this.fillBlank();
+
         this.addTextLabel();
+
         this.addMyBookPanel();
 
         /**
          * Add and configure 3 buttons.
          */
         switchBtn = new JButton("Switch");
-        switchBtn.setEnabled(false);
-        add(switchBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        switchBtn.addActionListener(new MakePlanController(user, this));
+
+        switchBtn.setEnabled(
+                false);
+        add(switchBtn,
+                new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        switchBtn.addActionListener(
+                new MakePlanController(user, this));
 
         this.editBtn = new JButton("Reschedule");
-        this.editBtn.setEnabled(false);
-        add(editBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        this.editBtn.addActionListener(this);
+
+        this.editBtn.setEnabled(
+                false);
+        add(editBtn,
+                new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(4).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+
+        this.editBtn.addActionListener(
+                this);
 
         this.removeBtn = new JButton("Remove");
-        this.removeBtn.setEnabled(false);
-        add(removeBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
-        this.removeBtn.addActionListener(this);
 
-        myPlanFrame.add(this);
-        myPlanFrame.setVisible(true);
+        this.removeBtn.setEnabled(
+                false);
+        add(removeBtn,
+                new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+
+        this.removeBtn.addActionListener(
+                this);
+
+        myPlanFrame.add(
+                this);
+        myPlanFrame.setVisible(
+                true);
     }
 
     private void fillBlank() {
@@ -250,18 +273,18 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
                                 }
                             }
                             this.refreshPlanPanel();
-                            if (this.selectedPlan.equals(user.getCurrentStudyPlan().getStudyPlanName())) {
+
+                            if (this.myPlanInfo.getMyStudyPlans().isEmpty()) {
+                                this.user.setCurrentStudyPlan(null);
+                                this.myPlanFrame.setVisible(false);
+                                new PlanListPanel(user, new PlanListInfo(user));
+                            } else if (this.selectedPlan.equals(user.getCurrentStudyPlan().getStudyPlanName())) {
 //                                this.myPlanFrame.removeWindowListener(windowListener1);
 //                                this.myPlanFrame.addWindowListener(windowListener2);
 //                                this.myPlanFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                                 this.user.setCurrentStudyPlan(this.myPlanInfo.getMyStudyPlans().get(0));
                                 this.refreshPlanPanel();
-                                
-                            }
-                            if (this.myPlanInfo.getMyStudyPlans().isEmpty()) {
-                                this.user.setCurrentStudyPlan(null);
-                                this.myPlanFrame.setVisible(false);
-                                new PlanListPanel(user, new PlanListInfo(user));
+
                             }
                         }
                         break;
