@@ -631,8 +631,7 @@ public class Database {
             int res = this.controller.executeUpdate(str_bd.toString());
             return res != 0;
         } catch (Exception e) {
-            System.out.println(str_bd.toString());
-            System.err.println("SQLException from method add: " + e.getMessage());
+            System.out.println("database instruction failed, maybe dulplicated key exists or sql error");
         }
         return false;
     }

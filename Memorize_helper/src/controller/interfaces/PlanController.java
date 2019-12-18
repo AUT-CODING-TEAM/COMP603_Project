@@ -502,5 +502,7 @@ public class PlanController {
         String sqlPrepared = "DELETE FROM PLAN WHERE USER_ID = ? AND BOOK = ?";
         String userId = user.getID() + "";
         db.prepare(sqlPrepared, userId, book);
+        String sqlPrepared2 = "DELETE FROM MEMORIZE WHERE USER_ID = ? AND WORD_SOURCE = ?";
+        db.prepare(sqlPrepared2, userId, book);
     }
 }
