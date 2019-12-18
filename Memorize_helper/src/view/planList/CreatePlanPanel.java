@@ -5,8 +5,11 @@
  */
 package view.planList;
 
+import controller.interfaces.PlanController;
 import controller.myPlan.MakePlanController;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -31,10 +34,25 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private JButton btn_confirm;
     private JList makePlanListPart1;
     private JList makePlanListPart2;
-    private String quantity;
+    private String wordQuantity;
+    private String dayQuantity;
 
-    public String getQuantity() {
-        return quantity;
+    MakePlanTabPanel makePlanTabPanelPart1;
+    MakePlanTabPanel makePlanTabPanelPart2;
+
+    private boolean isEdit = false;
+    JFrame myPlanFrame;
+
+    public JTabbedPane getOptionTabs() {
+        return optionTabs;
+    }
+
+    public String getWordQuantity() {
+        return wordQuantity;
+    }
+
+    public String getDayQuantity() {
+        return dayQuantity;
     }
 
     public StudyPlan getSelectedPlan() {
@@ -47,6 +65,18 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         this.selectedPlan = selectedPlan;
         setProperty();
         addComponents();
+        this.isEdit = false;
+    }
+
+    public CreatePlanPanel(User user, StudyPlan selectedPlan, JFrame myPlanFrame) {
+        super(GroundPanelTemplate.BACK);
+        this.user = user;
+        this.selectedPlan = selectedPlan;
+        this.isEdit = true;
+        this.myPlanFrame = myPlanFrame;
+        setProperty();
+        addComponents();
+
     }
 
     public void setProperty() {
@@ -61,10 +91,14 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if (e.getID() == WindowEvent.WINDOW_CLOSING && user.getCurrentStudyPlan() == null) {
-                    JOptionPane.showMessageDialog(null, "Please schedule the plan!", "informaiton ", JOptionPane.INFORMATION_MESSAGE);
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Do you want to leave without scheduling the plan?", "Close Window?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
                     new CreatePlanPanel(user, selectedPlan);
-                }
-                else{
+                } else {
                     new MyPlanPanel(user, new MyPlanInfo(user));
                 }
             }
@@ -84,7 +118,55 @@ public class CreatePlanPanel extends GroundPanelTemplate {
         btn_confirm = new JButton();
         btn_confirm.setText("OK");
 
-        btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
+        if (this.isEdit) {
+            btn_confirm.addActionListener(new ActionListener() {
+                CreatePlanPanel that = CreatePlanPanel.this;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (that.makePlanListPart1.getSelectedValue() == null && that.makePlanListPart2.getSelectedValue() == null) {
+                        JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
+                        return;
+                    }
+                    int num = 0;
+                    int day = 0;
+                    String str = "";
+                    Component c = that.optionTabs.getSelectedComponent();
+                    if (c.equals(that.makePlanTabPanelPart1)) {
+                        if (that.makePlanListPart1.getSelectedValue() != null) {
+                            str = (String) that.makePlanListPart1.getSelectedValue();
+                            String[] strs = str.split(" ");
+                            str = strs[strs.length - 2];
+                            num = Integer.parseInt(str);
+                            day = -1;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
+                            return;
+                        }
+                    } else {
+                        if (that.makePlanListPart2.getSelectedValue() != null) {
+                            str = (String) that.makePlanListPart2.getSelectedValue();
+                            String[] strs = str.split(" ");
+                            str = strs[strs.length - 2];
+                            num = -1;
+                            day = Integer.parseInt(str);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "please decide an ideal schedule!!");
+                            return;
+                        }
+                    }
+
+                    PlanController pc = new PlanController();
+                    pc.editPlan(that.user, that.selectedPlan.getStudyPlanName(), num, day);
+                    that.selectedPlanFrame.dispose();
+                    pc.updateTodayPlanInfo(user);
+                    new MyPlanPanel(user, new MyPlanInfo(user));
+                }
+            });
+        } else {
+            btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
+        }
+
         add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         selectedPlanFrame.add(this);
@@ -108,8 +190,8 @@ public class CreatePlanPanel extends GroundPanelTemplate {
 
         optionTabs = new JTabbedPane();
 
-        MakePlanTabPanel makePlanTabPanelPart1 = new MakePlanTabPanel(0);
-        MakePlanTabPanel makePlanTabPanelPart2 = new MakePlanTabPanel(1);
+        makePlanTabPanelPart1 = new MakePlanTabPanel(0);
+        makePlanTabPanelPart2 = new MakePlanTabPanel(1);
 
         optionTabs.addTab("based on DAILY TASK", makePlanTabPanelPart1);
         optionTabs.addTab("based on LEARNING DURATION", makePlanTabPanelPart2);
@@ -153,7 +235,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (makePlanListPart1.getValueIsAdjusting()) {
-                            quantity = makePlanListPart1.getSelectedValue().toString().trim();
+                            wordQuantity = makePlanListPart1.getSelectedValue().toString().trim();
                         }
                     }
                 });
@@ -162,7 +244,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
             } else if (option == 1) {
                 String s[] = new String[selectedPlan.getTotalNumber()];
                 for (int i = 0; i < s.length; i++) {
-                    s[i] = String.format("%50s", (i + 1) + (i == 0? " day": " days"));
+                    s[i] = String.format("%50s", (i + 1) + (i == 0 ? " day" : " days"));
                 }
                 makePlanListPart2 = new ListInScrollTemplate(s);
                 makePlanListPart2.setEnabled(true);
@@ -171,7 +253,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (makePlanListPart2.getValueIsAdjusting()) {
-                            quantity = makePlanListPart2.getSelectedValue().toString().trim();
+                            dayQuantity = makePlanListPart2.getSelectedValue().toString().trim();
                         }
                     }
                 });

@@ -85,6 +85,11 @@ public class PlanPanelUnit extends JPanel implements MouseListener {
     public boolean isActivated() {
         return this.activated;
     }
+    
+    public void activate(){
+        this.activated = true;
+        this.setForeground(ColorTable.get("ACTIVATED"));
+    }
 
     public void setSelect() {
         if (plan.getFinished() == 0) {
