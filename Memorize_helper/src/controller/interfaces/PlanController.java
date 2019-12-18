@@ -329,8 +329,14 @@ public class PlanController {
      */
     public void updateTodayPlanInfo(User user) {
         if (user != null) {
-            StudyPlan p = user.getCurrentStudyPlan();
-            if (p != null) {
+            StudyPlan p;
+            if (user.getCurrentStudyPlan() != null) {
+                ///
+                p = this.getPlan(user, user.getCurrentStudyPlan().getStudyPlanName());
+                
+                
+                
+                ///
                 MemorizeController mct = new MemorizeController();
                 long day_start
                         = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())
@@ -351,12 +357,18 @@ public class PlanController {
                 p.setTotalMemorizedNumber(mct.countMemorizedWordInPlan(user));
                 p.setNeedReviewNumber(this.getNeedReviewNum(user));
                 p.setReaminDay(remain_day);
+                
+               
+                
+                
 
                 if (p.getTotalMemorizedNumber() == p.getTotalNumber()) {
                     Database db = Database.getInstance();
                     db.set("PLAN", "ID", p.getID(), "FINISH", "1");
                     p.setFinished(1);
                 }
+                
+                user.setCurrentStudyPlan(p);
             }
 
         }

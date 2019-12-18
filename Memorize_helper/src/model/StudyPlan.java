@@ -113,6 +113,14 @@ public class StudyPlan {
         return this;
     }
 
+    public void setTotalDay(int totalDay) {
+        this.totalDay = totalDay;
+    }
+
+    public void setTodayTargetNumber(int todayTargetNumber) {
+        this.todayTargetNumber = todayTargetNumber;
+    }
+
     public void setReaminDay(int d) {
         this.remainDay = d;
     }
