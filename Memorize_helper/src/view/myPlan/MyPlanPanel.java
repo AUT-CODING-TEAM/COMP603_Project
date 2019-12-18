@@ -6,7 +6,6 @@
 package view.myPlan;
 
 import controller.interfaces.PlanController;
-import controller.interfaces.UserController;
 import controller.myPlan.*;
 import java.awt.*;
 import java.awt.event.*;

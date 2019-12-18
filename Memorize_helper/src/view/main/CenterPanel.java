@@ -10,15 +10,21 @@ import java.awt.*;
 import javax.swing.*;
 import model.*;
 import view.*;
+import view.planList.CreatePlanPanel;
 
 /**
  *
  * @author ThinkPad
  */
 public class CenterPanel extends MainViewViewTemplate {
+    private int remainingDay;
 
     public CenterPanel(JFrame mainView, User user) {
         super(mainView, user);
+    }
+
+    public int getRemainingDay() {
+        return remainingDay;
     }
 
     @Override
@@ -62,16 +68,19 @@ public class CenterPanel extends MainViewViewTemplate {
         add(btn_cP_vocabulary, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(2).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.2));
 
         addProgressBar();
+        
+        
     }
 
     private void addRemainingDayRest() {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
-        JLabel lbl_cP_remainingDayPart2 = new JLabel(String.valueOf(user.getRemainingDay()), SwingConstants.CENTER);
+        remainingDay = user.getRemainingDay() < 0 ? 0 : user.getRemainingDay();
+        JLabel lbl_cP_remainingDayPart2 = new JLabel(String.valueOf(remainingDay), SwingConstants.CENTER);
         lbl_cP_remainingDayPart2.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         jPanel.add(lbl_cP_remainingDayPart2);
-
-        JLabel lbl_cP_remainingDayPart3 = new JLabel(user.getRemainingDay() == 1 ? "day" : "days", SwingConstants.CENTER);
+        
+        JLabel lbl_cP_remainingDayPart3 = new JLabel(remainingDay == 1 ? "day" : "days", SwingConstants.CENTER);
         jPanel.add(lbl_cP_remainingDayPart3);
 
         add(jPanel, new GridBagTool().setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.3));
@@ -94,10 +103,10 @@ public class CenterPanel extends MainViewViewTemplate {
         StudyPlan sp = user.getCurrentStudyPlan();
         int totalMemorizedNumber = sp.getTotalMemorizedNumber();
         int totalNumber = sp.getTotalNumber();
-        
+
         JProgressBar psBar_cP_progress = new JProgressBar(0, 100);
         int progress = totalMemorizedNumber * 100 / totalNumber;
-        
+
         psBar_cP_progress.setValue(progress);
         psBar_cP_progress.setOpaque(true);
         psBar_cP_progress.setBackground(Color.decode("#F8F6F1"));

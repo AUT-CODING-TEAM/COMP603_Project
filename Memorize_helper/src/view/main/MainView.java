@@ -6,15 +6,13 @@
 package view.main;
 
 import controller.interfaces.PlanController;
-import database.Database;
-import view.prepare.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Locale;
 import javax.swing.*;
 import model.*;
 import view.*;
+import view.planList.CreatePlanPanel;
 
 /**
  *
@@ -34,6 +32,16 @@ public class MainView extends JFrame {
         setProperty();
         addComponents();
         setVisible(true);
+        
+        if (centralPanel.getRemainingDay() == 0) {
+            if (JOptionPane.showConfirmDialog(null,
+                    "Do you want to reshedule the plan?", "information",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                new CreatePlanPanel(user, user.getCurrentStudyPlan(), this);
+                this.dispose();
+            }
+        }
     }
 
     private void setSize() {
@@ -86,13 +94,5 @@ public class MainView extends JFrame {
         jPanel.add(bottomPanel, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.2));
 
         add(jPanel);
-    }
-
-    public static void main(String[] args) {
-        Locale.setDefault(Locale.ENGLISH);
-        //init the database
-        Database db = Database.getInstance();
-        db.init();
-        new LoginDialog();
     }
 }
