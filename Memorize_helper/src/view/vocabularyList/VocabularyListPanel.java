@@ -87,7 +87,7 @@ public class VocabularyListPanel extends GroundPanelTemplate {
             list_vLTP_vocabularyList.setListData(vocabularyListInfo.getVocabularyListInfo());
             if (option == 2) {
                 JButton btn_vLTP_learnCollect = new JButton("Start Learning My Favorites");
-                btn_vLTP_learnCollect.addActionListener(new StartLearnController(mainView, user, "favorite"));
+                btn_vLTP_learnCollect.addActionListener(new StartLearnController(vocabularyListFrame, user, "favorite"));
                 jPanel.add(btn_vLTP_learnCollect, BorderLayout.EAST);
             }
         }
