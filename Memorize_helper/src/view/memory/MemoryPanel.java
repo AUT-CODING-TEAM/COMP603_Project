@@ -60,7 +60,7 @@ public class MemoryPanel extends GroundPanelTemplate {
 
     public void addComponents() {
         memoryFrame = new JFrame("Studying");
-        setSize(memoryFrame, 620, 720);
+        setSize(memoryFrame, 720, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -111,7 +111,7 @@ public class MemoryPanel extends GroundPanelTemplate {
         vocabularyPanel.setLayout(new GridBagLayout());
 
 //        JLabel lbl_mP_word = new JLabel(memoryPage.getWord(), SwingConstants.CENTER);
-        JLabel lbl_mP_word = new JLabel(text, SwingConstants.CENTER);
+        JLabel lbl_mP_word = new JLabel("<html>" + text + "</html>", SwingConstants.CENTER);
         lbl_mP_word.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
         vocabularyPanel.add(lbl_mP_word, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTH).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 

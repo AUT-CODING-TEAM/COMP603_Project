@@ -16,6 +16,7 @@ import model.*;
  * @author ThinkPad
  */
 public class ChoiceLabel extends JLabel {
+
     private MemoryPanel memoryPanel;
     private Word choice;
     private Word wordObj;
@@ -23,9 +24,10 @@ public class ChoiceLabel extends JLabel {
     private MemoryPage memoryPage;
 
     ChoiceLabel(Word choice, User user, MemoryPanel memoryPanel, boolean isChineseChoice) {
-        super(choice.getChinese(), SwingConstants.CENTER);
+        this.setText("<html>" + choice.getChinese() + "</html>");
+        this.setHorizontalAlignment(SwingConstants.CENTER);
         if (!isChineseChoice) {
-            this.setText(choice.getWord());
+            this.setText("<html>" + choice.getWord() + "</html>");
         }
         this.memoryPanel = memoryPanel;
         this.choice = choice;
@@ -51,6 +53,5 @@ public class ChoiceLabel extends JLabel {
     public User getUser() {
         return user;
     }
-    
-    
+
 }
