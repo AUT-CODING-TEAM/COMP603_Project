@@ -10,7 +10,6 @@ import java.awt.*;
 import javax.swing.*;
 import model.*;
 import view.*;
-import view.planList.CreatePlanPanel;
 
 /**
  *
