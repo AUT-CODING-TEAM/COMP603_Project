@@ -1,16 +1,16 @@
 <<<<<<< HEAD
-/Memorize_helper/nbproject/private/
-/Memorize_helper/build/
-/Memorize_helper/Memorize_helper/
+/Vocabuilder/nbproject/private/
+/Vocabuilder/build/
+/Vocabuilder/Vocabuilder_DB/
 .DS_Store
 */.DS_Store
-/Memorize_helper/derby.log
+/Vocabuilder/derby.log
 =======
-/Memorize_helper/nbproject/private/
-/Memorize_helper/build/
-/Memorize_helper/Memorize_helper/
+/Vocabuilder/nbproject/private/
+/Vocabuilder/build/
+/Vocabuilder/Vocabuilder_DB/
 .DS_Store
 */.DS_Store
-/Memorize_helper/derby.log
+/Vocabuilder/derby.log
 >>>>>>> master
-/Memorize_helper/dist/
+/Vocabuilder/dist/

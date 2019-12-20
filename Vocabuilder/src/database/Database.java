@@ -22,7 +22,7 @@ public class Database {
     private DatabaseMetaData meta;
     private String username;
     private String password;
-    private static final String CONFIG = "vocabulary_config";
+    private static final String CONFIG = "Vocabuilder_Res";
     private Statement controller;
     public PreparedStatement p_controller;
 
@@ -43,7 +43,7 @@ public class Database {
     }
 
     private Database() {
-        this("jdbc:derby:Memorize_helper;create=true",
+        this("jdbc:derby:Vocabuilder_DB;create=true",
                 "root", "root");
     }
 
@@ -216,7 +216,7 @@ public class Database {
 
             try {
 
-                InputStreamReader isr = new InputStreamReader(new FileInputStream("vocabulary_config/" + f.getName()), "UTF-8");
+                InputStreamReader isr = new InputStreamReader(new FileInputStream("Vocabuilder_Res/" + f.getName()), "UTF-8");
                 BufferedReader bf = new BufferedReader(isr);
 
                 String line = "";

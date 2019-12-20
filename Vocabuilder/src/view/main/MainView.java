@@ -57,7 +57,7 @@ public class MainView extends JFrame {
 
     private void setProperty() {
         setSize();
-        setTitle("Vocabulearner");
+        setTitle("Vocabuilder");
 
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
