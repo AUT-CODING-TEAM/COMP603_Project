@@ -8,6 +8,7 @@ package controller.memory;
 import controller.interfaces.UserController;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.*;
@@ -19,7 +20,7 @@ import view.memory.MemoryPanel;
  *
  * @author ThinkPad
  */
-public class MakeChoiceController implements MouseListener {
+public class MakeChoiceController implements MouseListener, MouseMotionListener {
 
     private MemoryRecorder memoryRecorder;
     private User user;
@@ -66,5 +67,31 @@ public class MakeChoiceController implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        ChoiceLabel selectedLabel = (ChoiceLabel) e.getSource();
+        if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
+        } else {
+            JOptionPane.showMessageDialog(null, selectedLabel.getWordObj().getChinese() + "\n" + selectedLabel.getWordObj().getWord(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
+            memoryRecorder.getWordsToStudy().add(selectedLabel.getWordObj());
+        }
+
+        MemoryPage memoryPage = memoryRecorder.next();
+
+        if (memoryPage == null) {
+            JOptionPane.showMessageDialog(null, "Finish!", "information ", JOptionPane.INFORMATION_MESSAGE);
+            new MainView(user);
+        } else {
+            new MemoryPanel(user, memoryPage, memoryRecorder);
+        }
+
+        memoryFrame.dispose();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }
