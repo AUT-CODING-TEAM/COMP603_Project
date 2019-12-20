@@ -19,8 +19,8 @@ import view.memory.MemoryPanel;
  *
  * @author ThinkPad
  */
-public class MakeChoiceController implements MouseListener{
-    
+public class MakeChoiceController implements MouseListener {
+
     private MemoryRecorder memoryRecorder;
     private User user;
     private JFrame memoryFrame;
@@ -30,29 +30,25 @@ public class MakeChoiceController implements MouseListener{
         this.user = user;
         this.memoryFrame = memoryFrame;
     }
-    
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        ChoiceLabel selectedLabel = (ChoiceLabel)e.getSource();
+        ChoiceLabel selectedLabel = (ChoiceLabel) e.getSource();
         if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
-//            JOptionPane.showMessageDialog(null, "Correct!", "information ", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Wrong! Right Answer: " + selectedLabel.getWordObj().getChinese(), "error ", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, selectedLabel.getWordObj().getChinese() + "\n" + selectedLabel.getWordObj().getWord(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
             memoryRecorder.getWordsToStudy().add(selectedLabel.getWordObj());
         }
-        
+
         MemoryPage memoryPage = memoryRecorder.next();
 
-        if (memoryPage == null) {    
+        if (memoryPage == null) {
             JOptionPane.showMessageDialog(null, "Finish!", "information ", JOptionPane.INFORMATION_MESSAGE);
             new MainView(user);
-        }
-        else{
+        } else {
             new MemoryPanel(user, memoryPage, memoryRecorder);
         }
-        
+
         memoryFrame.dispose();
     }
 

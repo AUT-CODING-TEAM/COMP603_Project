@@ -9,6 +9,8 @@ import controller.prepare.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 /**
@@ -39,11 +41,17 @@ public class RegisterDialog extends JFrame {
         setTitle("Sign Up");
         setLayout(new GridLayout(4, 2));
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                RegisterDialog.this.dispose();
+                new LoginDialog();
+            }
+
+        });
     }
 
     private void addComponents() {
-        
+
         JLabel lbl_rgD_usernameTip = new JLabel("Username:", SwingConstants.CENTER);
         add(lbl_rgD_usernameTip);
         JTextField tf_rgD_username = new JTextField();
@@ -53,12 +61,12 @@ public class RegisterDialog extends JFrame {
         add(lbl_rgD_passwordTip);
         JPasswordField tf_rgD_password = new JPasswordField();
         add(tf_rgD_password);
-        
+
         JLabel lbl_rgD_pwdConfirmTip = new JLabel("Confirm Password:", SwingConstants.CENTER);
         add(lbl_rgD_pwdConfirmTip);
         JPasswordField tf_rgD_pwdConfirm = new JPasswordField();
         add(tf_rgD_pwdConfirm);
-        
+
         JButton btn_rgD_login = new JButton("Already have an account?");
         btn_rgD_login.addActionListener(new ActionListener() {
             @Override

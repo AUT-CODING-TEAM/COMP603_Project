@@ -5,11 +5,9 @@ import java.sql.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -180,10 +178,10 @@ public class Database {
 
     private void checkAndCreate(File f) throws SQLException {
         String table_name = f.getName();
-        System.out.println("Config file found: " + table_name);
         if (!table_name.contains(".txt")) {
             return;
         }
+        System.out.println("Config file found: " + table_name);
         if (table_name.contains(" ")) {
             table_name = table_name.replace(' ', '_');
         }

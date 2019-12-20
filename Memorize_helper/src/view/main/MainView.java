@@ -13,6 +13,7 @@ import javax.swing.*;
 import model.*;
 import view.*;
 import view.planList.CreatePlanPanel;
+import view.prepare.LoginDialog;
 
 /**
  *
@@ -32,7 +33,7 @@ public class MainView extends JFrame {
         setProperty();
         addComponents();
         setVisible(true);
-        
+
         if (centralPanel.getRemainingDay() == 0) {
             if (JOptionPane.showConfirmDialog(null,
                     "Do you want to reshedule the plan?", "information",
@@ -58,7 +59,14 @@ public class MainView extends JFrame {
         setSize();
         setTitle("Vocabulearner");
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                MainView.this.dispose();
+                new LoginDialog();
+            }
+        });
     }
 
     private void addComponents() {

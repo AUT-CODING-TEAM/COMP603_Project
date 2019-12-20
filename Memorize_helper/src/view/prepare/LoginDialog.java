@@ -9,7 +9,12 @@ import controller.prepare.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
+import model.MyPlanInfo;
+import view.myPlan.MyPlanPanel;
+import view.planList.CreatePlanPanel;
 
 /**
  *
@@ -40,7 +45,14 @@ public class LoginDialog extends JFrame {
         setLayout(new GridLayout(3, 2));
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+                
+        });
     }
+    
 
     private void addComponents() {
         JLabel lbl_lgD_usernameTip = new JLabel("Username:", SwingConstants.CENTER);
