@@ -48,10 +48,14 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     public void valueChanged(ListSelectionEvent e) {
         if (list_sP_searchResultList != null) {
             if (list_sP_searchResultList.getValueIsAdjusting()) {
-                wordExplainPage = new WordExplainPage(list_sP_searchResultList.getSelectedValue().toString().trim());
+                try {
+                    wordExplainPage = new WordExplainPage(list_sP_searchResultList.getSelectedValue().toString().trim());
+                    new WordExplainPanel(wordExplainPage, searchResultListFrame);
+                    searchResultListFrame.setVisible(false);
+                } catch (Exception ex) {
 
-                new WordExplainPanel(wordExplainPage, searchResultListFrame);
-                searchResultListFrame.setVisible(false);
+                }
+
             }
         }
 
