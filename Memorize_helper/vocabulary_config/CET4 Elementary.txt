@@ -17,8 +17,6 @@ busy	bizi	a.忙的，繁忙的
 jar	dʒa:	n.罐子，坛子，广口瓶
 dorm	dɔ:m	n.(集体)宿舍
 high	hai	a.高的；高级的ad.高
-drag	dræg	vt.拖拉拖曳拖累拖拉(动)vi.拖拉(动)缓慢地行走n.用来拖拉的东西拖拖累
-dirt	də:t	n.尘土污物污垢泥土污秽的言行卑鄙的人堕落矿渣
 link	liŋk	vt.有环连接n.环
 hint	hint	n.暗示，示意；建议
 joke	dʒəuk	n.笑话vi.说笑话
@@ -43,7 +41,6 @@ corn	kɔ:n	n.谷物；(英)小麦
 deer	diə	n.鹿
 near	niə	ad.近，接近a.近的
 mate	meit	n.伙伴，同事；配偶
-drum	drʌm	n.鼓鼓声鼓状物圆桶冰丘vi.击鼓作鼓声引起兴趣vt.召集入伍逐出(经过努力)推动...连续击打
 blue	blu:	a.蓝色的n.蓝色
 last	la:st	a.最后的ad.最后vi.持续，持久；耐久
 ball	bɔ:l	n.球，球状物；舞会
@@ -124,7 +121,6 @@ row	rəu	n.(一)排，(一)行
 pole	pəul	n.极(点)，磁极，电极
 pie	pai	n.(西点)馅饼
 clue	klu:	n.线索，暗示，提示
-date	deit	n.日期约会枣椰子vt.约会定...日期vi.追溯到n.[计算机]DOS命令：显示或设置系统日期
 bed	bed	n.床，床位；圃；河床
 glow	gləu	n.白热光vi.发白热光
 find	faind	vt.找到；发觉；找出
@@ -195,7 +191,6 @@ era	iərə	n.时代，年代；纪元
 cube	kju:b	n.立方形；立方
 cake	keik	n.饼，糕，蛋糕
 jury	dʒuəri	n.陪审团；评奖团
-due	dju:	adj.预期的应给的到期的应有的预定的n.应得物
 hide	haid	vt.把…藏起来；隐瞒
 navy	neivi	n.海军
 chin	tʃin	n.颏，下巴
@@ -215,7 +210,6 @@ clap	klæp	vi.拍手vt.拍，轻拍
 just	dʒΛst	ad.刚才；只是；正好
 even	i:vən	ad.甚至；甚至更，还a.均匀的；平的
 raw	rɔ:	a.未煮过的；未加工的
-deck	dek	n.甲板舱面层面桥面楼层vt.装饰
 luck	lΛk	n.运气；好运，幸运
 lie	lai	vi.说谎，欺骗n.谎话
 mile	mail	n.英里
@@ -227,11 +221,9 @@ herd	hə:d	n.兽群，牧群vt.放牧
 fear	fiə	n.害怕；担心vt.害怕
 mix	miks	vt.使混合，混淆
 goal	gəul	n.球门；得分；目的
-dusk	dʌsk	n.薄暮黄昏幽暗vi.(天)变黑变暗vt.把…变黑变暗adj.颜色暗沉的昏暗的
 main	mein	a.主要的，最重要的
 bad	bæd	a.坏的，恶的；严重的
 have	hæv,həv	v.aux.已经vt.有；吃
-dim	dim	adj.昏暗的暗淡的朦胧的模糊的笨的vt.使暗淡使失去光泽vi.变暗n.车头灯的短焦距光
 fox	fɔks	n.狐狸；狡猾的人
 go	gəu	vi.去；走；变为
 hate	heit	vt.恨，憎恨；不喜欢
@@ -252,11 +244,9 @@ lend	lend	vt.把…借给，贷(款)
 lime	laim	n.石灰
 pale	peil	a.苍白的；浅的
 ɔil	ɔil	n.油；石油vt.加油于
-dial	'daiəl	n.钟面拨号盘刻度盘针面转盘vt.拨用仪表测量操作仪表vi.拨号用仪表测量[计算机]拨号
 help	help	vt.帮助；援助n.帮手
 I	ai	pron.(主格)我
 few	fju:	a.很少的；少数的
-deep	di:p	adj.深的有...深的深奥的纵深的adv.深深地晚地n.深处
 pat	pæt	n.&vt.&n.轻拍
 pity	piti	n.怜悯；遗憾vt.同情
 okay	əu'kei	(缩作OK)a.&ad.对，好
@@ -269,7 +259,6 @@ else	els	ad.其它，另外a.别的
 bite	bait	vt.咬，叮，螫；剌穿
 burn	bə:n	vi.烧，燃烧n.烧伤
 lock	lɔk	n.锁vt.锁上，锁住
-damp	dæmp	adj.潮湿的有湿气的n.毒气湿气丧气vt.呛抑制使潮湿vi.衰减
 how	hau	ad.怎么；怎样；多少
 leak	li:k	vi.漏；泄露n.漏洞
 need	ni:d	vt.需要v.aux.需要
@@ -305,7 +294,6 @@ mist	mist	n.薄雾
 rat	ræt	n.老鼠，耗子
 pipe	paip	n.管子，导管；烟斗
 lawn	lɔ:n	n.草地，草坪，草场
-dull	dʌl	adj.枯燥的不鲜明的呆滞的迟钝的无趣的钝的暗的vt.使变钝vi.变钝
 only	əunli	ad.只，仅仅a.唯一的
 jɔin	dʒɔin	vt.参加；连接
 zoo	zu:	n.动物园拥挤杂乱的地方
@@ -316,7 +304,6 @@ feed	fi:d	vt.喂(养)vi.吃饲料
 grow	grəu	vi.生长；变得；增长
 bath	ba:θ	n.浴，洗澡；浴缸
 lose	lu:z	vt.失去；迷失；输掉
-dump	dʌmp	vt.倾卸倾倒倾销丢弃抛售导出vi.骤降扔垃圾n.垃圾场堆放处
 hat	hæt	n.帽子(一般指有边的)
 mark	ma:k	n.斑点；记号vt.标明
 sow	səu	vt.播(种)vi.播种
@@ -335,7 +322,6 @@ lean	li:n	vi.倾斜，屈身；靠
 less	les	a.更少的ad.更少地
 pig	pig	n.猪，小猪，野猪
 care	keə	vi.关心，介意n.小心
-dash	dæʃ	vt.使猛撞猛掷泼溅冲撞匆忙溅vi.猛冲猛撞n.猛冲冲撞破折号少量短跑冲劲
 cage	keidʒ	n.笼；鸟笼，囚笼
 ours	auəz	pron.我们的
 cave	keiv	n.山洞，洞穴，窑洞
@@ -346,8 +332,6 @@ page	peidʒ	n.页
 list	list	n.表，目录n.列举
 cent	sent	n.分；分币；百
 it	it	pron.这，那，它
-mean	mi:n	vt.作…解释；意指a.自私的；吝啬的n.平均值
-deed	di:d	n.行为事迹功绩(尤指房产)契约证书vt.通过行为转化
 mask	ma:sk	n.面具；伪装vt.掩饰
 May	mei	n.五月
 grey	grei	a.灰色的n.灰色
@@ -372,7 +356,6 @@ out	aut	ad.出，在外；现出来
 bar	ba:	n.酒吧间；条，杆；栅
 let	let	vt.允许，让；使
 pace	peis	n.步，步速vi.踱步
-disk	disk	n.圆盘唱片磁盘光盘花盘盘形物[计算机]磁盘vt.用圆盘耙耙地
 bang	bæŋ	n.巨响，枪声；猛击
 boat	bəut	n.小船，艇；渔船
 play	plei	vi.玩，游戏；演奏
@@ -385,7 +368,6 @@ nose	nəuz	n.鼻子；突出部分
 band	bænd	n.乐队；带；波段
 not	nɔt	ad.不，没有
 bind	baind	vt.捆绑；包扎；装钉
-dry	drai	adj.干的干燥的干旱的不行于色的枯燥无味的无酒的口渴的vt.把...弄干vi.(使)变干
 poet	pəuit	n.诗人
 hole	həul	n.洞；孔眼，裂开处
 mad	mæd	a.发疯的；恼火的
@@ -402,7 +384,6 @@ jazz	dʒæz	n.爵士音乐，爵士舞曲
 be	bi:	aux.v.&vi.是，在，做
 keep	ki:p	vi.保持；坚持
 mere	miə	a.仅仅的；纯粹的
-down	daun	adv.向下在下面下跌在南方adj.向下的降低的情绪低落停止运行n.绒毛汗毛轻视prep.沿着...而下
 door	dɔ:	n.门通道一家
 July	dʒu:'lai	n.七月
 him	him	pron.(宾格)他
@@ -421,9 +402,7 @@ bow	bau	n.弓；蝴蝶结；鞠躬
 jaw	dʒɔ:	n.颌，颚
 own	əun	a.自己的vt.有，拥有
 bill	bil	n.账单；招贴；票据
-dead	ded	adj.死的无生命的萧条的精疲力竭的用完的无趣的adv.完全地突然地直接地n.死者死
 kiss	kis	vt.吻vi.接吻n.吻
-dear	diə	adj.严重的珍贵的亲爱的昂贵的衷心的adv.高价地热爱地n.亲爱的人可爱的人int.啊哎呀
 bake	beik	vt.烤，烘，焙；烧硬
 gram	græm	n.克
 bury	beri	vt.埋葬，葬；埋藏
@@ -460,7 +439,6 @@ lake	leik	n.湖
 boss	bɔs	n.老板，上司vt.指挥
 pan	pæn	n.平底锅，盘子
 item	aitəm	n.条，条款；一条
-duck	dʌk	n.鸭雌鸭鸭肉板球零分vt.把…按入水中低头弯身(以免被打中或看见)躲避vi.迅速行进飞快行走(以免被看见)推委责任
 owe	əu	vt.欠；应把…归功于
 none	nΛn	pron.没有人ad.毫不
 keen	ki:n	a.热心的；激烈的
@@ -470,7 +448,6 @@ mass	mæs	n.众多；团；群众
 its	its	pron.它的
 by	bai	prep.在…旁；被，由
 ore	ɔ:	n.矿，矿石，矿砂
-dock	dɔk	n.船坞码头(造)修船厂尾巴的骨肉部分被告席vt.进港(减)剪短对接vi.进港对接
 lead	li:d	n.铅，铅制品vt.为…带路；领导
 rug	rΛg	n.小地毯；毛毯
 lay	lei	vt.置放；铺设；设置
@@ -501,7 +478,6 @@ blow	bləu	vi.吹，吹动；吹响
 mine	main	pron.我的n.矿，矿山；地雷
 host	həust	n.主人；东道主
 jet	dʒet	n.喷气式飞机；喷嘴
-draw	drɔ:	vt.(drewdrawn)拉拖挨近提取画绘制划拨出n.平局抽签拉拽吸引人的事物
 fine	fain	a.美好的；纤细的n.罚金，罚款
 nice	nais	a.美好的，令人愉快的
 envy	envi	vt.&n.妒忌；羡慕
@@ -517,13 +493,11 @@ tip	tip	vt.轻击vi.给小费
 cash	kæʃ	n.现金，现款
 bore	bɔ:	vt.使厌烦；钻，挖
 bag	bæg	n.袋，包，钱包，背包
-dip	dip	vt.浸蘸给...洗药浴vi.浸一浸下降向下倾斜翻阅提取(款项)n.游下降减少低洼处调味酱药浴液
 boy	bɔi	n.男孩，少年；家伙
 fork	fɔ:k	n.餐叉；叉；分叉
 boot	bu:t	n.靴子，长统靴
 hang	hæŋ	vt.挂，悬；吊死
 get	get	vi.变得，成为；到达
-dust	dʌst	n.尘土灰尘无价值之物屈辱状态vt.拂去灰尘撒上粉状物体大胜vi.擦拭灰尘
 ill	il	a.有病的；坏的ad.坏
 easy	i:zi	a.容易的；安逸的
 log	lɔg	n.原木，木料
@@ -537,7 +511,6 @@ fly	flai	n.蝇，苍蝇vi.飞行
 his	his	pron.他的，他的东西
 fuel	fjuəl	n.燃料vt.给…加燃料
 cart	ka:t	n.二轮运货马车
-dot	dɔt	n.点圆点少量小东西vt.作小点记号点缀vi.作小点记号[计算机]点
 chop	tʃɔp	vt.砍，劈；切细vi.砍
 bone	bəun	n.骨，骨骼
 hut	hΛt	n.小屋，棚屋
@@ -548,7 +521,6 @@ glue	glu:	n.胶，胶水vt.胶合
 plug	plΛg	n.塞子；插头vt.塞
 mail	meil	n.邮件vt.邮寄
 jam	dʒæm	n.果酱vt.使塞满；使堵塞
-deal	di:l	n.买卖待遇交易协定份量vt.(dealtdealt[delt])处理应付分配给予
 male	meil	a.男的，雄的n.男子
 drip	drip	vi.滴下漏水n.水滴滴点滴乏味的人
 folk	fəulk	n.人们，家属，亲属

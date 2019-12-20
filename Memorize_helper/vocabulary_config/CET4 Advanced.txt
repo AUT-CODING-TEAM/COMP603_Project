@@ -38,7 +38,7 @@ deserve	di'zə:v	vt.应受值得vi.应该得到
 inward	inwəd	a.里面的ad.向内
 furnace	fə:nis	n.炉子，熔炉；鼓风炉
 suspect	səs'pekt,'sΛspekt	vt.怀疑vi.疑心
-diamond	'daiəmənd	n.金钢石钻石菱形像钻石的物质纸牌的方块棒球内场vt.用钻石装饰adj.60或75周年纪念的
+diamond	'daiəmənd	n.金钢石
 simply	simpli	ad.简单地；朴素地
 problem	prɔbləm	n.问题；习题，问题
 stretch	stretʃ	vt.伸展vi.伸n.伸展
@@ -48,7 +48,6 @@ federal	fedərəl	a.联邦的；联盟的
 consult	kən'sΛlt	vt.请教，查阅
 unknown	Λn'nəun	a.不知道的；未知的
 monkey	mΛŋki	n.猴子，猿
-dismiss	dis'mis	vt.不再考虑解雇解散开除逃避(法律)驳回
 reveal	ri'vi:l	vt.展现；揭示，揭露
 enlarge	in'la:dʒ	vt.扩大，扩展；放大
 anxiety	æŋg'zaiəti	n.焦虑，忧虑；渴望
@@ -159,7 +158,6 @@ period	piəriəd	n.时期；学时；句号
 chicken	tʃikin	n.小鸡，小鸟；鸡肉
 typical	tipikəl	a.典型的，代表性的
 prepare	pri'peə	vt.&vi.准备，预备
-darling	'dɑ:liŋ	n.亲爱的人可爱的人可爱的物宠儿adj.可爱的亲爱的
 scrape	skreip	vt.&vi.&n.刮，擦
 consent	kən'sent	n.同意，赞成vi.同意
 council	kaunsil	n.理事会，委员会
@@ -632,8 +630,6 @@ partner	pa:tnə	n.伙伴；搭挡；配偶
 channel	tʃænl	n.海峡；渠道；频道
 loosen	lu:sn	vt.解开；使松驰
 healthy	helθi	a.健康的；有益健康的
-digital	'didʒitəl	adj.数字的计数的手指的数码的电子的
-distant	'distənt	adj.在远处的疏远的疏远的远房的陌生的远行的
 vanish	væniʃ	vi.突然不见，消失
 counter	kauntə	n.柜台；计数器
 tedious	ti:diəs	a.冗长乏味的，沉闷的

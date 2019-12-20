@@ -283,17 +283,13 @@ boundary	baundəri	n.分界线，办界
 underline	Λndə'lain	vt.划线于…之下
 frequency	fri:kwənsi	n.屡次；次数；频率
 precious	preʃəs	a.珍贵的，宝贵的
-dramatic	drə'mætik	adj.引人注目的戏剧的给人深刻印象的n.(pl.)戏剧作品戏曲
 assembly	ə'sembli	n.集合；集会；装配
-disadvantage	.disəd'væntidʒ	n.不利不利地位不利条件损害损失
 daylight	'deilait	n.白昼日光黎明
 possibility	pɔsə'biliti	n.可能；可能的事
 sufficient	sə'fiʃənt	a.足够的，充分的
 magazine	mægə'zi:n	n.杂志，期刊
 pressure	preʃə	n.压力；压力；压，按
 accompany	ə'kΛmpəni	vt.陪伴，陪同；伴随
-distress	di'stres	n.忧虑悲伤不幸苦恼贫困忧郁恶化扣押财物vt.使...苦恼仿造adj.亏本出售的
-delicate	'delikit	adj.纤细的易碎的精美的微妙的美味的脆弱的敏锐的n.精美的东西
 guidance	gaidəns	n.引导，指导，领导
 increase	in'kri:s,'inkri:s	vt.&vi.&n.增加
 continual	kən'tinjuəl	a.不断的；连续的
@@ -402,7 +398,6 @@ conversely	kɔnvə:sli	ad.相反地
 repetition	repi'tiʃən	n.重复，反复
 reliable	ri'laiəbl	a.可靠的，可信赖的
 transformation	trænsfə'meiʃən	n.变化；改造；转变
-distinct	di'stiŋkt	adj.与其他不同的不同的明显的(from)独特的清楚的
 disposal	di'spəuzəl	n.丢掉处理销毁菜碾碎器
 memorial	mi'mɔ:riəl	a.纪念的；记忆的
 authority	ɔ:'θɔriti	n.当局，官方；权力
@@ -489,7 +484,6 @@ probable	prɔbəbl	a.或有的；大概的
 transparent	træns'peərənt	a.透明的；易识破的
 collective	kə'lektiv	a.集体的；集合性的
 religious	ri'lidʒəs	a.宗教的；虔诚的
-dimension	di'menʃən	n.尺寸尺度面积次元容积维度范围方面vt.标尺寸形成...尺寸
 experience	iks'piəriəns	n.经验，感受；经历
 commerce	kɔmə(:)s	n.商业，贸易；社交
 injection	in'dʒekʃən	n.注射，注入；充满
@@ -510,7 +504,6 @@ portable	pɔ:təbl	a.轻便的；手提的
 neighbour	neibə	n.邻居，邻国，邻人
 investment	in'vestmənt	n.投资，投资额，投入
 helpless	helplis	a.无助的；无能的
-distance	'distəns	n.距离间距远处(人际关系的)疏远vt.使疏远把(对手)甩在后面与...保持距离adj.(通过电子手段)远程(教育)
 internal	in'tə:nl	a.内的；国内的
 gentleman	dʒentlmən	n.绅士；有教养的人
 extension	iks'tenʃən	n.延长部分；伸展
@@ -814,7 +807,6 @@ grateful	greitful	a.感激的；令人愉快的
 universal	ju:ni'və:səl	a.宇宙的；普遍的
 recommend	rekə'mend	vt.推荐，介绍；劝告
 economic	i:kə'nɔmik	a.经济的，经济学的
-desirable	di'zaiərəbl	adj.值得相望的可取的值得有的令人满意的有吸引力的n.有吸引力的人
 refrigerator	ri'fridʒəreitə	n.冰箱，冷藏库
 relative	relətiv	a.有关系的；相对的
 remarkable	ri'ma:kəbl	a.异常的，非凡的
@@ -853,12 +845,10 @@ grammatical	grə'mætikəl	a.语法上的
 generator	dʒenəreitə	n.发电机；发生者
 revolutionary	revə'lu:ʃənəri	a.革命的n.革命者
 outstanding	aut'stændiŋ	a.突出的，杰出的
-dishonour	dis'ɔnə	n.不光彩丢脸的人耻辱拒付vt.使丢脸侮辱拒付=dishonor
 remember	ri'membə	vt.记得，想起；记住
 equation	i'kweiʃən	n.方程(式)；等式
 feedback	fi:dbæk	n.回授，反馈，反应
 accidental	æksi'dentl	a.偶然的；非本质的
-dependent	di'pendənt	adj.依靠的依赖的附属的悬垂的n.受经济援助者
 absolutely	æbsəlu:tli	ad.完全地；绝对地
 lightning	laitniŋ	n.闪电，闪电放电
 communist	kɔmjunist	n.共产党员
@@ -871,7 +861,6 @@ politics	pɔlitiks	n.政治，政治学；政纲
 prosperity	prɔs'periti	n.繁荣；昌盛，兴旺
 instance	instəns	n.例子，实例，事例
 supplement	sΛplimənt	n.&vt.增补，补充
-dissolve	di'zɔlv	vt.使溶解解散消除解决(问题)使沮丧vi.消散溶解解散液化变得模糊n.叠化画面
 compound	kɔmpaund,kəm'paund	n.化合物；复合词
 multiple	mΛltipl	a.复合的；并联的
 intellectual	inti'lektjuəl	n.知识分子a.智力的
@@ -884,7 +873,6 @@ parallel	pærəlel	a.平行的；相同的
 northwest	nɔ:θ'west	n.西北a.位于西北的
 president	prezidənt	n.总统；校长；会长
 insurance	in'ʃuərəns	n.保险；保险费
-domestic	də'mestik	adj.本国的国内的家庭的驯养的n.家仆佣人
 encounter	in'kauntə	vt.遭遇，遇到n.遭遇
 elsewhere	els'weə	ad.在别处，向别处
 misunderstand	misΛndə'stænd	vt.误解，误会，曲解
@@ -979,7 +967,6 @@ recognize	rekəgnaiz	vt.认识，认出；承认
 arbitrary	a:bitrəri	a.随心所欲的；专断的
 velocity	vi'lɔsiti	n.速度，速率
 enthusiasm	in'θju:ziæzəm	n.热情，热心，热忱
-discharge	dis'tʃɑ:dʒ	vt.vi.释放排出放出解雇解除放电清偿债务n.释放卸货放电一股一阵开火发射准许离开
 transport	træns'pɔ:t	vt.运输n.运输
 democratic	.demə'krætik	adj.民主的民主政体的大众的平等的
 forecast	fɔ:ka:st	n.预测，预报vt.预示

@@ -181,11 +181,19 @@ public class Database {
     private void checkAndCreate(File f) throws SQLException {
         String table_name = f.getName();
         System.out.println("Config file found: " + table_name);
+        if (!table_name.contains(".txt")) {
+            return;
+        }
+        if (table_name.contains(" ")) {
+            table_name = table_name.replace(' ', '_');
+        }
         table_name = table_name.substring(0, table_name.lastIndexOf("."));
         String file_dir = Database.CONFIG + f.getName();
         ResultSet tables = meta.getTables(null, null, table_name.toUpperCase(), null);
+
         if (!tables.next()) {
             //TODO: create the table
+
             String sql_str1 = "create table " + table_name + "\n"
                     + "(\n"
                     + "	ID int generated always as identity,\n"

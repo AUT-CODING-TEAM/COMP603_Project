@@ -46,7 +46,6 @@ plain	plein	n.平原a.清楚的
 beast	bi:st	n.兽，野兽；牲畜
 floor	flɔ:	n.地板；楼层
 europe	juərəp	n.欧洲
-double	'dʌbl	adj.两倍的复制品替身双重角色的演员反转双的双人房adj.两倍的双重的骗人的加量的adv.两倍地双人地翻来覆去地对折地vt.使加倍对折握紧做替身vi.加倍转身兼任替代演出
 enemy	enimi	n.敌人；仇敌；敌兵
 sheet	ʃi:t	n.被单；纸张；薄板
 metal	metl	n.金属，金属制品
@@ -116,7 +115,6 @@ court	kɔ:t	n.法院，法庭；庭院
 brain	brein	n.脑，脑髓；脑力
 compel	kəm'pel	vt.强迫，迫使屈服
 cattle	kætl	n.牛；牲口，家畜
-detail	'di:teil	n.细节详情部分分派枝节零件vt.详述选派用小元素装饰vi.画细节
 trust	trΛst	n.信任vt.相信；委托
 trend	trend	vi.伸向；倾向n.倾向
 legal	li:gl	a.法律的；合法的
@@ -159,7 +157,6 @@ tank	tæŋk	n.坦克；大容器，槽
 wing	wiŋ	n.翼，翅膀，翅
 hungry	hΛŋgri	a.饥饿的；渴望的
 essay	esei	n.短文，散文，小品文
-drain	drein	vt.排去放水耗尽排出排干喝光vi.变干排出排水n.下水道排水沟消耗耗竭
 basin	beisn	n.盆，洗脸盆；盆地
 ignore	ig'nɔ:	vt.不顾，不理，忽视
 wound	wu:nd	n.创伤，伤vt.使受伤
@@ -215,7 +212,6 @@ press	pres	vt.压，按，揿；催促
 unite	ju'nait	vi.联合vt.使联合
 power	pauə	n.能力；力；权；幂
 wheel	wi:l	n.轮，车轮
-direct	di'rekt	adj.直接的直率的笔直的坦白的vt.指挥命令负责vi.指导指出
 twin	twin	a.孪生的n.孪生儿
 china	tʃainə	n.瓷器，瓷料
 annoy	ə'nɔi	vt.使恼怒；打搅
@@ -268,7 +264,6 @@ expose	iks'pəuz	vt.使暴露；揭露
 brick	brik	n.砖，砖块；砖状物
 force	fɔ:s	vt.强迫n.力，力量
 critic	kritik	n.批评家，爱挑剔的人
-drive	draiv	vt.&vi.驾驶驱驱使驾进力打入n.驾车快车道推进力驱使路街[计算机]驱动器
 avenue	ævinju:	n.林荫道，道路；大街
 brief	bri:f	a.简短的；短暂的
 harden	ha:dn	vt.使变硬vi.变硬
@@ -301,7 +296,6 @@ taste	teist	n.味觉，品味
 quit	kwit	vt.离开，退出；停止
 amaze	ə'meiz	vt.使惊奇，使惊愕
 grass	gra:s	n.草；牧草；草地
-dirty	'də:ti	adj.脏的下流的肮脏的色情的卑鄙的adv.卑鄙地vt.使...变脏vi.弄脏
 banana	bə'na:nə	n.香蕉；芭蕉属植物
 rural	ruərəl	a.农村的，田园的
 metre	mi:tə	n.米，公尺
@@ -343,7 +337,6 @@ niece	ni:s	n.侄女，外甥女
 forge	fɔ:dʒ	n.熔炉,铁工厂vt.打制,锻造,伪造
 spade	speid	n.铲，铁锹
 major	meidʒə	a.较大的n.专业
-daily	'deili	adj.每日的按天计算的日常的adv.每日天天n.日报(复)工作样片
 chill	tʃil	vt.使变冷n.寒冷
 loose	lu:s	a.松的；宽松的
 finish	finiʃ	vt.完成，结束n.结束
@@ -406,7 +399,6 @@ gross	grəus	a.总的；严重的
 magic	mædʒik	n.魔法，巫术；戏法
 brass	bra:s	n.黄铜；黄铜器
 alter	ɔ:ltə	vt.改变，变更；改做
-ditch	ditʃ	n.沟沟渠渠道vt.坠入沟中摆脱飞机(在海上)迫降vi.挖一条沟渠飞机紧急降落
 barber	ba:bə	n.理发师
 death	deθ	n.死死亡灭亡死神
 brave	breiv	a.勇敢的，华丽的
@@ -420,7 +412,6 @@ check	tʃek	vt.检查；制止n.检查
 screw	skru:	n.螺旋，螺丝vt.拧紧
 sort	sɔ:t	n.种类；类别vt.整理
 shift	ʃift	vt.替换，转移n.转换
-drift	drift	vi.漂流漂泊吹积n.漂流漂移漂流物观望吹积物趋势vt.使漂流把...吹积
 cargo	ka:gəu	n.船货，货物
 height	hait	n.高，高度；高处
 nɔisy	nɔizi	a.嘈杂的；喧闹的
@@ -465,20 +456,16 @@ stake	steik	n.桩；赌金；奖品
 pour	pɔ:	vt.灌，倒vi.倾泻
 rank	ræŋk	n.排，横行；社会阶层
 slide	slaid	vi.滑vt.使滑动n.滑
-dread	dred	n.畏惧恐怖可怕的人可怕的事vt.惧怕恐惧adj.可怕的可怖的
 frame	freim	n.框架，框子；构架
 forget	fə'get	vt.忘记，遗忘
 stack	stæk	n.堆，垛vt.堆积
 lucky	lΛki	a.幸运的；吉祥的
 cloth	klɔ:θ	n.布；衣料；桌布
 charge	tʃa:dʒ	vt.索价；控告n.费用
-drama	'drɑ:mə	n.一出戏剧剧本戏剧戏剧性情节刺激
 brake	breik	n.闸，刹车vi.制动
 index	indeks	n.索引；指数；指标
 dream	dri:m	n.梦梦想vt.&vi.做梦想象
-drill	dril	n.钻头钻孔机钻子播种机操练vi.钻孔vt.训练钻孔
 Bible	baibl	n.基督教《圣经》
-dance	dɑ:ns	vi.跳舞摇晃雀跃vt.使跳跃使某人以跳舞的方式进入n.舞跳舞舞蹈舞会舞步
 health	helθ	n.健康，健康状况
 fulfil	ful'fil	vt.履行；满足；完成
 orbit	ɔ:bit	n.运行轨道vt.环绕
@@ -598,7 +585,6 @@ truth	tru:θ	n.真理；真实；真实性
 wrap	ræp	vt.裹，包，捆n.披肩
 forest	fɔrist	n.森林；森林地带
 cease	si:s	vi.&vi.&n.停止，停息
-zero	'ziərəu	n.零零点零度最低点完全没有无足轻重的人或物adj.零的无价值的零视度的v.把...调零瞄准集中注意迫近
 crude	kru:d	a.简陋的；天然的
 brand	brænd	n.商品；烙印vt.铭刻
 spray	sprei	n.浪花；喷雾vt.喷
@@ -797,7 +783,6 @@ mould	məuld	n.模子，模型vt.浇铸
 blank	blæŋk	a.空白的n.空白
 begin	bi'gin	vi.开始vt.开始
 fridge	fridʒ	n.电冰箱
-desert	'dezət,di'zə:t	n.沙漠荒地应得(的惩罚或奖励)vt.离弃擅离遗弃vi.擅离职守adj.沙漠的荒凉的
 camel	kæməl	n.骆驼
 branch	bra:ntʃ	n.树枝；分部；分科
 aboard	ə'bɔ:d	ad.在船(车)上；上船
