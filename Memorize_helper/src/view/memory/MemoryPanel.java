@@ -60,7 +60,7 @@ public class MemoryPanel extends GroundPanelTemplate {
 
     public void addComponents() {
         memoryFrame = new JFrame("Studying");
-        setSize(memoryFrame, 1500, 720);
+        setSize(memoryFrame, 620, 720);
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -118,7 +118,10 @@ public class MemoryPanel extends GroundPanelTemplate {
         JLabel lbl_mP_phoneticSymbol = new JLabel("/" + memoryPage.getPhoneticSymbol() + "/", SwingConstants.CENTER);
         lbl_mP_phoneticSymbol.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
         vocabularyPanel.add(lbl_mP_phoneticSymbol, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTH).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
-
+        if (!isChineseChoices) {
+            lbl_mP_phoneticSymbol.setText("");
+        }
+        
         add(vocabularyPanel, new GridBagTool().setFill(GridBagConstraints.BOTH).setAnchor(GridBagConstraints.SOUTH).setGridx(1).setGridy(2).setGridwidth(2).setGridheight(1).setWeightx(0.9).setWeighty(0.35));
     }
 
