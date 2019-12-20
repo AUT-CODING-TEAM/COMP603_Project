@@ -22,8 +22,11 @@ public class ChoiceLabel extends JLabel {
     private User user;
     private MemoryPage memoryPage;
 
-    ChoiceLabel(Word choice, User user, MemoryPanel memoryPanel) {
+    ChoiceLabel(Word choice, User user, MemoryPanel memoryPanel, boolean isChineseChoice) {
         super(choice.getChinese(), SwingConstants.CENTER);
+        if (!isChineseChoice) {
+            this.setText(choice.getWord());
+        }
         this.memoryPanel = memoryPanel;
         this.choice = choice;
         this.user = user;
