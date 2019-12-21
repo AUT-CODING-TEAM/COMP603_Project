@@ -96,7 +96,7 @@ public class Database {
                         + "	word_source varchar(50) not null,\n"
                         + "	correct int default 0 not null,\n"
                         + "	wrong int default 0 not null,\n"
-                        + "     first_learnt_time varchar(40) not null\n"
+                        + "     first_learnt_time varchar(40) not null,\n"
                         + "	last_mem_time varchar(40) not null,\n"
                         + "	aging int default 0 not null\n"
                         + ")";

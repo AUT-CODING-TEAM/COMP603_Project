@@ -54,8 +54,11 @@ public class MemoryRecorder {
     public ArrayList<Word> getWordsToStudy() {
         return wordsToStudy;
     }
-    
 
+    public String getSource() {
+        return source;
+    }
+    
     public int getProcess() {
         return process;
     }
