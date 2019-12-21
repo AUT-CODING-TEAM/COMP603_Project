@@ -54,11 +54,18 @@ public class User {
         return this;
     }
 
-    public int getTodayLearnedNumber() {
+    public int getTodayMemorizedNumber() {
         if (this.currentStudyPlan == null) {
             return 0;
         }
         return this.currentStudyPlan.getTodayMemorizedNumber();
+    }
+
+    public int getTodayLearnedNumber() {
+        if (this.currentStudyPlan == null) {
+            return 0;
+        }
+        return this.currentStudyPlan.getTodayLearnedNumber();
     }
 
     public int getTodayTargetNumber() {
@@ -69,7 +76,7 @@ public class User {
     }
 
     public int getTodayReviewNumber() {
-        
+
         if (this.currentStudyPlan == null) {
             return 0;
         }
@@ -99,7 +106,5 @@ public class User {
         this.currentStudyPlan = currentStudyPlan;
         return this;
     }
-
-    
 
 }

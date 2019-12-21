@@ -349,6 +349,7 @@ public class PlanController {
 
                 p.setTodayMemorized(this.getTodayMemorizedNum(user));
                 p.setTodayReviewd(this.getTodayReviewedNum(user));
+                p.setTodayLearned(this.getTodayNewLearntNum(user));
                 p.setTotalMemorizedNumber(mct.countMemorizedWordInPlan(user));
                 p.setNeedReviewNumber(this.getNeedReviewNum(user));
                 p.setReaminDay(remain_day);
@@ -403,6 +404,7 @@ public class PlanController {
         }
         return mem_num;
     }
+    
     /**
      * @param user get this user's today memorized number
      * @return memorized word number today

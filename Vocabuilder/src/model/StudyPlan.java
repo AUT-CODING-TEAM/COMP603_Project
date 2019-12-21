@@ -20,6 +20,7 @@ public class StudyPlan {
 
     private int todayTargetNumber;
     private int todayMemorizedNumber;
+    private int todayLearnedNumber;
     private int todayReviewedNumber;
     private int needReviewNumber;
     private int totalMemorizedNumber;
@@ -59,7 +60,9 @@ public class StudyPlan {
     public void setTodayMemorized(int num) {
         this.todayMemorizedNumber = num;
     }
-
+    public void setTodayLearned(int num) {
+        this.todayLearnedNumber = num;
+    }
     public void setTodayReviewd(int num) {
         this.todayReviewedNumber = num;
     }
@@ -67,7 +70,9 @@ public class StudyPlan {
     public String getPlanFinishedDay() {
         return planFinishedDay;
     }
-
+    public int getTodayLearnedNumber(){
+        return this.todayLearnedNumber;
+    }
     public int getNeedReviewNumber() {
         return this.needReviewNumber;
     }
