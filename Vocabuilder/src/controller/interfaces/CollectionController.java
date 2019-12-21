@@ -102,17 +102,6 @@ public class CollectionController {
         Database db = Database.getInstance();
         String userId = user.getID() + "";
         String wordSource = user.getCurrentStudyPlan().getStudyPlanName();
-//        ResultSet rs =db.get(
-//                "COLLECTION",
-//                new String[]{
-//                    "USER_ID",
-//                    "WORD_SOURCE"
-//                },
-//                new String[]{
-//                    userId,
-//                    wordSource
-//                }
-//        );
         StringBuilder sb = new StringBuilder();
         sb.append("select ")
                 .append(wordSource)

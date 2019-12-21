@@ -69,7 +69,7 @@ public class Database {
                         + "	ID int generated always as identity,\n"
                         + "	username varchar(20) not null,\n"
                         + "	password long varchar not null,\n"
-                        + "	study_plan varchar(20) not null\n"
+                        + "	study_plan varchar(50) not null\n"
                         + ")";
                 String str2 = "create unique index users_ID_uindex\n"
                         + "	on users (ID)";
@@ -93,7 +93,7 @@ public class Database {
                         + "	ID int generated always as identity,\n"
                         + "	user_id varchar(5) not null,\n"
                         + "	word_id varchar(5) not null,\n"
-                        + "	word_source varchar(20) not null,\n"
+                        + "	word_source varchar(50) not null,\n"
                         + "	correct int default 0 not null,\n"
                         + "	wrong int default 0 not null,\n"
                         + "     first_learnt_time varchar(40) not null\n"
@@ -116,7 +116,7 @@ public class Database {
                         + "(\n"
                         + "	ID int generated always as identity,\n"
                         + "	user_id varchar(10) not null,\n"
-                        + "	book varchar(20) not null,\n"
+                        + "	book varchar(50) not null,\n"
                         + "	total_day int not null,\n"
                         + "	start_time bigint not null,\n"
                         + "	today_target_number int not null,\n"
@@ -140,7 +140,7 @@ public class Database {
                         + "	ID int generated always as identity,\n"
                         + "	USER_ID varchar(10) not null,\n"
                         + "	WORD_ID varchar(10) not null,\n"
-                        + "	WORD_SOURCE varchar(10) not null\n"
+                        + "	WORD_SOURCE varchar(50) not null\n"
                         + ")";
                 String str2 = "create unique index COLLECTION_ID_uindex\n"
                         + "	on COLLECTION (ID)";
@@ -738,6 +738,6 @@ public class Database {
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
         t.reset();
-        t.init();
+//        t.init();
     }
 }
