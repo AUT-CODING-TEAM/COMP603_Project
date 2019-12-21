@@ -273,17 +273,4 @@ public class UserController {
         return mct.wrong(user, wd);
     }
 
-    public static void main(String[] args) {
-        UserController uct = new UserController();
-        WordController wct = new WordController();
-        MemorizeController mct = new MemorizeController();
-        System.out.println(uct.register("yyz", "123456"));
-        User user = uct.getUser("yyz");
-        System.out.println(uct.checkPassword(user, "123456"));
-        System.out.println(uct.checkPassword(user, "456789"));
-        uct.activateStudyPlanByNum(user, "CET4", 15);
-        Word wd = wct.getBookWordByName("cet4", "able");
-//        uct.checkAns(user, wd, wd2);
-
-    }
 }

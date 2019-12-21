@@ -331,12 +331,7 @@ public class PlanController {
         if (user != null) {
             StudyPlan p;
             if (user.getCurrentStudyPlan() != null) {
-                ///
                 p = this.getPlan(user, user.getCurrentStudyPlan().getStudyPlanName());
-                
-                
-                
-                ///
                 MemorizeController mct = new MemorizeController();
                 long day_start
                         = (System.currentTimeMillis() + TimeZone.getDefault().getRawOffset())

@@ -192,32 +192,4 @@ public class WordController {
         return wordCollection;
     }
 
-    public static void main(String[] args) {
-        WordController wct = new WordController();
-        Word word1 = wct.getBookWordByID("CET4", 2);
-        Word word2 = wct.getBookWordByName("CET4", "about");
-        ArrayList<Word> word3 = wct.getAllWordByID(4);
-        ArrayList<Word> word4 = wct.getAllWordByName("abuse");
-        ArrayList<Word> word5 = wct.searchBook("CET4", "abs");
-        ArrayList<String> books = wct.getAllBook();
-        System.out.println("All books: ");
-        for (String book : books) {
-            System.out.println(book);
-        }
-        System.out.println(word1);
-        System.out.println("");
-        System.out.println(word2);
-        System.out.println("");
-        for (Word wd : word3) {
-            System.out.println(wd);
-        }
-        System.out.println("");
-        for (Word wd : word4) {
-            System.out.println(wd);
-        }
-        System.out.println("");
-        for (Word wd : word5) {
-            System.out.println(wd);
-        }
-    }
 }

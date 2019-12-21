@@ -33,9 +33,9 @@ public class BottomPanel extends MainViewViewTemplate {
     public void addComponents() {
         JLabel lbl_bP_todayPlan = new JLabel();
         int todayTargetNumber = user.getTodayTargetNumber();
-        int todayLearnedNumber = todayTargetNumber - user.getTodayLearnedNumber();
+        int todayLearnNumber = todayTargetNumber - user.getTodayLearnedNumber();
         int todayReviewNumber = user.getTodayReviewNumber();
-        String todayPlan = "New Words for Today: " + (todayLearnedNumber < 0? 0: todayLearnedNumber) +  " " + "  Review for Today: " + todayReviewNumber;
+        String todayPlan = "New Words for Today: " + (todayLearnNumber < 0? 0: todayLearnNumber) +  " " + "  Review for Today: " + todayReviewNumber;
         lbl_bP_todayPlan.setText(todayPlan);
         lbl_bP_todayPlan.setHorizontalAlignment(SwingConstants.CENTER);
         add(lbl_bP_todayPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));

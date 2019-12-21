@@ -115,7 +115,6 @@ public class MemorizeController {
             String.valueOf(userid),
             String.valueOf(wordid),
             source
-        //String.valueOf(System.currentTimeMillis())
         };
         boolean res = db.set("memorize", col2, val2,
                 "last_mem_time", String.valueOf(System.currentTimeMillis()));
@@ -393,10 +392,6 @@ public class MemorizeController {
         if (number < 1) {
             number = user.getTodayTargetNumber();
         }
-//        String studyPlan = "CET4入门";
-//        String userId = "1";
-//        int number = 30;
-
         sb.append("select ");
         sb.append(studyPlan).append(".* ");
         sb.append("from ");
@@ -435,9 +430,6 @@ public class MemorizeController {
 
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName().toUpperCase();
         String userId = user.getID() + "";
-//        String studyPlan = "CET4入门";
-//        String userId = "1";
-
         StringBuilder sb = new StringBuilder();
         sb.append("select ")
                 .append(studyPlan)
@@ -477,21 +469,7 @@ public class MemorizeController {
         WordController wct = new WordController();
         String studyPlan = user.getCurrentStudyPlan().getStudyPlanName();
         return wct.getBookContent(studyPlan);
-//        ArrayList<Word> wordList = new ArrayList<>();
-//        Database db = Database.getInstance();
-//
-//        ResultSet rs = db.getFullTable(studyPlan);
-//        while (rs.next()) {
-//            Word word = new Word(
-//                    rs.getInt("ID"),
-//                    rs.getString("WORD"),
-//                    rs.getString("CHINESE"),
-//                    rs.getString("PHONETIC"),
-//                    studyPlan
-//            );
-//            wordList.add(word);
-//        }
-//        return wordList;
+
     }
 
     /**
@@ -513,9 +491,6 @@ public class MemorizeController {
             number = user.getTodayTargetNumber();
         }
 
-//        String studyPlan = "CET4入门";
-//        String userId = "1";
-//        int number = 30;
         sb.append("select MEMORIZE.LAST_MEM_TIME, MEMORIZE.AGING, ")
                 .append(studyPlan)
                 .append(".* from MEMORIZE,")
@@ -570,16 +545,6 @@ public class MemorizeController {
 
         }
         return wordSet;
-    }
-
-    public static void main(String[] args) throws SQLException {
-        MemorizeController mc = new MemorizeController();
-        WordController wc = new WordController();
-//        mc.getLearntWords();
-//        mc.getPlanWords();
-//        mc.getReviewWordLists();
-//        Word word1 = wc.getBookWordByID("CET4入门", 2);
-//        mc.getOptions("CET4入门", word1);
     }
 
 }
