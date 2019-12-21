@@ -270,7 +270,7 @@ public class UserControllerTest {
 
         UserController instance = new UserController();
         boolean expResult = true;
-        boolean result = instance.checkAns(UserControllerTest.testUser, oriWord, choice);
+        boolean result = instance.checkAns(UserControllerTest.testUser, oriWord, choice, 1);
         assertEquals(expResult, result);
     }
 }

@@ -85,17 +85,17 @@ public class MemorizeController {
         }
         String book = plan.getStudyPlanName();
         ArrayList<Word> words = wct.getBookContent(book);
-        String[] col = {"user_id", "word_id", "word_source", "last_mem_time"};
+        String[] col = {"user_id", "word_id", "word_source", "first_learnt_time", "last_mem_time"};
         int now_num = this.getWordNumInMemorize(user);
         if (now_num >= words.size()) {
             return true;
         }
         int len = words.size() - now_num > 100 ? 100 : words.size() - now_num;
-        String[][] val = new String[len][4];
+        String[][] val = new String[len][5];
 
         for (int i = 0; i < len; i++) {
             Word wd = words.get(i + now_num);
-            String[] temp = {uid, String.valueOf(wd.getID()), book, "0"};
+            String[] temp = {uid, String.valueOf(wd.getID()), book, "0", "0"};
             val[i] = temp;
         }
         result = db.add("memorize", col, val);
@@ -108,7 +108,14 @@ public class MemorizeController {
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
      * @return if the last memory time are updated
      */
-    public boolean updateTime(int userid, int wordid, String source) {
+    public boolean updateTime(int userid, int wordid, String source, int mode) {
+        String time_type = "";
+        if (mode == 0) {
+            time_type = "first_learnt_time";
+        } else {
+            time_type = "last_mem_time";
+        }
+
         Database db = Database.getInstance();
         String[] col2 = {"user_id", "word_id", "word_source"};
         String[] val2 = {
@@ -117,7 +124,8 @@ public class MemorizeController {
             source
         };
         boolean res = db.set("memorize", col2, val2,
-                "last_mem_time", String.valueOf(System.currentTimeMillis()));
+                time_type, String.valueOf(System.currentTimeMillis()));
+
         return res;
 
     }
@@ -128,8 +136,14 @@ public class MemorizeController {
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
      * @return if the last memory time are updated
      */
-    public boolean updateTime(String username, String word, String source) {
+    public boolean updateTime(String username, String word, String source, int mode) {
         Database db = Database.getInstance();
+        String time_type = "";
+        if (mode == 0) {
+            time_type = "first_learnt_time";
+        } else {
+            time_type = "last_mem_time";
+        }
         try {
             ResultSet user = db.get("users", "username", username);
             if (!user.next()) {
@@ -146,7 +160,8 @@ public class MemorizeController {
             return this.updateTime(
                     Integer.valueOf(user_id),
                     Integer.valueOf(word_id),
-                    source
+                    source,
+                    mode
             );
 
         } catch (SQLException ex) {
@@ -160,8 +175,8 @@ public class MemorizeController {
      * @param wd the instance of class Word
      * @return if the last memory time are updated
      */
-    public boolean updateTime(User user, Word wd) {
-        return this.updateTime(user.getID(), wd.getID(), wd.getSource());
+    public boolean updateTime(User user, Word wd, int mode) {
+        return this.updateTime(user.getID(), wd.getID(), wd.getSource(), mode);
     }
 
     /**
@@ -218,7 +233,7 @@ public class MemorizeController {
      * @param memo a memorize instance whose correct count will be added
      * @return if the correct count updated
      */
-    public boolean correct(Memorize memo) {
+    public boolean correct(Memorize memo, int mode) {
         Database db = Database.getInstance();
         memo.addCorrect();
         String[] key = {"user_id", "word_id", "word_source"};
@@ -228,7 +243,7 @@ public class MemorizeController {
             memo.getWordSource()
         };
         boolean res = db.set("memorize", key, con, "correct", memo.getCorrect());
-        this.updateTime(memo.getUserID(), memo.getWordID(), memo.getWordSource());
+        this.updateTime(memo.getUserID(), memo.getWordID(), memo.getWordSource(), mode);
         this.aging(
                 memo.getUserID(),
                 memo.getWordID(),
@@ -260,10 +275,10 @@ public class MemorizeController {
      * @param wd what word's memorize info should be update
      * @return if the correct count updated
      */
-    public boolean correct(User user, Word wd) {
+    public boolean correct(User user, Word wd, int mode) {
         Database db = Database.getInstance();
         Memorize memo = this.getMemorize(user, wd);
-        return this.correct(memo);
+        return this.correct(memo, mode);
     }
 
     /**
