@@ -738,6 +738,6 @@ public class Database {
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
         t.reset();
-//        t.init();
+        t.init();
     }
 }
