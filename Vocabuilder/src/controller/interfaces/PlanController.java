@@ -425,7 +425,7 @@ public class PlanController {
         int mem_num = 0;
         StringBuilder bd = new StringBuilder("select count(*) as NUMBER from ");
         bd.append("\"MEMORIZE\" where \"WORD_SOURCE\" = \'").append(table.toUpperCase());
-        bd.append("\' and CAST(\"FIRST_LEARNT_MEM_TIME\" as bigint) >= ").append(day_start);
+        bd.append("\' and CAST(\"FIRST_LEARNT_TIME\" as bigint) >= ").append(day_start);
         bd.append(" and CAST(\"FIRST_LEARNT_TIME\" as bigint) <= ").append(day_end);
         bd.append(" and \"AGING\" >= 1 and \"USER_ID\" = \'").append(user.getID());
         bd.append("\'");

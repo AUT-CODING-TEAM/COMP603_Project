@@ -498,7 +498,7 @@ public class MemorizeController {
      * @return A list of words that need to be review.
      * @throws SQLException
      */
-    public ArrayList<Word> getReviewWordLists(User user) throws SQLException {
+        public ArrayList<Word> getReviewWordLists(User user) throws SQLException {
         ArrayList<Word> wordList = new ArrayList<>();
         Database db = Database.getInstance();
         StringBuilder sb = new StringBuilder();

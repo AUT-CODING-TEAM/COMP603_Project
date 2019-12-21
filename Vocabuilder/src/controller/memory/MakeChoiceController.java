@@ -35,7 +35,7 @@ public class MakeChoiceController implements MouseListener, MouseMotionListener 
     @Override
     public void mouseClicked(MouseEvent e) {
         ChoiceLabel selectedLabel = (ChoiceLabel) e.getSource();
-        if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
+        if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice(), (memoryRecorder.getSource().equals("new")? 0: 1))) {
         } else {
             JOptionPane.showMessageDialog(null, selectedLabel.getWordObj().getChinese() + "\n" + selectedLabel.getWordObj().getWord(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
             memoryRecorder.getWordsToStudy().add(selectedLabel.getWordObj());
@@ -71,23 +71,7 @@ public class MakeChoiceController implements MouseListener, MouseMotionListener 
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        ChoiceLabel selectedLabel = (ChoiceLabel) e.getSource();
-        if (new UserController().checkAns(selectedLabel.getUser(), selectedLabel.getWordObj(), selectedLabel.getChoice())) {
-        } else {
-            JOptionPane.showMessageDialog(null, selectedLabel.getWordObj().getChinese() + "\n" + selectedLabel.getWordObj().getWord(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
-            memoryRecorder.getWordsToStudy().add(selectedLabel.getWordObj());
-        }
-
-        MemoryPage memoryPage = memoryRecorder.next();
-
-        if (memoryPage == null) {
-            JOptionPane.showMessageDialog(null, "Finish!", "information ", JOptionPane.INFORMATION_MESSAGE);
-            new MainView(user);
-        } else {
-            new MemoryPanel(user, memoryPage, memoryRecorder);
-        }
-
-        memoryFrame.dispose();
+        mouseClicked(e);
     }
 
     @Override
