@@ -108,14 +108,14 @@ public class MemorizeController {
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
      * @return if the last memory time are updated
      */
-    public boolean updateTime(int userid, int wordid, String source, int mode) {
+    private boolean updateTime(int userid, int wordid, String source, int mode) {
         String time_type = "";
         if (mode == 0) {
             time_type = "first_learnt_time";
         } else {
             time_type = "last_mem_time";
-        }
 
+        }
         Database db = Database.getInstance();
         String[] col2 = {"user_id", "word_id", "word_source"};
         String[] val2 = {
@@ -136,7 +136,7 @@ public class MemorizeController {
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
      * @return if the last memory time are updated
      */
-    public boolean updateTime(String username, String word, String source, int mode) {
+    private boolean updateTime(String username, String word, String source, int mode) {
         Database db = Database.getInstance();
         String time_type = "";
         if (mode == 0) {
@@ -176,7 +176,11 @@ public class MemorizeController {
      * @return if the last memory time are updated
      */
     public boolean updateTime(User user, Word wd, int mode) {
-        return this.updateTime(user.getID(), wd.getID(), wd.getSource(), mode);
+        boolean res = this.updateTime(user.getID(), wd.getID(), wd.getSource(), mode);
+        if (mode == 0) {
+            this.updateTime(user.getID(), wd.getID(), wd.getSource(), 1);
+        }
+        return res;
     }
 
     /**
@@ -526,7 +530,6 @@ public class MemorizeController {
             );
             wordList.add(word);
         }
-
         return wordList;
     }
 
