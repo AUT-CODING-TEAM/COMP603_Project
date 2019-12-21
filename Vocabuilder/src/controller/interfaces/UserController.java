@@ -237,9 +237,9 @@ public class UserController {
      * @param choice the word of option user choosed.
      * @return 
      */
-    public boolean checkAns(User user, Word oriWord, Word choice){
+    public boolean checkAns(User user, Word oriWord, Word choice, int mode){
         if(oriWord.equals(choice)){
-            this.correct(user, oriWord);
+            this.correct(user, oriWord, mode);
             return true;
         }
         this.wrong(user, oriWord);
@@ -251,11 +251,11 @@ public class UserController {
      * @param wd the instance of class Word
      * @return if the correct count of this user memorize this word is added
      */
-    private boolean correct(User user, Word wd) {
+    private boolean correct(User user, Word wd, int mode) {
         Database db = Database.getInstance();
         MemorizeController mct = new MemorizeController();
         PlanController pct = new PlanController();
-        boolean res = mct.correct(user, wd);
+        boolean res = mct.correct(user, wd, mode);
         if(res){
             pct.updateTodayPlanInfo(user);
         }

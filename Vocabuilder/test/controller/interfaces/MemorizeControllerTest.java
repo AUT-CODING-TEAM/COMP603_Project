@@ -163,7 +163,7 @@ public class MemorizeControllerTest {
         String source = "CET4入门";
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
-        boolean result = instance.updateTime(user.getID(), wordid, source);
+        boolean result = instance.updateTime(user.getID(), wordid, source, 1);
         Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
                 + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
                 "0", String.valueOf(user.getID()));
@@ -180,7 +180,7 @@ public class MemorizeControllerTest {
         String source = "CET4入门";
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
-        boolean result = instance.updateTime(user.getUsername(), word, source);
+        boolean result = instance.updateTime(user.getUsername(), word, source, 1);
         Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
                 + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
                 "0", String.valueOf(user.getID()));
@@ -196,7 +196,7 @@ public class MemorizeControllerTest {
         Word wd = new Word(1, "lens", "", "", "CET4入门");
         MemorizeController instance = new MemorizeController();
         boolean expResult = true;
-        boolean result = instance.updateTime(user, wd);
+        boolean result = instance.updateTime(user, wd, 1);
         Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
                 + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
                 "0", String.valueOf(user.getID()));
@@ -255,7 +255,7 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         memo = instance.getMemorize(user, wd);
         boolean expResult = true;
-        boolean result = instance.correct(memo);
+        boolean result = instance.correct(memo, 1);
         Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
                 + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
                 "0", String.valueOf(user.getID()));
@@ -290,7 +290,7 @@ public class MemorizeControllerTest {
         MemorizeController instance = new MemorizeController();
         Word wd = new Word(1, "lens", "", "", "CET4入门");
         boolean expResult = true;
-        boolean result = instance.correct(user, wd);
+        boolean result = instance.correct(user, wd, 1);
         Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
                 + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
                 "0", String.valueOf(user.getID()));
