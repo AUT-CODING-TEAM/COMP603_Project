@@ -108,10 +108,11 @@ public class MemorizeController {
      * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
      * @return if the last memory time are updated
      */
-    private boolean updateTime(int userid, int wordid, String source, int mode) {
+    public boolean updateTime(int userid, int wordid, String source, int mode) {
         String time_type = "";
         if (mode == 0) {
             time_type = "first_learnt_time";
+            this.updateTime(userid, wordid, source, 1);
         } else {
             time_type = "last_mem_time";
 
@@ -128,59 +129,6 @@ public class MemorizeController {
 
         return res;
 
-    }
-
-    /**
-     * @param username user's username
-     * @param word the word wait to be memorized
-     * @param source the word belong to which source (eg. CET4 or CET6 or IELTS)
-     * @return if the last memory time are updated
-     */
-    private boolean updateTime(String username, String word, String source, int mode) {
-        Database db = Database.getInstance();
-        String time_type = "";
-        if (mode == 0) {
-            time_type = "first_learnt_time";
-        } else {
-            time_type = "last_mem_time";
-        }
-        try {
-            ResultSet user = db.get("users", "username", username);
-            if (!user.next()) {
-                return false;
-            }
-            String user_id = user.getString("ID");
-
-            ResultSet wd = db.get(source, "word", word);
-            if (!wd.next()) {
-                return false;
-            }
-            String word_id = wd.getString("ID");
-
-            return this.updateTime(
-                    Integer.valueOf(user_id),
-                    Integer.valueOf(word_id),
-                    source,
-                    mode
-            );
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    /**
-     * @param user the instance of class User
-     * @param wd the instance of class Word
-     * @return if the last memory time are updated
-     */
-    public boolean updateTime(User user, Word wd, int mode) {
-        boolean res = this.updateTime(user.getID(), wd.getID(), wd.getSource(), mode);
-        if (mode == 0) {
-            this.updateTime(user.getID(), wd.getID(), wd.getSource(), 1);
-        }
-        return res;
     }
 
     /**

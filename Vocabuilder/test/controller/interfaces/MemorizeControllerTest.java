@@ -171,39 +171,6 @@ public class MemorizeControllerTest {
     }
 
     /**
-     * Test of updateTime method, of class MemorizeController.
-     */
-    @Test
-    public void testUpdateTime_3args_2() {
-        System.out.println("updateTime");
-        String word = "lens";
-        String source = "CET4入门";
-        MemorizeController instance = new MemorizeController();
-        boolean expResult = true;
-        boolean result = instance.updateTime(user.getUsername(), word, source, 1);
-        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
-                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
-                "0", String.valueOf(user.getID()));
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of updateTime method, of class MemorizeController.
-     */
-    @Test
-    public void testUpdateTime_User_Word() {
-        System.out.println("updateTime");
-        Word wd = new Word(1, "lens", "", "", "CET4入门");
-        MemorizeController instance = new MemorizeController();
-        boolean expResult = true;
-        boolean result = instance.updateTime(user, wd, 1);
-        Database.getInstance().prepare("update MEMORIZE set CORRECT = 0,"
-                + "WRONG = 0, AGING = 0, LAST_MEM_TIME = ? where USER_ID = ?",
-                "0", String.valueOf(user.getID()));
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of aging method, of class MemorizeController.
      */
     @Test
