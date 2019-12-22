@@ -25,13 +25,13 @@ public class SearchController implements DocumentListener {
 
     private void response() {
 
-        this.inputKeyWord = searchResultListPanel.getTf_sRLP_keyword().getText();
+        this.inputKeyWord = searchResultListPanel.getKeyword().getText();
 
         if ("".equals(inputKeyWord)) {
             searchResultListPanel.backToMain();
             searchResultListPanel.getSearchResultListFrame().dispose();
         } else {
-            searchResultListPanel.getList_sP_searchResultList().setListData(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
+            searchResultListPanel.getSearchResultList().setListData(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
         }
 
     }

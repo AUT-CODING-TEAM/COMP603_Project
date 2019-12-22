@@ -8,8 +8,6 @@ package view.searchResultList;
 import controller.WordDetailController;
 import controller.main.SearchController;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -27,10 +25,10 @@ import view.main.MainView;
 public class SearchResultListPanel extends GroundPanelTemplate {
 
     private JFrame searchResultListFrame;
-    private JList list_sP_searchResultList;
+    private JList searchResultList;
     private String inputKeyWord;
     private User user;
-    private JTextField tf_sRLP_keyword;
+    private JTextField keyword;
 
     public SearchResultListPanel(String inputKeyWord, User user) {
         super(GroundPanelTemplate.BACK);
@@ -72,7 +70,7 @@ public class SearchResultListPanel extends GroundPanelTemplate {
 
         this.searchResultListFrame.addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent e) {
-                SearchResultListPanel.this.tf_sRLP_keyword.requestFocus();
+                SearchResultListPanel.this.keyword.requestFocus();
             }
         });
 
@@ -84,12 +82,12 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         searchPanel.setLayout(new GridLayout(3, 1));
 
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
-        JLabel lbl_sRLP_searchTip = new JLabel("Look Up");
-        jPanel.add(lbl_sRLP_searchTip);
+        JLabel searchTip = new JLabel("Look Up");
+        jPanel.add(searchTip);
 
-        tf_sRLP_keyword = new JTextField(20);
-        tf_sRLP_keyword.getDocument().addDocumentListener(new SearchController(this));
-        jPanel.add(tf_sRLP_keyword);
+        keyword = new JTextField(20);
+        keyword.getDocument().addDocumentListener(new SearchController(this));
+        jPanel.add(keyword);
 
         searchPanel.add(new JLabel());
         searchPanel.add(jPanel);
@@ -102,29 +100,29 @@ public class SearchResultListPanel extends GroundPanelTemplate {
         JPanel jPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         jPanel.setLayout(new GridLayout(1, 1));
 
-        list_sP_searchResultList = new ListInScrollTemplate(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
-        list_sP_searchResultList.setEnabled(true);
-        list_sP_searchResultList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list_sP_searchResultList.addListSelectionListener(new WordDetailController(user, list_sP_searchResultList, searchResultListFrame));
-        jPanel.add(list_sP_searchResultList);
+        searchResultList = new ListInScrollTemplate(new SearchResultInfo(inputKeyWord).getSearchResultListInfo());
+        searchResultList.setEnabled(true);
+        searchResultList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        searchResultList.addListSelectionListener(new WordDetailController(user, searchResultList, searchResultListFrame));
+        jPanel.add(searchResultList);
         
-        this.tf_sRLP_keyword.setCaret(new HighlightCaret());
+        this.keyword.setCaret(new HighlightCaret());
         JScrollPane jScrollPane = new JScrollPane(jPanel);
         add(jScrollPane, new GridBagTool().setGridx(1).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.89));
         
-        this.tf_sRLP_keyword.setText(inputKeyWord);
+        this.keyword.setText(inputKeyWord);
     }
 
     public JFrame getSearchResultListFrame() {
         return searchResultListFrame;
     }
 
-    public JList getList_sP_searchResultList() {
-        return list_sP_searchResultList;
+    public JList getSearchResultList() {
+        return searchResultList;
     }
 
-    public JTextField getTf_sRLP_keyword() {
-        return tf_sRLP_keyword;
+    public JTextField getKeyword() {
+        return keyword;
     }
 
     public void backToMain() {
