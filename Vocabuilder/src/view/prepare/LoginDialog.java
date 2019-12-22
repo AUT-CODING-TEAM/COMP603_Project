@@ -25,7 +25,7 @@ public class LoginDialog extends JFrame {
     public LoginDialog() {
         setProperty();
         addComponents();
-        
+
         setVisible(true);
     }
 
@@ -49,35 +49,34 @@ public class LoginDialog extends JFrame {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
-                
+
         });
     }
-    
 
     private void addComponents() {
-        JLabel lbl_lgD_usernameTip = new JLabel("Username:", SwingConstants.CENTER);
-        add(lbl_lgD_usernameTip);
-        JTextField tf_lgD_username = new JTextField();
-        add(tf_lgD_username);
-        
-        JLabel lbl_lgD_passwordTip = new JLabel("Password:", SwingConstants.CENTER);
-        add(lbl_lgD_passwordTip);
-        JPasswordField tf_lgD_password = new JPasswordField();
-        add(tf_lgD_password);
-        
-        JButton btn_lgD_register = new JButton("Sign Up First");
-        btn_lgD_register.addActionListener(new ActionListener() {
+        JLabel usernameTipLabel = new JLabel("Username:", SwingConstants.CENTER);
+        add(usernameTipLabel);
+        JTextField usernameField = new JTextField();
+        add(usernameField);
+
+        JLabel pwTipLabel = new JLabel("Password:", SwingConstants.CENTER);
+        add(pwTipLabel);
+        JPasswordField pwField = new JPasswordField();
+        add(pwField);
+
+        JButton signUpBtn = new JButton("Sign Up First");
+        signUpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RegisterDialog();
                 dispose();
             }
         });
-        add(btn_lgD_register);
-        
-        JButton btn_lgD_ok = new JButton("Sign In");
-        btn_lgD_ok.addActionListener(new LoginController(this, tf_lgD_username, tf_lgD_password));
-        add(btn_lgD_ok);
-        this.getRootPane().setDefaultButton(btn_lgD_ok);
+        add(signUpBtn);
+
+        JButton signInBtn = new JButton("Sign In");
+        signInBtn.addActionListener(new LoginController(this, usernameField, pwField));
+        add(signInBtn);
+        this.getRootPane().setDefaultButton(signInBtn);
     }
 }

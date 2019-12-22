@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editBtnor.
- */
 package view.myPlan;
 
 import controller.interfaces.PlanController;
@@ -80,7 +75,6 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
         });
         myPlanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
         this.fillBlank();
 
         this.addTextLabel();
@@ -135,11 +129,11 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
     }
 
     private void addTextLabel() {
-        JLabel lbl_myPP_myPlan = new JLabel("My Plan(s)", SwingConstants.CENTER);
-        this.add(lbl_myPP_myPlan, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
+        JLabel planTipLabel = new JLabel("My Plan(s)", SwingConstants.CENTER);
+        this.add(planTipLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_myPP_chooseBook = new JLabel("Select a Plan");
-        this.add(lbl_myPP_chooseBook, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+        JLabel selectTipLabel = new JLabel("Select a Plan");
+        this.add(selectTipLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.WEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
     }
 
     private void addMyBookPanel() {
@@ -233,7 +227,7 @@ public class MyPlanPanel extends GroundPanelTemplate implements ActionListener, 
 
                 case "Switch":
                     if (this.selectedPlan != null) {
-                        //another controler...
+                        //handled by another original controler...
                         break;
                     }
                     break;

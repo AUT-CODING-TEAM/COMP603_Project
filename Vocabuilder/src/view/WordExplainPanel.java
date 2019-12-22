@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.*;
@@ -53,27 +48,28 @@ public class WordExplainPanel extends GroundPanelTemplate {
         wordExplainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         wordExplainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-//                super.windowClosing(e);
                 wordExplainFrame.dispose();
-                if (memoryRecorder != null && user != null) {//from memoryPanel 
-                    new MemoryPanel(user, memoryRecorder.next(), memoryRecorder);//if prompt was clicked, there must be next one
+                if (memoryRecorder != null && user != null) {
+                    //from memoryPanel 
+                    new MemoryPanel(user, memoryRecorder.next(), memoryRecorder);
+                    //if prompt was clicked, there must be next one
                 } else {
                     sourceFrame.setVisible(true);
                 }
             }
         });
 
-        JLabel lbl_wEP_word = new JLabel(wordExplainPage.getWord(), SwingConstants.CENTER);
-        lbl_wEP_word.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
-        add(lbl_wEP_word, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.4));
+        JLabel wordExplainLabel = new JLabel(wordExplainPage.getWord(), SwingConstants.CENTER);
+        wordExplainLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
+        add(wordExplainLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.4));
 
-        JLabel lbl_wEP_phoneticSymbol = new JLabel(wordExplainPage.getPhoneticSymbol(), SwingConstants.CENTER);
-        lbl_wEP_phoneticSymbol.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-        add(lbl_wEP_phoneticSymbol, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.3));
+        JLabel wordPhoneticLabel = new JLabel(wordExplainPage.getPhoneticSymbol(), SwingConstants.CENTER);
+        wordPhoneticLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
+        add(wordPhoneticLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.3));
 
-        JLabel lbl_wEP_Chinese = new JLabel(wordExplainPage.getChinese(), SwingConstants.CENTER);
-        lbl_wEP_Chinese.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-        add(lbl_wEP_Chinese, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.3));
+        JLabel chineseLabel = new JLabel(wordExplainPage.getChinese(), SwingConstants.CENTER);
+        chineseLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
+        add(chineseLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setGridx(0).setGridy(2).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.3));
 
         wordExplainFrame.add(this);
         wordExplainFrame.setVisible(true);

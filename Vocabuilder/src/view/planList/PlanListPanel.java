@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.planList;
 
 import view.OnePlanPanel;
@@ -43,9 +38,9 @@ public class PlanListPanel extends GroundPanelTemplate {
         planListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         planListFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 if (user.getCurrentStudyPlan() == null) {
-//                    JOptionPane.showMessageDialog(null, "Please select a vocabulary list!", "information ", JOptionPane.INFORMATION_MESSAGE);
                     if (JOptionPane.showConfirmDialog(null,
                             "Do you want to leave without selecting a plan?", "Close Window?",
                             JOptionPane.YES_NO_OPTION,
@@ -68,8 +63,8 @@ public class PlanListPanel extends GroundPanelTemplate {
         //bottom fill label
         add(new JLabel(), new GridBagTool().setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.05));
 
-        JLabel lbl_pLP_rankList = new JLabel("Select Vocabulary List", SwingConstants.CENTER);
-        add(lbl_pLP_rankList, new GridBagTool().setFill(GridBagConstraints.VERTICAL).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+        JLabel selectionTipLabel = new JLabel("Select Vocabulary List", SwingConstants.CENTER);
+        add(selectionTipLabel, new GridBagTool().setFill(GridBagConstraints.VERTICAL).setAnchor(GridBagConstraints.CENTER).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         JPanel planListPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
@@ -84,18 +79,18 @@ public class PlanListPanel extends GroundPanelTemplate {
             OnePlanPanel jPanel = new OnePlanPanel();
             jPanel.setStudyPlan(planListInfo.getStudyPlans().get(i));
 
-            JLabel lbl_pLP_studyPlanName = new JLabel(planListInfo.getStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
-            lbl_pLP_studyPlanName.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-            jPanel.addStudyPlanName(lbl_pLP_studyPlanName, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
+            JLabel planNameLabel = new JLabel(planListInfo.getStudyPlans().get(i).getStudyPlanName(), SwingConstants.CENTER);
+            planNameLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
+            jPanel.addStudyPlanName(planNameLabel, new GridBagTool().setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.8));
 
-            JLabel lbl_pLP_totalNumber = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
-            lbl_pLP_totalNumber.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
-            jPanel.addTotalNumber(lbl_pLP_totalNumber, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
+            JLabel totalNumLabel = new JLabel(String.valueOf(planListInfo.getStudyPlans().get(i).getTotalNumber()) + "words", SwingConstants.CENTER);
+            totalNumLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 15));
+            jPanel.addTotalNumber(totalNumLabel, new GridBagTool().setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.2));
 
             if (planListInfo.getStudyPlans().get(i).getStudyPlanName().equals("fill")) {
                 jPanel.setBackground(new Color(248, 246, 241));
-                lbl_pLP_studyPlanName.setText("");
-                lbl_pLP_totalNumber.setText("");
+                planNameLabel.setText("");
+                totalNumLabel.setText("");
             } else if (planListInfo.getStudyPlans().get(i).getAdded() == 0) {
                 jPanel.setBackground(new Color(186, 187, 185));
                 jPanel.addMouseListener(addPlanController);

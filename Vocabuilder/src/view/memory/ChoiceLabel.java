@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.memory;
 
 import controller.memory.MakeChoiceController;
@@ -18,6 +13,8 @@ import model.*;
 /**
  *
  * @author ThinkPad
+ * @author Pingchuan
+ * @author Yizhao
  */
 public class ChoiceLabel extends JLabel implements MouseListener {
 
@@ -32,9 +29,8 @@ public class ChoiceLabel extends JLabel implements MouseListener {
     private static final Color PRESSED_COLOR = new Color(222, 221, 218);
 
     ChoiceLabel(Word choice, User user, MemoryPanel memoryPanel, boolean isChineseChoice) {
-//        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         this.setBackground(DEFAULT_COLOR);
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89,86,79)));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 86, 79)));
         this.setText("<html>" + choice.getChinese() + "</html>");
         this.setHorizontalAlignment(SwingConstants.CENTER);
         if (!isChineseChoice) {
@@ -47,7 +43,6 @@ public class ChoiceLabel extends JLabel implements MouseListener {
         this.memoryPage = memoryPanel.getMemoryPage();
         this.wordObj = memoryPage.getWordObj();
         this.addMouseListener(this);
-//        setBorder(new TitledBorder(""));
         MakeChoiceController t = new MakeChoiceController(memoryPanel.getMemoryRecorder(), user, memoryPanel.getMemoryFrame());
         addMouseListener(t);
         addMouseMotionListener(t);
@@ -70,10 +65,6 @@ public class ChoiceLabel extends JLabel implements MouseListener {
         return user;
     }
 
-    /**
-     *
-     * mouseState: 1. pressed 2. released 3. Entered 4. Exited
-     */
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -81,13 +72,10 @@ public class ChoiceLabel extends JLabel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         this.setBackground(PRESSED_COLOR);
-//        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-    //    this.setBackground(ENTERED_COLOR);
-//        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
     }
 
     @Override
@@ -99,8 +87,6 @@ public class ChoiceLabel extends JLabel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         this.setBackground(DEFAULT_COLOR);
-//        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
     }
-
 
 }

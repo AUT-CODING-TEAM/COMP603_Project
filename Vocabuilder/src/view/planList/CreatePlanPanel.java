@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.planList;
 
 import controller.interfaces.PlanController;
@@ -22,6 +17,7 @@ import view.myPlan.MyPlanPanel;
 /**
  *
  * @author ThinkPad
+ * @author Pingchuan
  */
 public class CreatePlanPanel extends GroundPanelTemplate {
 
@@ -31,7 +27,7 @@ public class CreatePlanPanel extends GroundPanelTemplate {
     private JLabel selectedBookName;
     private JLabel selectedBookTotalNumber;
     private JTabbedPane optionTabs;
-    private JButton btn_confirm;
+    private JButton confirmBtn;
     private JList makePlanListPart1;
     private JList makePlanListPart2;
     private String wordQuantity;
@@ -115,11 +111,11 @@ public class CreatePlanPanel extends GroundPanelTemplate {
 
         addMakePlanPanel();
 
-        btn_confirm = new JButton();
-        btn_confirm.setText("OK");
+        confirmBtn = new JButton();
+        confirmBtn.setText("OK");
 
         if (this.isEdit) {
-            btn_confirm.addActionListener(new ActionListener() {
+            confirmBtn.addActionListener(new ActionListener() {
                 CreatePlanPanel that = CreatePlanPanel.this;
 
                 @Override
@@ -164,10 +160,10 @@ public class CreatePlanPanel extends GroundPanelTemplate {
                 }
             });
         } else {
-            btn_confirm.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
+            confirmBtn.addActionListener(new MakePlanController(user, this, selectedPlanFrame));
         }
 
-        add(btn_confirm, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
+        add(confirmBtn, new GridBagTool().setFill(GridBagConstraints.HORIZONTAL).setGridx(1).setGridy(3).setGridwidth(1).setGridheight(1).setWeightx(0.9).setWeighty(0.1));
 
         selectedPlanFrame.add(this);
         selectedPlanFrame.setVisible(true);

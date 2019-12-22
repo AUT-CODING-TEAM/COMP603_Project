@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.main;
 
 import controller.interfaces.PlanController;
@@ -59,7 +54,6 @@ public class MainView extends JFrame {
         setSize();
         setTitle("Vocabuilder");
 
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -89,7 +83,7 @@ public class MainView extends JFrame {
 
         this.addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent e) {
-                MainView.this.topPanel.getTf_tP_keyword().requestFocus();
+                MainView.this.topPanel.getKeywordField().requestFocus();
             }
         });
 

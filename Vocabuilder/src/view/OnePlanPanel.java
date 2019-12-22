@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Component;
@@ -17,8 +12,8 @@ import model.StudyPlan;
  */
 public class OnePlanPanel extends JPanel{
     private StudyPlan studyPlan;
-    private JLabel lbl_pLP_studyPlanName;
-    private JLabel lbl_pLP_totalNumber;
+    private JLabel planNameLabel;
+    private JLabel totalNumLabel;
     public OnePlanPanel(){
         setLayout(new GridBagLayout());
     }
@@ -33,28 +28,28 @@ public class OnePlanPanel extends JPanel{
     
     public void addStudyPlanName(Component comp, Object constraints) {
         super.add(comp, constraints);
-        this.lbl_pLP_studyPlanName = (JLabel)comp;
+        this.planNameLabel = (JLabel)comp;
     }
     
     public void addTotalNumber(Component comp, Object constraints) {
         super.add(comp, constraints);
-        this.lbl_pLP_totalNumber = (JLabel)comp;
+        this.totalNumLabel = (JLabel)comp;
     }
 
-    public JLabel getLbl_pLP_studyPlanName() {
-        return lbl_pLP_studyPlanName;
+    public JLabel getPlanNameLabel() {
+        return planNameLabel;
     }
 
-    public void setLbl_pLP_studyPlanName(JLabel lbl_pLP_studyPlanName) {
-        this.lbl_pLP_studyPlanName = lbl_pLP_studyPlanName;
+    public void setPlanNameLabel(JLabel planNameLabel) {
+        this.planNameLabel = planNameLabel;
     }
 
-    public JLabel getLbl_pLP_totalNumber() {
-        return lbl_pLP_totalNumber;
+    public JLabel getTotalNumLabel() {
+        return totalNumLabel;
     }
 
-    public void setLbl_pLP_totalNumber(JLabel lbl_pLP_totalNumber) {
-        this.lbl_pLP_totalNumber = lbl_pLP_totalNumber;
+    public void setTotalNumLabel(JLabel totalNumLabel) {
+        this.totalNumLabel = totalNumLabel;
     }
 
 }

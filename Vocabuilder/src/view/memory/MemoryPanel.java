@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.memory;
 
 import controller.WordDetailController;
@@ -23,6 +18,8 @@ import view.main.MainView;
 /**
  *
  * @author ThinkPad
+ * @author Pingchuan
+ * @author Yizhao
  */
 public class MemoryPanel extends GroundPanelTemplate {
 
@@ -64,7 +61,6 @@ public class MemoryPanel extends GroundPanelTemplate {
         memoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         memoryFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-//                super.windowClosing(e);
                 new MainView(user);
             }
         });
@@ -93,8 +89,8 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel progressPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         progressPanel.setLayout(new BorderLayout());
 
-        JLabel lbl_mP_newLearnNumber = new JLabel("       " + memoryPage.getSource() + ":  " + memoryPage.getStudyNumber() + "       ", SwingConstants.CENTER);
-        progressPanel.add(lbl_mP_newLearnNumber, BorderLayout.SOUTH);
+        JLabel toLearnNumLabel = new JLabel("       " + memoryPage.getSource() + ":  " + memoryPage.getStudyNumber() + "       ", SwingConstants.CENTER);
+        progressPanel.add(toLearnNumLabel, BorderLayout.SOUTH);
 
         add(progressPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTHWEST).setGridx(1).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
     }
@@ -110,18 +106,18 @@ public class MemoryPanel extends GroundPanelTemplate {
         JPanel vocabularyPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
         vocabularyPanel.setLayout(new GridBagLayout());
 
-//        JLabel lbl_mP_word = new JLabel(memoryPage.getWord(), SwingConstants.CENTER);
-        JLabel lbl_mP_word = new JLabel("<html>" + text + "</html>", SwingConstants.CENTER);
-        lbl_mP_word.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
-        vocabularyPanel.add(lbl_mP_word, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTH).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
+        JLabel wordLabel;
+        wordLabel = new JLabel("<html>" + text + "</html>", SwingConstants.CENTER);
+        wordLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 40));
+        vocabularyPanel.add(wordLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.SOUTH).setGridx(0).setGridy(0).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
 
-        JLabel lbl_mP_phoneticSymbol = new JLabel("/" + memoryPage.getPhoneticSymbol() + "/", SwingConstants.CENTER);
-        lbl_mP_phoneticSymbol.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
-        vocabularyPanel.add(lbl_mP_phoneticSymbol, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTH).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
+        JLabel phoneticSymbolLabel = new JLabel("/" + memoryPage.getPhoneticSymbol() + "/", SwingConstants.CENTER);
+        phoneticSymbolLabel.setFont(new Font("FACE_SYSTEM", Font.PLAIN, 20));
+        vocabularyPanel.add(phoneticSymbolLabel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTH).setGridx(0).setGridy(1).setGridwidth(1).setGridheight(1).setWeightx(1).setWeighty(0.5));
         if (!isChineseChoices) {
-            lbl_mP_phoneticSymbol.setText("");
+            phoneticSymbolLabel.setText("");
         }
-        
+
         add(vocabularyPanel, new GridBagTool().setFill(GridBagConstraints.BOTH).setAnchor(GridBagConstraints.SOUTH).setGridx(1).setGridy(2).setGridwidth(2).setGridheight(1).setWeightx(0.9).setWeighty(0.35));
     }
 
@@ -132,8 +128,8 @@ public class MemoryPanel extends GroundPanelTemplate {
 
         Set<Word> choicesInDB = memoryPage.getChoices();
         for (Word choice : choicesInDB) {
-            ChoiceLabel lbl_mP_choice = new ChoiceLabel(choice, user, this, this.isChineseChoices);
-            choicesPanel.add(lbl_mP_choice);
+            ChoiceLabel choiceLabel = new ChoiceLabel(choice, user, this, this.isChineseChoices);
+            choicesPanel.add(choiceLabel);
         }
 
         add(choicesPanel, new GridBagTool().setGridx(1).setGridy(3).setGridwidth(2).setGridheight(2).setWeightx(0.9).setWeighty(0.35));
@@ -142,19 +138,19 @@ public class MemoryPanel extends GroundPanelTemplate {
     private void addButtonsPanel(JFrame memoryFrame) {
         JPanel buttonsPanel = new GroundPanelTemplate(GroundPanelTemplate.FORE);
 
-        JButton btn_mP_hint = new JButton("Prompt");
-        btn_mP_hint.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this));
-        buttonsPanel.add(btn_mP_hint);
+        JButton hitBtn = new JButton("Prompt");
+        hitBtn.addActionListener(new WordDetailController(user, new WordExplainPage(memoryPage.getWord()), this));
+        buttonsPanel.add(hitBtn);
 
-        JButton btn_mP_favorite = null;
+        JButton favorBtn = null;
         try {
-            btn_mP_favorite = new CollectionController().hasCollected(user, memoryPage.getWordObj()) ? new JButton("Remove from Favorite") : new JButton("Add to Favorite");
-            btn_mP_favorite.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
+            favorBtn = new CollectionController().hasCollected(user, memoryPage.getWordObj()) ? new JButton("Remove from Favorite") : new JButton("Add to Favorite");
+            favorBtn.addActionListener(new AddFavoriteController(user, memoryPage.getWordObj()));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        buttonsPanel.add(btn_mP_favorite);
+        buttonsPanel.add(favorBtn);
 
         add(buttonsPanel, new GridBagTool().setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.NORTHWEST).setGridx(1).setGridy(5).setGridwidth(1).setGridheight(1).setWeightx(0.45).setWeighty(0.1));
 
