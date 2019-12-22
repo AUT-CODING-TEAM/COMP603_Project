@@ -18,22 +18,22 @@ import view.prepare.LoginDialog;
 public class RegisterController implements ActionListener {
 
     private JFrame registerDialog;
-    private JTextField tf_rgD_username;
-    private JPasswordField tf_rgD_password;
-    private JPasswordField tf_rgD_pwdConfirm;
+    private JTextField usernameTextField;
+    private JPasswordField passwordField;
+    private JPasswordField passwordConfirmField;
 
-    public RegisterController(JFrame aThis, JTextField tf_rgD_username, JPasswordField tf_rgD_password, JPasswordField tf_rgD_pwdConfirm) {
+    public RegisterController(JFrame aThis, JTextField username, JPasswordField password, JPasswordField pwdConfirm) {
         this.registerDialog = aThis;
-        this.tf_rgD_username = tf_rgD_username;
-        this.tf_rgD_password = tf_rgD_password;
-        this.tf_rgD_pwdConfirm = tf_rgD_pwdConfirm;
+        this.usernameTextField = username;
+        this.passwordField = password;
+        this.passwordConfirmField = pwdConfirm;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = tf_rgD_username.getText();
-        String password = String.valueOf(tf_rgD_password.getPassword());
-        String pwdConfirm = String.valueOf(tf_rgD_pwdConfirm.getPassword());
+        String username = usernameTextField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+        String pwdConfirm = String.valueOf(passwordConfirmField.getPassword());
 
         int registerCheck = registerCheck(username, password, pwdConfirm);
         if (registerCheck == 1) {

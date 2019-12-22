@@ -22,7 +22,7 @@ import view.memory.MemoryPanel;
 public class WordDetailController implements ListSelectionListener, ActionListener {
 
     private User user;
-    private JList list_sP_searchResultList;
+    private JList searchResultList;
     private JFrame searchResultListFrame;
     private MemoryPanel memoryPanel;
     private WordExplainPage wordExplainPage;
@@ -31,7 +31,7 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     //from SearchResultListPanel
     public WordDetailController(User user, JList list_sP_searchResultList, JFrame searchResultListFrame) {
         this.user = user;
-        this.list_sP_searchResultList = list_sP_searchResultList;
+        this.searchResultList = list_sP_searchResultList;
         this.searchResultListFrame = searchResultListFrame;
     }
 
@@ -46,10 +46,10 @@ public class WordDetailController implements ListSelectionListener, ActionListen
     //from SearchResultListPanel
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (list_sP_searchResultList != null) {
-            if (list_sP_searchResultList.getValueIsAdjusting()) {
+        if (searchResultList != null) {
+            if (searchResultList.getValueIsAdjusting()) {
                 try {
-                    wordExplainPage = new WordExplainPage(list_sP_searchResultList.getSelectedValue().toString().trim());
+                    wordExplainPage = new WordExplainPage(searchResultList.getSelectedValue().toString().trim());
                     new WordExplainPanel(wordExplainPage, searchResultListFrame);
                     searchResultListFrame.setVisible(false);
                 } catch (Exception ex) {
