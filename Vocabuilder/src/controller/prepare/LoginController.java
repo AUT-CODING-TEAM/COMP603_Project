@@ -20,20 +20,20 @@ import view.planList.PlanListPanel;
 public class LoginController implements ActionListener {
 
     private JFrame loginDialog;
-    private JTextField tf_lgD_username;
-    private JPasswordField tf_lgD_password;
+    private JTextField usernameTextField;
+    private JPasswordField passwordField;
     private User user;
     
-    public LoginController(JFrame aThis, JTextField tf_lgD_username, JPasswordField tf_lgD_password) {
+    public LoginController(JFrame aThis, JTextField username, JPasswordField password) {
         this.loginDialog = aThis;
-        this.tf_lgD_username = tf_lgD_username;
-        this.tf_lgD_password = tf_lgD_password;
+        this.usernameTextField = username;
+        this.passwordField = password;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = tf_lgD_username.getText();
-        String password = String.valueOf(tf_lgD_password.getPassword());
+        String username = usernameTextField.getText();
+        String password = String.valueOf(passwordField.getPassword());
 
         int loginCheck = loginCheck(username, password);
         if (loginCheck == 1) {

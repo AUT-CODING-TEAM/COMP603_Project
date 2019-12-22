@@ -3,8 +3,6 @@ package view.searchResultList;
 import controller.WordDetailController;
 import controller.main.SearchController;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;

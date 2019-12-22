@@ -2,13 +2,9 @@ package view.main;
 
 import controller.main.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.DefaultCaret;
-import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Highlighter;
 import model.*;
 import view.*;
 import view.searchResultList.SearchResultListPanel;
