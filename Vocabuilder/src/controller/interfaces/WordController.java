@@ -27,7 +27,6 @@ public class WordController {
             add("COLLECTION");
         }
     };
-
     /**
      * @param id word's id
      * @return the words whose ID is param.id in all books

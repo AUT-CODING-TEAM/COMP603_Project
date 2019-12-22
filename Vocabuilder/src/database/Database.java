@@ -5,8 +5,10 @@ import java.sql.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -183,6 +185,23 @@ public class Database {
         File file = new File(Database.CONFIG);
         File[] files = file.listFiles();
         return files;
+    }
+
+    public int getFileLines() throws FileNotFoundException, IOException {
+        int linenumber = 0;
+        for (File f : this.getConfigFiles()) {
+            if (f.exists()) {
+                FileReader fr = new FileReader(f);
+                LineNumberReader lnr = new LineNumberReader(fr);
+                while (lnr.readLine() != null) {
+                    linenumber++;
+                }
+                lnr.close();
+            } else {
+                System.out.println("File does not exists!");
+            }
+        }
+        return linenumber;
     }
 
     private void checkAndCreate(File f, Loading jf) throws SQLException {
