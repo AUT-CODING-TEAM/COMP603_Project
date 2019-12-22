@@ -868,7 +868,7 @@ centre	sentə	n.中心；中枢vt.集中
 fifth	fifθ	num.第五n.五分之一
 large	la:dʒ	a.大的；巨大的
 offer	ɔfə	vt.提供；提出n.提供
-sɔil	sɔil	vt.弄脏vi.变脏
+soil	sɔil	vt.弄脏vi.变脏
 cross	krɔs	vt.穿过；使交叉
 harsh	ha:ʃ	a.严厉的；刺耳的
 shelf	ʃelf	n.搁板，架子
