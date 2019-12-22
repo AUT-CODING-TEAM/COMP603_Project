@@ -7,7 +7,6 @@ package controller.main;
 
 import view.searchResultList.SearchResultListPanel;
 import javax.swing.event.*;
-import javax.swing.text.Document;
 import model.SearchResultInfo;
 
 /**

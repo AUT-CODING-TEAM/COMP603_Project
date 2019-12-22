@@ -12,9 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
-import model.MyPlanInfo;
-import view.myPlan.MyPlanPanel;
-import view.planList.CreatePlanPanel;
 
 /**
  *
