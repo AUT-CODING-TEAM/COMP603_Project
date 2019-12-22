@@ -1,5 +1,7 @@
 import database.Database;
 import java.util.Locale;
+import javax.swing.JFrame;
+import view.main.Loading;
 import view.prepare.LoginDialog;
 
 /*
@@ -17,7 +19,8 @@ public class Start {
         Locale.setDefault(Locale.ENGLISH);
         //init the database
         Database db = Database.getInstance();
-        db.init();
+        
+        db.init(new Loading());
         new LoginDialog();
     }
 }

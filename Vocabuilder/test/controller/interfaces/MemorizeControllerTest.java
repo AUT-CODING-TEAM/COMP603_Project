@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.StudyPlan;
+import view.main.Loading;
 
 /**
  *
@@ -40,7 +41,7 @@ public class MemorizeControllerTest {
     public static void setUpClass() {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
-        db.init();
+        db.init(new Loading());
         ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
         try {
             if (!res.next()) {
@@ -102,7 +103,7 @@ public class MemorizeControllerTest {
         try {
             Database db = Database.getInstance();
             SHA256Util sha256 = new SHA256Util();
-            db.init();
+            db.init(new Loading());
             ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");

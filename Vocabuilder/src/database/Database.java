@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import view.main.Loading;
 
 /**
  *
@@ -58,12 +61,13 @@ public class Database {
         return Database.instance;
     }
 
-    public void init() {
+    public void init(Loading jf) {
         try {
             File[] files = this.getConfigFiles();
 
             ResultSet user_table = this.meta.getTables(null, null, "USERS", null);
             if (!user_table.next()) {
+                jf.setText("Initializing the Database(user table)...please wait for a while");
                 String str1 = "create table users\n"
                         + "(\n"
                         + "	ID int generated always as identity,\n"
@@ -88,6 +92,7 @@ public class Database {
 
             ResultSet mem_table = this.meta.getTables(null, null, "MEMORIZE", null);
             if (!mem_table.next()) {
+                jf.setText("Initializing the Database(memorize table)...please wait for a while");
                 String str1 = "create table memorize\n"
                         + "(\n"
                         + "	ID int generated always as identity,\n"
@@ -112,6 +117,7 @@ public class Database {
 
             ResultSet plan_table = this.meta.getTables(null, null, "PLAN", null);
             if (!plan_table.next()) {
+                jf.setText("Initializing the Database(plan table)...please wait for a while");
                 String str1 = "create table plan\n"
                         + "(\n"
                         + "	ID int generated always as identity,\n"
@@ -135,6 +141,7 @@ public class Database {
 
             ResultSet collection_table = this.meta.getTables(null, null, "COLLECTION", null);
             if (!collection_table.next()) {
+                jf.setText("Initializing the Database(collection table)...please wait for a while");
                 String str1 = "create table COLLECTION\n"
                         + "(\n"
                         + "	ID int generated always as identity,\n"
@@ -157,15 +164,16 @@ public class Database {
                 System.out.println("No config file found");
                 return;
             }
-
+            jf.setText("Initializing the Vocabulary...please wait for a while");
             for (File f : files) {
-                this.checkAndCreate(f);
+                this.checkAndCreate(f, jf);
             }
 //            ResultSet tables = meta.getTables(conn.getCatalog(), null, "user_info", null);
 //            if (!tables.next()) {
 //                // table doesnt exist so create it
 //            }
             System.out.println("Done!");
+            jf.done();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,7 +185,7 @@ public class Database {
         return files;
     }
 
-    private void checkAndCreate(File f) throws SQLException {
+    private void checkAndCreate(File f, Loading jf) throws SQLException {
         String table_name = f.getName();
         if (!table_name.contains(".txt")) {
             return;
@@ -227,7 +235,7 @@ public class Database {
                     }
                     String[] info = line.split("\t");
                     System.out.println(info[0]);
-
+                    jf.setText("Initializing the Vocabulary(" + info[0] + ")...please wait for a while");
                     String[] col = {"word", "phonetic", "chinese"};
                     info[0] = info[0].replace("'", "''");
                     info[1] = info[1].replace("'", "''");
@@ -738,6 +746,6 @@ public class Database {
     public static void main(String[] args) throws SQLException {
         Database t = Database.getInstance();
         t.reset();
-        t.init();
+        t.init(new Loading());
     }
 }

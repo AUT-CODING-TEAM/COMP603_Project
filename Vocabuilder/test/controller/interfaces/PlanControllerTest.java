@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import view.main.Loading;
 
 /**
  *
@@ -36,7 +37,7 @@ public class PlanControllerTest {
     public static void setUpClass() {
         Database db = Database.getInstance();
         SHA256Util sha256 = new SHA256Util();
-        db.init();
+        db.init(new Loading());
         ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
         try {
             if (!res.next()) {
@@ -91,7 +92,7 @@ public class PlanControllerTest {
         try {
             Database db = Database.getInstance();
             SHA256Util sha256 = new SHA256Util();
-            db.init();
+            db.init(new Loading());
             ResultSet res = db.prepare("select * from USERS where USERNAME = ?", "TEST");
             if (res.next()) {
                 int user_id = res.getInt("ID");
